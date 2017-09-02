@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true" CodeBehind="ULError.aspx.cs" Inherits="ParkingPal.UL.ULError" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p>
         Unfortunately an error has occured. Our system has generated the following error message for you:
     </p>
@@ -9,6 +11,4 @@
         for you to worry. Please send the error message to us via an email and we will inspect the
         issue.
     </p>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 </asp:Content>
