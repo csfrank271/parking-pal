@@ -1,0 +1,62 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ParkingPalMaster.master.cs" Inherits="ParkingPal.MasterPages.ParkingPalMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="~/CSS/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <title>ParkingPal - <%: Page.Title %></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../JS/materialize.min.js"></script>
+
+    <form id="MainContent" runat="server">
+    <div>
+        <!-- Unauthenticated nav -->
+        <nav id="unauthenticatedNav" runat="server" visible="false">
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Parking Pal</a>
+                <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="/login">Log in</a></li>
+                </ul>
+                <ul class="side-nav" id="sideNav">
+                    <li><a href="../UL/ULLogin.aspx">Log in</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Authenticated nav -->
+        <nav id="authenticatedNav" runat="server" visible="false">
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Parking Pal</a>
+                <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Log in</a></li>
+                </ul>
+                <ul class="side-nav" id="sideNav">
+                    <li><a href="#">Log in</a></li>
+                </ul>
+            </div>
+        </nav>
+  
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+
+    <!-- Initialise materialize JS functionality -->
+    <script type="text/javascript" src="../JS/initialiseMaterialize.js"></script>
+</body>
+</html>
