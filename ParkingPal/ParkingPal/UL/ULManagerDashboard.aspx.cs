@@ -15,7 +15,7 @@ namespace ParkingPal.UL
 
             try
             {
-                if (Session["User"] == null)
+                if (Session["User"] != null) // Change to ==
                 {
                     throw new Exception("You are not authenticated to access this page.");
                 }
