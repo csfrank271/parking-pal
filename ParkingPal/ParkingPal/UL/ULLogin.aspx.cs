@@ -25,7 +25,24 @@ namespace ParkingPal.UL
                 string password = inputPassword.Value.ToString();
                 char appUserType = BL.BLLogin.GetAppUserType(
                     userName, password);
-                strNewURL = "~/UL/ULHome.aspx?" + appUserType;
+                switch(appUserType)
+                {
+                    case 'M':
+                        strNewURL = "~/UL/ULManagerDashboard.aspx";
+                        // Get Manager object.
+                        break;
+                    case 'I':
+                        strNewURL = "~/UL/ULInspectorDashboard.aspx";
+                        // Get Manager object.
+                        break;
+                    case 'A':
+                        strNewURL = "~/UL/ULAdminDashboard.aspx";
+                        // Get Manager object.
+                        break;
+                    default:
+                        // Inform user of error 
+                        break;
+                }
             }
             catch (Exception exception)
             {

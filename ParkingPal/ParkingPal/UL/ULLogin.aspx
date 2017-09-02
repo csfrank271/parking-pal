@@ -9,7 +9,7 @@
                 <h1><%: Page.Title %></h1>
             </div>
             <div class="s12">
-                <h5>Single sign on for all user roles.</h5>
+                <h5>Single sign on for all users.</h5>
             </div>
         </div>
         
