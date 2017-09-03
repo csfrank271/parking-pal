@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ParkingPal.Models;
 
 namespace ParkingPal.UL
 {
@@ -15,13 +16,16 @@ namespace ParkingPal.UL
 
             try
             {
-                if (Session["User"] != null) // Change to ==
+                if (Session["AppUser"] == null ||
+                    Session["Manager"] == null)
                 {
                     throw new Exception("You are not authenticated to access this page.");
                 }
                 else
                 {
-                   
+                    // Retrieve appUser and manager from the session:
+                    AppUser appUser = (AppUser)Session["AppUser"];
+                    Manager manager = (Manager)Session["Manager"];
                 }
             }
             catch (Exception exception)
