@@ -14,17 +14,18 @@ namespace ParkingPal.UL
         {
             string strNewURL = null;
 
+            // Authenticate the user:
+            AppUser appUser = (AppUser)Session["AppUser"];
             try
             {
-                if (Session["AppUser"] == null ||
-                    Session["Manager"] == null)
+                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
+                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
+                if (redirect != null)
                 {
-                    throw new Exception("You are not authenticated to access this page.");
+                    strNewURL = "~" + redirect;
                 }
                 else
                 {
-                    // Retrieve appUser and manager from the session:
-                    AppUser appUser = (AppUser)Session["AppUser"];
                     Manager manager = (Manager)Session["Manager"];
                 }
             }
@@ -33,11 +34,13 @@ namespace ParkingPal.UL
                 strNewURL = "~/UL/ULError.aspx";
                 Session["exception"] = exception;
             }
-
-            // Redirect to the next page:
-            if (strNewURL != null)
+            finally
             {
-                Response.Redirect(strNewURL);
+                // Redirect to the next page:
+                if (strNewURL != null)
+                {
+                    Response.Redirect(strNewURL);
+                }
             }
         }
     }
