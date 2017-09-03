@@ -26,7 +26,7 @@
         <!-- Unauthenticated nav -->
         <nav visible="false">
             <div runat="server" id="unauthenticatedNav" class="nav-wrapper" visible="false">
-                <a href="#!" class="brand-logo">ParkingPal</a>
+                <a href="../UL/ULHome.aspx"" class="brand-logo">ParkingPal</a>
                 <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="../UL/ULLogin.aspx">Log in</a></li>
@@ -36,7 +36,7 @@
                 </ul>
             </div>
             <div runat="server" id="authenticatedNav" class="nav-wrapper" visible="false">
-                <a href="#!" class="brand-logo">ParkingPal</a>
+                <a href="../UL/ULHome.aspx"" class="brand-logo">ParkingPal</a>
                 <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="../UL/ULLogout.aspx">Log out</a></li>
