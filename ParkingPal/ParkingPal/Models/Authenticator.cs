@@ -13,14 +13,17 @@ namespace ParkingPal.Models
             List<string> managerURLs = new List<string>
             {
                 "/UL/ULManagerDashboard.aspx",
+                "/UL/ULLogout.aspx"
             };
             List<string> inspectorURLs = new List<string>
             {
                 "/UL/ULInspectorDashboard.aspx",
+                "/UL/ULLogout.aspx"
             };
             List<string> administratorURLs = new List<string>
             {
                 "/UL/ULAdminDashboard.aspx",
+                "/UL/ULLogout.aspx"
             };
             List<string> unauthenticatedURLs = new List<string>
             {
