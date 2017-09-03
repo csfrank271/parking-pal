@@ -106,5 +106,88 @@ namespace ParkingPal.DAL
 
             return manager;
         }
+
+        // Retrieves an Inspector by searching for one with a matching appUserID.
+        public static Inspector GetInspector(int appUserID)
+        {
+            // Initialise inspector:
+            Inspector inspector = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_inspector", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@user_id", SqlDbType.Int).Value = appUserID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    // Retrieve the record if it exists:
+                    while (reader.Read())
+                    {
+                        inspector = new Inspector
+                        (
+                            (int)reader["ID"],
+                            (int)reader["AppUserID"],
+                            (int)reader["ManagerID"]
+                        );
+                    }
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return inspector;
+        }
+
+        // Retrieves an Administrator by searching for one with a matching appUserID.
+        public static Administrator GetAdministrator(int appUserID)
+        {
+            // Initialise administrator:
+            Administrator administrator = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_administrator", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@user_id", SqlDbType.Int).Value = appUserID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    // Retrieve the record if it exists:
+                    while (reader.Read())
+                    {
+                        administrator = new Administrator
+                        (
+                            (int)reader["ID"],
+                            (int)reader["AppUserID"]
+                        );
+                    }
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return administrator;
+        }
     }
 }

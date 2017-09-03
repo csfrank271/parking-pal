@@ -33,5 +33,29 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static Inspector GetInspector(int appUserID)
+        {
+            try
+            {
+                return DALLogin.GetInspector(appUserID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static Administrator GetAdministrator(int appUserID)
+        {
+            try
+            {
+                return DALLogin.GetAdministrator(appUserID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

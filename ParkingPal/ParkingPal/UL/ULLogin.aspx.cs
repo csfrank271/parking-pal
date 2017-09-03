@@ -13,7 +13,36 @@ namespace ParkingPal.UL
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string strNewURL = null;
 
+            // Authenticate the user:
+            AppUser appUser = (AppUser)Session["AppUser"];
+            try
+            {
+                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
+                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
+                if (redirect != null)
+                {
+                    strNewURL = "~" + redirect;
+                }
+                else
+                {
+                    // Code to run if user is authenticated.
+                }
+            }
+            catch (Exception exception)
+            {
+                strNewURL = "~/UL/ULError.aspx";
+                Session["exception"] = exception;
+            }
+            finally
+            {
+                // Redirect to the next page:
+                if (strNewURL != null)
+                {
+                    Response.Redirect(strNewURL);
+                }
+            }
         }
         // Handles the event of the 'Create Character' button being clicked:
         protected void BtnLogin_Click(object sender, EventArgs e)
@@ -31,8 +60,7 @@ namespace ParkingPal.UL
                 int appUserID = -1;
 
                 // Attempt to retrieve an appUser:
-                AppUser appUser = BLLogin.GetAppUser(
-                    userName, password);
+                AppUser appUser = BLLogin.GetAppUser(userName, password);
                 
                 // If the appUser was retrieved:
                 if (appUser != null)
@@ -48,9 +76,9 @@ namespace ParkingPal.UL
                         Manager manager = BLLogin.GetManager(appUserID);
                         if(manager.ApprovalStatus == 'C')
                         {
-                            strNewURL = "~/UL/ULManagerDashboard.aspx";
                             Session["AppUser"] = appUser;
                             Session["Manager"] = manager;
+                            strNewURL = "~/UL/ULManagerDashboard.aspx";
                         }
                         else
                         {
@@ -58,15 +86,20 @@ namespace ParkingPal.UL
                         }
                         break;
                     case 'I':
+                        Inspector inspector = BLLogin.GetInspector(appUserID);
+                        Session["AppUser"] = appUser;
+                        Session["Inspector"] = inspector;
                         strNewURL = "~/UL/ULInspectorDashboard.aspx";
-                        // Get Manager object.
                         break;
                     case 'A':
                         strNewURL = "~/UL/ULAdminDashboard.aspx";
-                        // Get Manager object.
+                        Administrator administrator = BLLogin.GetAdministrator(appUserID);
+                        Session["AppUser"] = appUser;
+                        Session["Administrator"] = administrator;
+                        strNewURL = "~/UL/ULAdminDashboard.aspx";
                         break;
                     default:
-                        // Inform user of error 
+                        // GENERATE VALIDATION ERROR HERE ABOUT ACCOUNT NON-EXISTENCE HERE.
                         break;
                 }
             }
