@@ -66,7 +66,23 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CSS\materialize.css" />
+    <Content Include="CSS\materialize.min.css" />
+    <Content Include="JS\initialiseMaterialize.js" />
+    <Content Include="JS\materialize.js" />
+    <Content Include="JS\materialize.min.js" />
     <Content Include="packages.config" />
+    <Content Include="Fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="Fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="Fonts\roboto\Roboto-Light.woff" />
+    <Content Include="Fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="Fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="Fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="Fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="Fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="Fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="Fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="MasterPages\ParkingPalMaster.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -76,23 +92,91 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="UL\ULAdminDashboard.aspx" />
+    <Content Include="UL\ULError.aspx" />
+    <Content Include="UL\ULHome.aspx" />
+    <Content Include="UL\ULInspectorDashboard.aspx" />
+    <Content Include="UL\ULLogin.aspx" />
+    <Content Include="UL\ULLogout.aspx" />
+    <Content Include="UL\ULManagerDashboard.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\BLLogin.cs" />
+    <Compile Include="DAL\DALCommon.cs" />
+    <Compile Include="DAL\DALLogin.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MasterPages\ParkingPalMaster.Master.cs">
+      <DependentUpon>ParkingPalMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPages\ParkingPalMaster.Master.designer.cs">
+      <DependentUpon>ParkingPalMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\Authenticator.cs" />
     <Compile Include="Models\EmailAlert.cs" />
+    <Compile Include="Models\Inspector.cs" />
+    <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ParkingLot.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UL\ULAdminDashboard.aspx.cs">
+      <DependentUpon>ULAdminDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULAdminDashboard.aspx.designer.cs">
+      <DependentUpon>ULAdminDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULError.aspx.cs">
+      <DependentUpon>ULError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULError.aspx.designer.cs">
+      <DependentUpon>ULError.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULHome.aspx.cs">
+      <DependentUpon>ULHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULHome.aspx.designer.cs">
+      <DependentUpon>ULHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULInspectorDashboard.aspx.cs">
+      <DependentUpon>ULInspectorDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULInspectorDashboard.aspx.designer.cs">
+      <DependentUpon>ULInspectorDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULLogin.aspx.cs">
+      <DependentUpon>ULLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULLogin.aspx.designer.cs">
+      <DependentUpon>ULLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULLogout.aspx.cs">
+      <DependentUpon>ULLogout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULLogout.aspx.designer.cs">
+      <DependentUpon>ULLogout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULManagerDashboard.aspx.cs">
+      <DependentUpon>ULManagerDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULManagerDashboard.aspx.designer.cs">
+      <DependentUpon>ULManagerDashboard.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BL\" />
-    <Folder Include="DAL\" />
-    <Folder Include="UL\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
