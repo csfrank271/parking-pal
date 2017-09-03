@@ -2,13 +2,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <p>
-        Unfortunately an error has occured. Our system has generated the following error message for you:
-    </p>
-    <p><code id="exceptionMsg" runat="server"></code></p>
-    <p>
-        If you don't understand this message, then the error is likely our fault. There is no reason
-        for you to worry. Please send the error message to us via an email and we will inspect the
-        issue.
-    </p>
+    <div class="container">
+        <div class="s12">
+            <div class="card">
+                <div class="card-content">
+                    <p>
+                        An unexpected error has occured with ParkingPal. We apologise for any inconvenience this error has caused. Please send us the following information
+                        so we can fix the problem:
+                    </p>
+                    <code id="exceptionMsg" runat="server" />
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
