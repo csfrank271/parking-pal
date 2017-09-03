@@ -8,17 +8,17 @@ namespace ParkingPal.Models
     public class AppUser
     {
         private int appUserID;
-        private string userName, userPassword, firstName,
-            lasName;
+        private string userName, userPassword, firstName, lastName;
         private char appUserType;
 
-        public AppUser(int appUserID, string userName, string userPassword, string firstName, string lasName, char appUserType)
+        public AppUser(int appUserID, string userName, string userPassword,
+            string firstName, string lastName, char appUserType)
         {
             this.appUserID = appUserID;
             this.userName = userName;
             this.userPassword = userPassword;
             this.firstName = firstName;
-            this.lasName = lasName;
+            this.lastName = lastName;
             this.appUserType = appUserType;
         }
 
@@ -74,16 +74,16 @@ namespace ParkingPal.Models
             }
         }
 
-        public string LasName
+        public string LastName
         {
             get
             {
-                return lasName;
+                return lastName;
             }
 
             set
             {
-                lasName = value;
+                lastName = value;
             }
         }
 
