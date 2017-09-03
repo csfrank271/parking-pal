@@ -49,6 +49,10 @@ namespace ParkingPal.UL
         {
             string strNewURL = null;
 
+            // Reset the customer validator state:
+            cvLoginError.IsValid = true;
+            loginError.Visible = false;
+
             try
             {
                 // Get the login details from the user's input:
@@ -100,6 +104,8 @@ namespace ParkingPal.UL
                         break;
                     default:
                         // GENERATE VALIDATION ERROR HERE ABOUT ACCOUNT NON-EXISTENCE HERE.
+                        cvLoginError.IsValid = false;
+                        loginError.Visible = true;
                         break;
                 }
             }

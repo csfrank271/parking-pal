@@ -18,10 +18,24 @@
             <div class="input-field col m6 s12">
                 <input runat="server" id="inputUserName" type="text" class="validate">
                 <label for="inputUserName">User Name</label>
+                <asp:RequiredFieldValidator
+                    ID="rfvUserName"
+                    ControlToValidate="inputUserName"
+                    Display="Dynamic"
+                    runat="server"
+                    ErrorMessage="User name can not be empty.">
+                </asp:RequiredFieldValidator>
             </div>
             <div class="input-field col m6 s12">
-                <input runat="server" id="inputPassword" type="text" class="validate">
+                <input runat="server" id="inputPassword" type="password" class="validate">
                 <label for="inputPassword">Password</label>
+                <asp:RequiredFieldValidator
+                    ID="rfvPassword"
+                    ControlToValidate="inputPassword"
+                    Display="Dynamic"
+                    runat="server"
+                    ErrorMessage="Password can not be empty.">
+                </asp:RequiredFieldValidator>
             </div>
         </div>
         <div class="row">
@@ -29,6 +43,17 @@
                 <asp:button ID="btnLogin" runat="server"
                     cssclass="btn"
                     OnClick="BtnLogin_Click" Text="Submit" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <asp:panel ID="pnlErrors" runat="server">
+                    <p id="loginError" visible="false" runat="server">
+                        Username and password combination is invalid!
+                    </p>
+                    <asp:CustomValidator id="cvLoginError" runat="server" 
+                        Display="None" EnableClientScript="False"></asp:CustomValidator>
+                </asp:panel>
             </div>
         </div>
     </div>
