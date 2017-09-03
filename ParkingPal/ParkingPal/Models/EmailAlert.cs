@@ -11,6 +11,15 @@ namespace ParkingPal.Models
         private string emailAddress, alertMessage;
         private DateTime alertTime;
 
+        public EmailAlert(int emailAlertID, int ticketID, string emailAddress, string alertMessage, DateTime alertTime)
+        {
+            this.emailAlertID = emailAlertID;
+            this.ticketID = ticketID;
+            this.emailAddress = emailAddress;
+            this.alertMessage = alertMessage;
+            this.alertTime = alertTime;
+        }
+
         public int EmailAlertID
         {
             get
@@ -74,16 +83,6 @@ namespace ParkingPal.Models
             {
                 alertTime = value;
             }
-        }
-
-        public EmailAlert (int emailAlertID, int ticketID, string emailAddress,
-            string alertMessage, DateTime alertTime)
-        {
-            EmailAlertID = emailAlertID;
-            TicketID = ticketID;
-            EmailAddress = emailAddress;
-            AlertMessage = alertMessage;
-            AlertTime = alertTime;
         }
     }
 }

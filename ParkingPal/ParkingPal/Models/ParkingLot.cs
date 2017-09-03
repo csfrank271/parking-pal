@@ -7,9 +7,21 @@ namespace ParkingPal.Models
 {
     public class ParkingLot
     {
-        private int parkingLotID, adminID, totalCarparks, functioningCarparks;
+        private int parkingLotID, totalCarparks, functioningCarparks;
+        private int? adminID;
         private char approvalStatus;
         private string address, coordinates;
+
+        public ParkingLot(int parkingLotID, int? adminID, int totalCarparks, int functioningCarparks, char approvalStatus, string address, string coordinates)
+        {
+            this.parkingLotID = parkingLotID;
+            this.adminID = adminID;
+            this.totalCarparks = totalCarparks;
+            this.functioningCarparks = functioningCarparks;
+            this.approvalStatus = approvalStatus;
+            this.address = address;
+            this.coordinates = coordinates;
+        }
 
         public int ParkingLotID
         {
@@ -23,7 +35,7 @@ namespace ParkingPal.Models
             }
         }
 
-        public int AdminID
+        public int? AdminID
         {
             get
             {
@@ -89,19 +101,6 @@ namespace ParkingPal.Models
             {
                 this.coordinates = value;
             }
-        }
-
-        public ParkingLot(int parkingLotID, int adminID, int totalCarparks,
-            int functioningCarparks, char approvalStatus, string address,
-            string coordinates)
-        {
-            ParkingLotID = parkingLotID;
-            AdminID = adminID;
-            TotalCarparks = totalCarparks;
-            FunctioningCarparks = functioningCarparks;
-            ApprovalStatus = approvalStatus;
-            Address = address;
-            Coordinates = coordinates;
         }
     }
 }

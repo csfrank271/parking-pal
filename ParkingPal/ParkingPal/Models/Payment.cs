@@ -9,6 +9,12 @@ namespace ParkingPal.Models
     {
         private int paymentID, ticketID;
 
+        public Payment(int paymentID, int ticketID)
+        {
+            this.paymentID = paymentID;
+            this.ticketID = ticketID;
+        }
+
         public int PaymentID
         {
             get
@@ -33,12 +39,6 @@ namespace ParkingPal.Models
             {
                 ticketID = value;
             }
-        }
-
-        public Payment (int paymentID, int ticketID)
-        {
-            PaymentID = paymentID;
-            TicketID = ticketID;
         }
     }
 }

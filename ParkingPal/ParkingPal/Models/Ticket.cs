@@ -11,6 +11,14 @@ namespace ParkingPal.Models
         private string rego;
         private DateTime startDateTime, endDateTime;
 
+        public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime)
+        {
+            this.ticketID = ticketID;
+            this.rego = rego;
+            this.startDateTime = startDateTime;
+            this.endDateTime = endDateTime;
+        }
+
         public int TicketID
         {
             get
@@ -61,15 +69,6 @@ namespace ParkingPal.Models
             {
                 endDateTime = value;
             }
-        }
-
-        public Ticket (int ticketID, string rego, DateTime startDateTime,
-            DateTime endDateTime)
-        {
-            TicketID = ticketID;
-            Rego = rego;
-            StartDateTime = startDateTime;
-            EndDateTime = endDateTime;
         }
     }
 }
