@@ -16,7 +16,7 @@ namespace ParkingPal.MasterPages
             Response.Cache.AppendCacheExtension("no-cache");
             Response.Expires = 0;
 
-            if (Session["User"] == null)
+            if (Session["AppUser"] == null)
             {
                 unauthenticatedNav.Visible = true;
             }

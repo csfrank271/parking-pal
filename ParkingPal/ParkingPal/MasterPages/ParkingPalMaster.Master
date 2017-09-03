@@ -24,28 +24,25 @@
     <form id="MainContent" runat="server">
     <div>
         <!-- Unauthenticated nav -->
-        <nav id="unauthenticatedNav" runat="server" visible="false">
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Parking Pal</a>
+        <nav visible="false">
+            <div runat="server" id="unauthenticatedNav" class="nav-wrapper" visible="false">
+                <a href="#!" class="brand-logo">ParkingPal</a>
                 <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="/login">Log in</a></li>
+                    <li><a href="../UL/ULLogin.aspx">Log in</a></li>
                 </ul>
                 <ul class="side-nav" id="sideNav">
                     <li><a href="../UL/ULLogin.aspx">Log in</a></li>
                 </ul>
             </div>
-        </nav>
-        <!-- Authenticated nav -->
-        <nav id="authenticatedNav" runat="server" visible="false">
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Parking Pal</a>
+            <div runat="server" id="authenticatedNav" class="nav-wrapper" visible="false">
+                <a href="#!" class="brand-logo">ParkingPal</a>
                 <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#">Log in</a></li>
+                    <li><a href="../UL/ULLogout.aspx">Log out</a></li>
                 </ul>
                 <ul class="side-nav" id="sideNav">
-                    <li><a href="#">Log in</a></li>
+                    <li><a href="../UL/ULLogout.aspx">Log out</a></li>
                 </ul>
             </div>
         </nav>
