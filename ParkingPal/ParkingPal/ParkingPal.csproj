@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="CSS\materialize.css" />
     <Content Include="CSS\materialize.min.css" />
+    <Content Include="IMG\merewether baths blocks.jpg" />
     <Content Include="JS\initialiseMaterialize.js" />
     <Content Include="JS\materialize.js" />
     <Content Include="JS\materialize.min.js" />
