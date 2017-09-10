@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ParkingPal.Models;
+using ParkingPal.BL;
+using System.Web.Services;
 
 namespace ParkingPal.UL
 {
@@ -27,6 +29,13 @@ namespace ParkingPal.UL
                 else
                 {
                     Manager manager = (Manager)Session["Manager"];
+                    List<InspectorUser> inspectorUsers = BLManagerDashboard.
+                        GetManagerInspectors(manager.ManagerID);
+                    if(inspectorUsers != null)
+                    {
+                        LVInspectorUsers.DataSource = inspectorUsers;
+                        LVInspectorUsers.DataBind();
+                    }
                 }
             }
             catch (Exception exception)
@@ -42,6 +51,16 @@ namespace ParkingPal.UL
                     Response.Redirect(strNewURL);
                 }
             }
+        }
+
+        [WebMethod]
+        protected void UpdateInspectorsList (ListViewDataItem e)
+        {
+            LVInspectorUsers.SelectedIndex = e.DataItemIndex;
+            LVInspectorUsers.DataBind();
+
+            // Update selected inspector panel:
+            //InspectorsName.InnerText =
         }
     }
 }
