@@ -33,6 +33,7 @@ namespace ParkingPal.DAL
                     // Retrieve the record if it exists:
                     if(reader.HasRows)
                     {
+                        inspectorUsers = new List<InspectorUser>();
                         while (reader.Read())
                         {
                             AppUser appUser = new AppUser
@@ -48,7 +49,7 @@ namespace ParkingPal.DAL
                             (
                                 (int)reader["InspectorID"],
                                 (int)reader["AppUserID"],
-                                (int)reader["Manager"]
+                                (int)reader["ManagerID"]
                             );
                             inspectorUsers.Add(new InspectorUser(appUser, inspector));
                         }
