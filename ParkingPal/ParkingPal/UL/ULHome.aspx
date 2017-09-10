@@ -2,6 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="image" style="padding: 50px 0px; background-position: center center; background-image: url('http://localhost:63460/IMG/merewether baths blocks.jpg'); width:100%">
+        <!--<img src="../IMG/merewether baths blocks.jpg" alt="Merewether Bath Blocks" style="width:100%; position="relative" />-->
+        <h4 style="text-align:center; vertical-align:central; text-shadow:2px 2px #000000; color:white;  background-color:rgba(0,0,0,0.7); padding:10px">
+            <span>ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!</span>
+                </h4>
+    </div>
     <br />
     <div class="center">
         <!--add link to purchase screen when created-->
@@ -11,15 +17,13 @@
             Buy a Ticket Now
            </a>
     </div>
-    <div style="text-align:center; font-size:medium; width:">
-        <br />ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!
-    </div>
     <br />
     <!-- if we want the collapisble table to be added dynamically we need to add the following javascript:
     $(document).ready(function(){
         $('.collapsible').collapsible();
     });
     -->
+
     <ul class="collapsible" data-collapsible="accordion">
         <li>
             <div class="collapsible-header active center"><i class="material-icons right">expand_more</i><h5>UON ICT Carpark</h5></div>
@@ -52,5 +56,5 @@
             </div>
         </li>
     </ul>
-    <img src="../IMG/merewether baths blocks.jpg" alt="Merewether Bath Blocks" style="width:100%; position="absolute; bottom:0" />
+
 </asp:Content>
