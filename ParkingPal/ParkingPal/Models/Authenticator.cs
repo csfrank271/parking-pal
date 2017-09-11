@@ -28,6 +28,7 @@ namespace ParkingPal.Models
             List<string> unauthenticatedURLs = new List<string>
             {
                 "/UL/ULLogin.aspx",
+                "/UL/ULPurchaseTicketDashboard.aspx",
                 "/UL/ULHome.aspx"
             };
 
