@@ -83,6 +83,13 @@
     <Content Include="Fonts\roboto\Roboto-Thin.woff" />
     <Content Include="Fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="MasterPages\ParkingPalMaster.Master" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -99,6 +106,7 @@
     <Content Include="UL\ULLogin.aspx" />
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
+    <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +182,13 @@
     <Compile Include="UL\ULManagerDashboard.aspx.designer.cs">
       <DependentUpon>ULManagerDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UL\ULPurchaseTicketDashboard.aspx.cs">
+      <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULPurchaseTicketDashboard.aspx.designer.cs">
+      <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -193,7 +208,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63460</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63460/</IISUrl>
+          <IISUrl>http://localhost:45600/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -70,6 +70,6 @@
     <script type="text/javascript">
         var now = new Date(Date.now());
         var formatted = now.getHours() + ":" + now.getMinutes();
-        document.getElementById("#labelTicketStartTime").text(formatted);
+        document.getElementById("labelTicketStartTime").text(formatted);
     </script> 
 </asp:Content>
