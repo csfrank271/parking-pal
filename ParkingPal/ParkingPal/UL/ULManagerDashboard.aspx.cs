@@ -41,6 +41,10 @@ namespace ParkingPal.UL
                         LVInspectorUsers.DataSource = null;
                         LVInspectorUsers.DataBind();
                     }
+                    // We want to set the selectorInspector list's datasource to null ONLY when
+                    // the page loads initially. Setting it to null on partial loads would
+                    // make item commands from the list view not work, since there would be
+                    // no objects in the list:
                     if(!IsPostBack)
                     {
                         LVSelectedInspector.DataSource = null;
@@ -67,21 +71,50 @@ namespace ParkingPal.UL
         [WebMethod]
         public void SelectInspector(int selectedItemIndex)
         {
-            // Update the selected item in the InspectorUsers list:
-            LVInspectorUsers.SelectedIndex = selectedItemIndex;
-            LVInspectorUsers.DataBind();
+            string strNewURL = null;
 
-            // Retrieve the selected InspectorUser from the list's datasource:
-            List<InspectorUser> inspectorUsers =
-                (List<InspectorUser>)LVInspectorUsers.DataSource;
-            List<InspectorUser> selectedInspectorUser = new List<InspectorUser>
+            // Authenticate the user:
+            AppUser appUser = (AppUser)Session["AppUser"];
+            try
             {
-                inspectorUsers.ElementAt(selectedItemIndex)
-            };
+                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
+                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
+                if (redirect != null)
+                {
+                    strNewURL = "~" + redirect;
+                }
+                else
+                {
+                    // Update the selected item in the InspectorUsers list:
+                    LVInspectorUsers.SelectedIndex = selectedItemIndex;
+                    LVInspectorUsers.DataBind();
 
-            // Update the selected Inspector panel;
-            LVSelectedInspector.DataSource = selectedInspectorUser;
-            LVSelectedInspector.DataBind();
+                    // Retrieve the selected InspectorUser from the list's datasource:
+                    List<InspectorUser> inspectorUsers =
+                        (List<InspectorUser>)LVInspectorUsers.DataSource;
+                    List<InspectorUser> selectedInspectorUser = new List<InspectorUser>
+                    {
+                        inspectorUsers.ElementAt(selectedItemIndex)
+                    };
+
+                    // Update the selected Inspector panel;
+                    LVSelectedInspector.DataSource = selectedInspectorUser;
+                    LVSelectedInspector.DataBind();
+                }
+            }
+            catch (Exception exception)
+            {
+                strNewURL = "~/UL/ULError.aspx";
+                Session["exception"] = exception;
+            }
+            finally
+            {
+                // Redirect to the next page:
+                if (strNewURL != null)
+                {
+                    Response.Redirect(strNewURL);
+                }
+            }
         }
 
         // Deletes an Inspector from the Inpsector list and updates the selected Inspector panel.
@@ -102,7 +135,6 @@ namespace ParkingPal.UL
                 }
                 else
                 {
-                    
                     // Retrieve the ID of the Inspector to be removed:
                     List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
                     int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
@@ -112,9 +144,9 @@ namespace ParkingPal.UL
 
                     // Update the Inspectors List Panel:
                     inspectorUsers.RemoveAll(x => (x.Inspector.InspectorID == inspectorID));
-                    //LVInspectorUsers.DataSource = null;
+                    LVInspectorUsers.SelectedIndex = -1;
                     LVInspectorUsers.DataBind();
-                    LVSelectedInspector.DataSource = inspectorUsers;
+                    LVSelectedInspector.DataSource = null;
                     LVSelectedInspector.DataBind();
                 }
             }

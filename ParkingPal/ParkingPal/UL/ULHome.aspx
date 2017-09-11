@@ -2,7 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="image" style="padding: 50px 0px; background-position: center center; background-image: url('http://localhost:63460/IMG/merewether baths blocks.jpg'); width:100%; background-repeat: no-repeat;">
+    <div class="image" style="padding: 50px 0px; background-position:center center;
+        background-image: url('../IMG/merewetherBathsBlocks.jpg');
+        width:100%; background-repeat: no-repeat;">
         <h4 style="text-align:center; vertical-align:central; text-shadow:2px 2px #000000; color:white;  background-color:rgba(0,0,0,0.7); padding:10px">
             <span>ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!</span>
                 </h4>
