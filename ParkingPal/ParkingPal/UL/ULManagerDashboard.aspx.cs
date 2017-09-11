@@ -31,10 +31,20 @@ namespace ParkingPal.UL
                     Manager manager = (Manager)Session["Manager"];
                     List<InspectorUser> inspectorUsers = BLManagerDashboard.
                         GetManagerInspectors(manager.ManagerID);
-                    if(inspectorUsers != null)
+                    if (inspectorUsers != null)
                     {
                         LVInspectorUsers.DataSource = inspectorUsers;
                         LVInspectorUsers.DataBind();
+                    }
+                    else
+                    {
+                        LVInspectorUsers.DataSource = null;
+                        LVInspectorUsers.DataBind();
+                    }
+                    if(!IsPostBack)
+                    {
+                        LVSelectedInspector.DataSource = null;
+                        LVSelectedInspector.DataBind();
                     }
                 }
             }
@@ -53,14 +63,74 @@ namespace ParkingPal.UL
             }
         }
 
+        // Selects an Inspector from the Inpsector list and updates the selected Inspector panel.
         [WebMethod]
-        protected void UpdateInspectorsList (ListViewDataItem e)
+        public void SelectInspector(int selectedItemIndex)
         {
-            LVInspectorUsers.SelectedIndex = e.DataItemIndex;
+            // Update the selected item in the InspectorUsers list:
+            LVInspectorUsers.SelectedIndex = selectedItemIndex;
             LVInspectorUsers.DataBind();
 
-            // Update selected inspector panel:
-            //InspectorsName.InnerText =
+            // Retrieve the selected InspectorUser from the list's datasource:
+            List<InspectorUser> inspectorUsers =
+                (List<InspectorUser>)LVInspectorUsers.DataSource;
+            List<InspectorUser> selectedInspectorUser = new List<InspectorUser>
+            {
+                inspectorUsers.ElementAt(selectedItemIndex)
+            };
+
+            // Update the selected Inspector panel;
+            LVSelectedInspector.DataSource = selectedInspectorUser;
+            LVSelectedInspector.DataBind();
+        }
+
+        // Deletes an Inspector from the Inpsector list and updates the selected Inspector panel.
+        [WebMethod]
+        public void DeleteInspector(int selectedItemIndex)
+        {
+            string strNewURL = null;
+
+            // Authenticate the user:
+            AppUser appUser = (AppUser)Session["AppUser"];
+            try
+            {
+                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
+                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
+                if (redirect != null)
+                {
+                    strNewURL = "~" + redirect;
+                }
+                else
+                {
+                    
+                    // Retrieve the ID of the Inspector to be removed:
+                    List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
+                    int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
+                    
+                    // Remove the inspector and its associated AppUser from the database:
+                    BLManagerDashboard.DeleteInspector(inspectorID);
+
+                    // Update the Inspectors List Panel:
+                    inspectorUsers.RemoveAll(x => (x.Inspector.InspectorID == inspectorID));
+                    //LVInspectorUsers.DataSource = null;
+                    LVInspectorUsers.DataBind();
+                    LVSelectedInspector.DataSource = inspectorUsers;
+                    LVSelectedInspector.DataBind();
+                }
+            }
+            catch (Exception exception)
+            {
+                strNewURL = "~/UL/ULError.aspx";
+                Session["exception"] = exception;
+            }
+            finally
+            {
+                // Redirect to the next page:
+                if (strNewURL != null)
+                {
+                    Response.Redirect(strNewURL);
+                }
+            }
         }
     }
 }

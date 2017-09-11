@@ -20,5 +20,17 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static void DeleteInspector(int inspectorID)
+        {
+            try
+            {
+                DALManagerDashboard.DeleteInspector(inspectorID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

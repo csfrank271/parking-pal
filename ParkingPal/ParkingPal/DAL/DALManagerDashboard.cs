@@ -13,7 +13,7 @@ namespace ParkingPal.DAL
         // Retrieves an appUser by searching for one with a matching userName and userPassword.
         public static List<InspectorUser> GetManagerInspectors(int managerID)
         {
-            // Initialise appUser:
+            // Initialise inspectorUsers:
             List<InspectorUser> inspectorUsers = null;
 
             try
@@ -23,7 +23,7 @@ namespace ParkingPal.DAL
                     // Set the SQL command and its parameters
                     SqlCommand sqlComm = new SqlCommand("dbo.sp_get_inspectors_for_manager", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
-                    sqlComm.Parameters.Add("@manager_id", SqlDbType.Int, 50).Value = managerID;
+                    sqlComm.Parameters.Add("@manager_id", SqlDbType.Int).Value = managerID;
 
                     // Open the SQL connection and run the command:
                     sqlConn.Open();
@@ -65,6 +65,29 @@ namespace ParkingPal.DAL
             }
 
             return inspectorUsers;
+        }
+
+        // Deletes an Inspector and its associated AppUser entry:
+        public static void DeleteInspector(int inspectorID)
+        {
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_delete_inspector", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@inspector_id", SqlDbType.Int).Value = inspectorID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }
     }
 }

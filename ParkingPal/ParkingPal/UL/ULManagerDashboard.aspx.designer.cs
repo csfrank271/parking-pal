@@ -31,13 +31,13 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.ScriptManager smUpdatePanelScripts;
         
         /// <summary>
-        /// UP_InspectorUsers control.
+        /// UP_Inspectors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UP_InspectorUsers;
+        protected global::System.Web.UI.UpdatePanel UP_Inspectors;
         
         /// <summary>
         /// LVInspectorUsers control.
@@ -49,30 +49,12 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.ListView LVInspectorUsers;
         
         /// <summary>
-        /// UpdatePanel1 control.
+        /// LVSelectedInspector control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
-        /// <summary>
-        /// InspectorsFullName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorsFullName;
-        
-        /// <summary>
-        /// InspectorsUserName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorsUserName;
+        protected global::System.Web.UI.WebControls.ListView LVSelectedInspector;
     }
 }
