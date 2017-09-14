@@ -49,6 +49,33 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.ListView LVInspectorUsers;
         
         /// <summary>
+        /// LB_AddInspector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LB_AddInspector;
+        
+        /// <summary>
+        /// InspectorManagmentPanel_Default control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorManagmentPanel_Default;
+        
+        /// <summary>
+        /// InspectorManagmentPanel_Selected control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorManagmentPanel_Selected;
+        
+        /// <summary>
         /// LVSelectedInspector control.
         /// </summary>
         /// <remarks>
