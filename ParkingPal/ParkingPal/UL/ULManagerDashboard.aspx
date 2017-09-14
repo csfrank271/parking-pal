@@ -1,40 +1,60 @@
 ﻿<%@ Page Title="ManagerDash" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true"
     CodeBehind="ULManagerDashboard.aspx.cs" Inherits="ParkingPal.UL.ULManagerDashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        function show_inspector_delete_modal() {
+            $('#modal_delete_inspector').modal('open');
+        };
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script runat="server" EnablePartialRendering="true" ID="ScriptManager1">
-
-    protected void LV_ItemSelected(object sender, EventArgs e)
+    protected void LVInspectorUsers_ItemSelected(object sender, EventArgs e)
     {
     }
-    protected void LV_SelectedIndexChanging(object sender, EventArgs e)
+    protected void LVInspectorUsers_SelectedIndexChanging(object sender, EventArgs e)
     {
         //ListView lv = (ListView)sender;
         //lv.SelectedIndex = e.NewSelectedIndex;
-
     }
     protected void LV_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
-        var lbIU = e.Item.FindControl("LB_InspectorUser") as LinkButton;
-        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbIU);
+        var lbSelectInspector = e.Item.FindControl("LB_SelectInspector") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbSelectInspector);
+        var lbDeleteInspector = e.Item.FindControl("LB_DeleteInspector") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteInspector);
+        var lbDeleteInspectorPromptYes = e.Item.FindControl("LB_DeleteInspectorPromptYes") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteInspector);
+        var lbDeleteInspectorPromptNo = e.Item.FindControl("LB_DeleteInspectorPromptNo") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteInspector);
     }
-    protected void LV_OnItemCommand(object sender, ListViewCommandEventArgs e)
+    protected void LVInspectorUsers_OnItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        int selectedIndex = LVInspectorUsers.SelectedIndex;
+        switch(e.CommandName)
+        {
+            case "SelectInspector":
+                SelectInspector(e.Item.DataItemIndex);
+                break;
+        }
+    }
+    protected void LVSelectedInspector_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
         switch(e.CommandName)
         {
-            case "SelectItem":
-                SelectInspector(e.Item.DataItemIndex);
-                break;
-            case "DeleteItem":
+            case "DeleteInspector":
                 DeleteInspector(LVInspectorUsers.SelectedIndex);
                 break;
+            case "ShowDeleteInspectorPrompt":
+                LVSelectedInspector.Items[0].FindControl("LB_DeleteInspector").Visible = false;
+                LVSelectedInspector.Items[0].FindControl("InspectorDeletionPrompt").Visible = true;
+                break;
+            case "CancelInspectorDeletion":
+                LVSelectedInspector.Items[0].FindControl("LB_DeleteInspector").Visible = true;
+                LVSelectedInspector.Items[0].FindControl("InspectorDeletionPrompt").Visible = false;
+                break;
         }
-
-        // Refresh the update panels:
-        //UP_Inspectors.Update();
     }
-
 </script>
 <asp:ScriptManager ID="smUpdatePanelScripts" runat="server" />
 <div class="container">
@@ -93,22 +113,22 @@
                                     <input type="text" placeholder="&#xF002; Search inspectors"
                                         style="font-family: Arial, FontAwesome"/>
                                 </div>
-                                <asp:ListView runat="server" ID="LVInspectorUsers" OnItemCommand="LV_OnItemCommand"
-                                    OnSelectedIndexChanging="LV_SelectedIndexChanging">
+                                <asp:ListView runat="server" ID="LVInspectorUsers" OnItemCommand="LVInspectorUsers_OnItemCommand"
+                                    OnSelectedIndexChanging="LVInspectorUsers_SelectedIndexChanging">
                                     <LayoutTemplate>
                                         <ul class="collection">
                                             <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
                                         </ul>
                                     </LayoutTemplate>
                                     <ItemTemplate>
-                                        <asp:LinkButton runat="server" ID="LB_InspectorUser" class="collection-item"
-                                            CommandName="SelectItem" ClientIDMode="AutoID" >
+                                        <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item"
+                                            CommandName="SelectInspector" ClientIDMode="AutoID" >
                                             <span><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
                                         </asp:LinkButton>
                                     </ItemTemplate>
                                     <SelectedItemTemplate>
-                                        <asp:LinkButton runat="server" ID="LB_InspectorUser" class="collection-item active"
-                                            CommandName="SelectItem" ClientIDMode="AutoID" >
+                                        <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item active"
+                                            CommandName="SelectInspector" ClientIDMode="AutoID" >
                                             <span><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>
@@ -121,8 +141,8 @@
                             <div class="col s12 l8">
                                 <h3>Inspector Details</h3>
                                 <!-- Inspector Details card -->
-                                <asp:ListView runat="server" ID="LVSelectedInspector" OnItemCommand="LV_OnItemCommand"
-                                    OnSelectedIndexChanging="LV_SelectedIndexChanging">
+                                <asp:ListView runat="server" ID="LVSelectedInspector" OnItemCommand="LVSelectedInspector_OnItemCommand"
+                                    OnSelectedIndexChanging="LVInspectorUsers_SelectedIndexChanging">
                                     <LayoutTemplate>
                                         <ul class="collection">
                                             <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
@@ -136,11 +156,24 @@
                                             <p><b>User name: </b><%#Eval("AppUser.UserName")%></p>
                                         </div>
                                         <div class="col m6 s12">
-                                            <asp:LinkButton runat="server" ID="LB_InspectorUser"
-                                                class="btn" CommandName="DeleteItem"
+                                            <asp:LinkButton runat="server" ID="LB_DeleteInspector"
+                                                class="btn" CommandName="ShowDeleteInspectorPrompt"
                                                 ClientIDMode="AutoID" >
-                                                <span>Delete</span>
+                                                <span>DeleteOld</span>
                                             </asp:LinkButton>
+                                            <div runat="server" id="InspectorDeletionPrompt" visible="false">
+                                                <p>Are you sure?</p>
+                                                <asp:LinkButton runat="server" ID="LB_DeleteInspectorPromptYes"
+                                                    class="btn" CommandName="DeleteInspector"
+                                                    ClientIDMode="AutoID" >
+                                                    <span>Yes</span>
+                                                </asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="LB_DeleteInspectorPromptNo"
+                                                    class="btn" CommandName="CancelInspectorDeletion"
+                                                    ClientIDMode="AutoID" >
+                                                    <span>No</span>
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                     </ItemTemplate>
                                     <EmptyDataTemplate>
