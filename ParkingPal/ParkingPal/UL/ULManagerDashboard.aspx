@@ -157,12 +157,22 @@
                                         </LayoutTemplate>
                                         <ItemTemplate> <!-- This template defines the layout for the selected Inspector details and options -->
                                             <div class="col s12">
-                                                <p><b>Full name: </b><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></p>
+                                                <p><b>Full name: </b></p>
+                                                <asp:TextBox runat="server" Text='<%# String.Format("{0} {1}", Eval("AppUser.FirstName"),
+                                                    Eval("AppUser.LastName"))%>'></asp:TextBox>
                                             </div>
                                             <div class="col s12">
-                                                <p><b>User name: </b><%#Eval("AppUser.UserName")%></p>
+                                                <p><b>User name: </b></p>
+                                                <asp:TextBox runat="server" Text='<%# String.Format("{0}", Eval("AppUser.UserName"))%>'></asp:TextBox>
                                             </div>
-                                            <div class="col s12"> <!-- The Inspector delete button -->
+                                            <div class="col s6"> <!-- The Edit delete button -->
+                                                <asp:LinkButton runat="server" ID="LB_EditInspector"
+                                                    class="btn" CommandName="UpdateInspectorDetails"
+                                                    ClientIDMode="AutoID" >
+                                                    <span>Edit Inspector</span>
+                                                </asp:LinkButton>
+                                            </div>
+                                            <div class="col s6"> <!-- The Inspector delete button -->
                                                 <asp:LinkButton runat="server" ID="LB_DeleteInspector"
                                                     class="btn" CommandName="ShowDeleteInspectorPrompt"
                                                     ClientIDMode="AutoID" >
