@@ -4,7 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <script runat="server" EnablePartialRendering="true" ID="ScriptManager1">
-    
     // Registers controls for asynchronus postback, which allows these controls to perform partial page updates.
     protected void LV_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
@@ -16,8 +15,10 @@
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteInspector);
         var lbDeleteInspectorPromptNo = e.Item.FindControl("LB_DeleteInspectorPromptNo") as LinkButton;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteInspector);
+        var lbEditInspector = e.Item.FindControl("LB_EditInspector") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbEditInspector);
     }
-    
+
     // The list of commands and actions for link buttons in the 'LVInspectorUsers' list.
     protected void LVInspectorUsers_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
@@ -49,6 +50,33 @@
             case "CancelInspectorDeletion":
                 LVSelectedInspector.Items[0].FindControl("LB_DeleteInspector").Visible = true;
                 LVSelectedInspector.Items[0].FindControl("InspectorDeletionPrompt").Visible = false;
+                break;
+            case "UpdateInspectorDetails":
+                Regex rgxHumanName = new Regex(@"^[A-z]{1,}$");
+                bool verificationPassed = true;
+                // Verify first name:
+                TextBox tbxInspectorFirstName = (TextBox)LVSelectedInspector.Items[0].FindControl("Tbx_InspectorFirstName");
+                if (!rgxHumanName.IsMatch(tbxInspectorFirstName.Text))
+                {
+                    verificationPassed = false;
+                    CustomValidator cvInspectorFirstName = (CustomValidator)LVSelectedInspector.Items[0].
+                        FindControl("CV_InspectorFirstName");
+                    cvInspectorFirstName.IsValid = false;
+                }
+                // Verify last name:
+                TextBox tbxInspectorLastName = (TextBox)LVSelectedInspector.Items[0].FindControl("Tbx_InspectorLastName");
+                if (!rgxHumanName.IsMatch(tbxInspectorLastName.Text))
+                {
+                    verificationPassed = false;
+                    CustomValidator cvInspectorLastName = (CustomValidator)LVSelectedInspector.Items[0].
+                        FindControl("CV_InspectorLastName");
+                    cvInspectorLastName.IsValid = false;
+                }
+                // Update Inspector:
+                if(verificationPassed)
+                {
+                    // RUN UPDATE INSPECTOR DB FUNCTION.
+                }
                 break;
         }
     }
@@ -156,40 +184,47 @@
                                             <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
                                         </LayoutTemplate>
                                         <ItemTemplate> <!-- This template defines the layout for the selected Inspector details and options -->
-                                            <div class="col s12">
-                                                <p><b>Full name: </b></p>
-                                                <asp:TextBox runat="server" Text='<%# String.Format("{0} {1}", Eval("AppUser.FirstName"),
-                                                    Eval("AppUser.LastName"))%>'></asp:TextBox>
-                                            </div>
-                                            <div class="col s12">
+                                            <div class="col m6 s12">
                                                 <p><b>User name: </b></p>
-                                                <asp:TextBox runat="server" Text='<%# String.Format("{0}", Eval("AppUser.UserName"))%>'></asp:TextBox>
+                                                <span><%# String.Format("{0}", Eval("AppUser.UserName"))%></span>
                                             </div>
-                                            <div class="col s6"> <!-- The Edit delete button -->
+                                            <div class="col m6 s12">
+                                                <p><b>First name: </b></p>
+                                                <asp:TextBox ID="Tbx_InspectorFirstName" runat="server" Text='<%# String.Format("{0}", Eval("AppUser.FirstName"))%>'></asp:TextBox>
+                                                <asp:CustomValidator ID="CV_InspectorFirstName" runat="server" ControlToValidate="Tbx_InspectorFirstName"
+                                                    ErrorMessage="First name must not be blank and can only contain letters."></asp:CustomValidator>
+                                            </div>
+                                            <div class="col m6 s12">
+                                                <p><b>Last name: </b></p>
+                                                <asp:TextBox ID="Tbx_InspectorLastName" runat="server" Text='<%# String.Format("{0}", Eval("AppUser.LastName"))%>'></asp:TextBox>
+                                                <asp:CustomValidator ID="CV_InspectorLastName" runat="server" ControlToValidate="Tbx_InspectorLastName"
+                                                    ErrorMessage="Last name must not be blank and can only contain letters."></asp:CustomValidator>
+                                            </div>
+                                            <div class="col s12"> <!-- The edit Inspector button -->
                                                 <asp:LinkButton runat="server" ID="LB_EditInspector"
                                                     class="btn" CommandName="UpdateInspectorDetails"
                                                     ClientIDMode="AutoID" >
-                                                    <span>Edit Inspector</span>
+                                                    <span>Update</span>
                                                 </asp:LinkButton>
                                             </div>
-                                            <div class="col s6"> <!-- The Inspector delete button -->
+                                            <div class="col s12"> <!-- The Inspector delete button -->
                                                 <asp:LinkButton runat="server" ID="LB_DeleteInspector"
                                                     class="btn" CommandName="ShowDeleteInspectorPrompt"
                                                     ClientIDMode="AutoID" >
-                                                    <span>Delete Inspector</span>
+                                                    <span>Delete</span>
                                                 </asp:LinkButton>
                                             </div>
-                                            <div runat="server" id="InspectorDeletionPrompt" visible="false"> <!-- Inspector deletion confirmation prompt -->
+                                            <div class="col s12" runat="server" id="InspectorDeletionPrompt" visible="false"> <!-- Inspector deletion confirmation prompt -->
                                                 <div class="col s12">
                                                     <p>Are you sure?</p>
                                                 </div>
-                                                <div class="col s12">
+                                                <div class="col s6">
                                                     <asp:LinkButton runat="server" ID="LB_DeleteInspectorPromptYes" class="btn"
                                                         CommandName="DeleteInspector" ClientIDMode="AutoID" >
                                                         <span>Yes</span>
                                                     </asp:LinkButton>
                                                 </div>
-                                                <div class="col s12">
+                                                <div class="col s6">
                                                     <asp:LinkButton runat="server" ID="LB_DeleteInspectorPromptNo" class="btn"
                                                         CommandName="CancelInspectorDeletion" ClientIDMode="AutoID" >
                                                         <span>No</span>
