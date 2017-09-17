@@ -13,15 +13,6 @@ namespace ParkingPal.UL {
     public partial class ULManagerDashboard {
         
         /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptManager1;
-        
-        /// <summary>
         /// smUpdatePanelScripts control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager smUpdatePanelScripts;
+        
+        /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptManager1;
         
         /// <summary>
         /// UP_Inspectors control.
@@ -76,12 +76,93 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorManagmentPanel_Selected;
         
         /// <summary>
-        /// LVSelectedInspector control.
+        /// Tbx_InspectorUserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView LVSelectedInspector;
+        protected global::System.Web.UI.WebControls.TextBox Tbx_InspectorUserName;
+        
+        /// <summary>
+        /// Tbx_InspectorFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_InspectorFirstName;
+        
+        /// <summary>
+        /// CV_InspectorFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InspectorFirstName;
+        
+        /// <summary>
+        /// Tbx_InspectorLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_InspectorLastName;
+        
+        /// <summary>
+        /// CV_InspectorLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InspectorLastName;
+        
+        /// <summary>
+        /// BTN_EditInspector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_EditInspector;
+        
+        /// <summary>
+        /// BTN_DeleteInspector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_DeleteInspector;
+        
+        /// <summary>
+        /// InspectorDeletionPrompt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorDeletionPrompt;
+        
+        /// <summary>
+        /// BTN_DeleteInspectorYes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_DeleteInspectorYes;
+        
+        /// <summary>
+        /// BTN_DeleteInspectorNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_DeleteInspectorNo;
     }
 }

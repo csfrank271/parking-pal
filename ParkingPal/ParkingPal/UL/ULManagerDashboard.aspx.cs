@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ParkingPal.Models;
 using ParkingPal.BL;
 using System.Web.Services;
+using System.Text.RegularExpressions;
 
 namespace ParkingPal.UL
 {
@@ -31,25 +32,8 @@ namespace ParkingPal.UL
                     Manager manager = (Manager)Session["Manager"];
                     List<InspectorUser> inspectorUsers = BLManagerDashboard.
                         GetManagerInspectors(manager.ManagerID);
-                    if (inspectorUsers != null)
-                    {
-                        LVInspectorUsers.DataSource = inspectorUsers;
-                        LVInspectorUsers.DataBind();
-                    }
-                    else
-                    {
-                        LVInspectorUsers.DataSource = null;
-                        LVInspectorUsers.DataBind();
-                    }
-                    // We want to set the selectorInspector list's datasource to null ONLY when
-                    // the page loads initially. Setting it to null on partial loads would
-                    // make item commands from the list view not work, since there would be
-                    // no objects in the list:
-                    if(!IsPostBack)
-                    {
-                        LVSelectedInspector.DataSource = null;
-                        LVSelectedInspector.DataBind();
-                    }
+                    LVInspectorUsers.DataSource = inspectorUsers;
+                    LVInspectorUsers.DataBind();
                 }
             }
             catch (Exception exception)
@@ -67,102 +51,89 @@ namespace ParkingPal.UL
             }
         }
 
-        // Selects an Inspector from the Inpsector list and updates the selected Inspector panel.
-        [WebMethod]
-        public void SelectInspector(int selectedItemIndex)
+        // Switches the visible panel in the right-side section of the Inspector page.
+        public void ChangeInspectorPanel(char panelType)
         {
-            string strNewURL = null;
+            InspectorManagmentPanel_Default.Visible = false;
+            InspectorManagmentPanel_Selected.Visible = false;
 
-            // Authenticate the user:
-            AppUser appUser = (AppUser)Session["AppUser"];
-            try
+            switch (panelType)
             {
-                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
-                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
-                if (redirect != null)
-                {
-                    strNewURL = "~" + redirect;
-                }
-                else
-                {
-                    // Update the selected item in the InspectorUsers list:
-                    LVInspectorUsers.SelectedIndex = selectedItemIndex;
-                    LVInspectorUsers.DataBind();
-
-                    // Retrieve the selected InspectorUser from the list's datasource:
-                    List<InspectorUser> inspectorUsers =
-                        (List<InspectorUser>)LVInspectorUsers.DataSource;
-                    List<InspectorUser> selectedInspectorUser = new List<InspectorUser>
-                    {
-                        inspectorUsers.ElementAt(selectedItemIndex)
-                    };
-
-                    // Update the selected Inspector panel;
-                    LVSelectedInspector.DataSource = selectedInspectorUser;
-                    LVSelectedInspector.DataBind();
-                }
-            }
-            catch (Exception exception)
-            {
-                strNewURL = "~/UL/ULError.aspx";
-                Session["exception"] = exception;
-            }
-            finally
-            {
-                // Redirect to the next page:
-                if (strNewURL != null)
-                {
-                    Response.Redirect(strNewURL);
-                }
+                case 'D':
+                    InspectorManagmentPanel_Default.Visible = true;
+                    break;
+                case 'S':
+                    InspectorManagmentPanel_Selected.Visible = true;
+                    InspectorDeletionPrompt.Visible = false;
+                    BTN_DeleteInspector.Visible = true;
+                    break;
             }
         }
 
-        // Deletes an Inspector from the Inpsector list and updates the selected Inspector panel.
-        [WebMethod]
-        public void DeleteInspector(int selectedItemIndex)
+        // Attempt to update an Inspector.
+        public void EditInspector(object sender, EventArgs e)
         {
-            string strNewURL = null;
+            // Retrieve the ID of the Inspector to be removed:
+            List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
+            int selectedItemIndex = LVInspectorUsers.SelectedIndex;
+            int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
 
-            // Authenticate the user:
-            AppUser appUser = (AppUser)Session["AppUser"];
-            try
-            {
-                string pageURL = HttpContext.Current.Request.Url.AbsolutePath;
-                string redirect = Authenticator.AuthenticateUser(appUser, pageURL);
-                if (redirect != null)
-                {
-                    strNewURL = "~" + redirect;
-                }
-                else
-                {
-                    // Retrieve the ID of the Inspector to be removed:
-                    List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
-                    int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
-                    
-                    // Remove the inspector and its associated AppUser from the database:
-                    BLManagerDashboard.DeleteInspector(inspectorID);
+            // Retrieve the user's input and set the Regex and verification checks:
+            string firstName = Tbx_InspectorFirstName.Text,
+                lastName = Tbx_InspectorLastName.Text;
+            Regex rgxHumanName = new Regex(@"^[A-z]{1,}$");
+            bool verificationPassed = true;
 
-                    // Update the Inspectors List Panel:
-                    inspectorUsers.RemoveAll(x => (x.Inspector.InspectorID == inspectorID));
-                    LVInspectorUsers.SelectedIndex = -1;
-                    LVInspectorUsers.DataBind();
-                    LVSelectedInspector.DataSource = null;
-                    LVSelectedInspector.DataBind();
-                }
-            }
-            catch (Exception exception)
+            // Verify first name:
+            if (!rgxHumanName.IsMatch(firstName))
             {
-                strNewURL = "~/UL/ULError.aspx";
-                Session["exception"] = exception;
+                verificationPassed = false;
+                CV_InspectorFirstName.IsValid = false;
             }
-            finally
+            // Verify last name:
+            if (!rgxHumanName.IsMatch(lastName))
             {
-                // Redirect to the next page:
-                if (strNewURL != null)
-                {
-                    Response.Redirect(strNewURL);
-                }
+                verificationPassed = false;
+                CV_InspectorLastName.IsValid = false;
             }
+            // Update Inspector:
+            if (verificationPassed)
+            {
+                BLManagerDashboard.UpdateInspector(inspectorID, firstName, lastName);
+            }
+        }
+
+        // Delete an Inspector.
+        public void DeleteInspector(object sender, EventArgs e)
+        {
+            ChangeInspectorPanel('D');
+            int selectedItemIndex = LVInspectorUsers.SelectedIndex;
+
+            // Retrieve the ID of the Inspector to be removed:
+            List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
+            int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
+
+            // Remove the inspector and its associated AppUser from the database:
+            BLManagerDashboard.DeleteInspector(inspectorID);
+
+            // Update the Inspectors List Panel:
+            inspectorUsers.RemoveAll(x => (x.Inspector.InspectorID == inspectorID));
+            LVInspectorUsers.SelectedIndex = -1;
+            LVInspectorUsers.DataBind();
+        }
+
+        // Display the Inspector deletion prompt.
+        public void PromptInspectorDeletion(object sender, EventArgs e)
+        {
+            InspectorDeletionPrompt.Visible = true;
+            BTN_DeleteInspector.Visible = false;
+        }
+
+        // Remove the Inspector deletion prompt.
+        public void CancelInspectorDeletion(object sender, EventArgs e)
+        {
+            InspectorDeletionPrompt.Visible = false;
+            BTN_DeleteInspector.Visible = true;
         }
     }
 }

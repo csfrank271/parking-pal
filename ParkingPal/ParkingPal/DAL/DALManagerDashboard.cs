@@ -89,5 +89,30 @@ namespace ParkingPal.DAL
                 throw exception;
             }
         }
+
+        // Updates an Inspector and its associated AppUser entry:
+        public static void UpdateInspector(int inspectorID, string firstName, string lastName)
+        {
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_update_inspector", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@inspector_id", SqlDbType.Int).Value = inspectorID;
+                    sqlComm.Parameters.Add("@first_name", SqlDbType.VarChar, 50).Value = firstName;
+                    sqlComm.Parameters.Add("@last_name", SqlDbType.VarChar, 50).Value = lastName;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }
