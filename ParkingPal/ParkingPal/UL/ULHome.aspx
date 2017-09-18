@@ -12,7 +12,7 @@
     <br />
     <div class="center">
         <!--add link to purchase screen when created-->
-           <a class="waves-effect waves-light blue darken-3 btn-large center">
+           <a href="../UL/ULPurchaseTicketDashboard.aspx" class="waves-effect waves-light blue darken-3 btn-large center">
                <i class="material-icons left">
                    schedule</i>
             Buy a Ticket Now
