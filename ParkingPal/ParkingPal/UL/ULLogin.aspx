@@ -43,6 +43,11 @@
                     cssclass="btn blue darken-3"
                     OnClick="BtnLogin_Click" Text="Submit" />
             </div>
+            <div>
+               <a href="../UL/ULRegister.aspx">
+                Click here to create an account
+           </a>
+            </div>
         </div>
         <div class="row">
             <div class="col s12">
