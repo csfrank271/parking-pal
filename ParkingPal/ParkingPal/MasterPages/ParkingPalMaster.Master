@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="~/CSS/materialize.min.css"  media="screen,projection"/>
+    <!--Import Chantelle's CSS -->
+    <link type="text/css" rel="stylesheet" href="~/CSS/CGStyle.css"  media="screen,projection"/>
     <!--Import Font Awesome icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
