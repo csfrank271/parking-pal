@@ -43,5 +43,17 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+        public static InspectorUser AddInspector(int managerID, string userName, string password,
+            string firstName, string lastName)
+        {
+            try
+            {
+                return DALManagerDashboard.AddInspector(managerID, userName, password, firstName, lastName);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

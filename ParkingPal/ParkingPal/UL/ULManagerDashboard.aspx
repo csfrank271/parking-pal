@@ -18,12 +18,16 @@
         smUpdatePanelScripts.RegisterAsyncPostBackControl(btnDeleteInspectorYes);
         var btnDeleteInspectorNo = e.Item.FindControl("BTN_DeleteInspectorNo") as Button;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(btnDeleteInspectorNo);
+        var btnShowAddInspectorPanel = e.Item.FindControl("BTN_ShowAddInspectorPanel") as Button;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnShowAddInspectorPanel);
+        var btnAddInspector = e.Item.FindControl("BTN_AddInspector") as Button;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnAddInspector);
     }
 
     // The list of commands and actions for link buttons in the 'LVInspectorUsers' list.
     protected void LVInspectorUsers_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
-        int selectedIndex = e.Item.DataItemIndex;
+        int selectedIndex = e.Item.DisplayIndex;
         switch(e.CommandName)
         {
             case "SelectInspector":
@@ -34,8 +38,17 @@
                 Tbx_InspectorLastName.Text = commandArgs[2];
                 LVInspectorUsers.SelectedIndex = selectedIndex;
                 LVInspectorUsers.DataBind();
+                InspectorManagementTitle.InnerText = "Inspector Management - " + commandArgs[0];
                 break;
         }
+    }
+
+    protected void LVInspectorUsers_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+    {
+        DP_InspectorUsers.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        LVInspectorUsers.SelectedIndex = -1;
+        ChangeInspectorPanel('D');
+        LVInspectorUsers.DataBind();
     }
 </script>
 <div class="container">
@@ -67,7 +80,9 @@
                                 <div class="col s12">
                                     <h5>Inspector List</h5>
                                 </div>
-                                <asp:ListView runat="server" ID="LVInspectorUsers" OnItemCommand="LVInspectorUsers_OnItemCommand">
+                                <asp:ListView runat="server" ID="LVInspectorUsers" 
+                                    OnItemCommand="LVInspectorUsers_OnItemCommand"
+                                    OnPagePropertiesChanging="LVInspectorUsers_PagePropertiesChanging">
                                     <LayoutTemplate> <!-- This layout is shown when the Inspector list is not empty -->
                                         <div class="col s12"> <!-- The Inspector search bar -->
                                             <div class="input-field">  
@@ -107,6 +122,13 @@
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>
                                 </asp:ListView>
+                                <div class="col s12 center-align">
+                                    <asp:DataPager ID="DP_InspectorUsers" PageSize="1" PagedControlID="LVInspectorUsers" runat="server">
+                                        <Fields>
+                                            <asp:NumericPagerField ButtonType="Link"/>
+                                        </Fields>
+                                    </asp:DataPager>
+                                </div>
                             </div>
                             <div class="divider"></div>
                             <div class="row"> <!-- The Additional actions section for the Inspector list -->
@@ -114,17 +136,16 @@
                                     <h5>Additional actions</h5>
                                 </div>
                                 <div class="col s12">
-                                    <asp:LinkButton runat="server" ID="LB_AddInspector" class="btn"
-                                        CommandName="AddInspector" ClientIDMode="AutoID" >
-                                        <span>Add Inspector</span>  <i class="fa fa-plus-square"></i>
-                                    </asp:LinkButton>
+                                    <asp:Button runat="server" Cssclass="btn" Text="Add Inspector" ID="BTN_ShowAddInspectorPanel"
+                                        OnClick="ShowAddInspectorPrompt" ClientIDMode="AutoID">
+                                    </asp:Button> <!-- The add Inspector button -->
                                 </div>
                             </div>
                         </div>
                         <div class="col s12 l8"> <!-- Right-side content (bottom on small screens) -->
                             <div class="row">
                                 <div class="col s12">
-                                    <h5>Inspector Management</h5>
+                                    <h5 runat="server" id="InspectorManagementTitle">Inspector Management Section</h5>
                                 </div>
                                 <div runat="server" id ="InspectorManagmentPanel_Default"> <!-- The default screen for the Inspector Management Panel -->
                                     <div class="col s12">
@@ -133,8 +154,6 @@
                                             This space is an area for managing Inspectors. It will display details
                                             of an Inspector when selected from the Inspector list, and provide the
                                             options to edit or delete the Inspector.
-                                            This space will also provide the form for creating a new Inspector by
-                                            selecting the 'Add Inspector' button in the 'Additional actions' section.
                                         </span>
                                     </div>
                                 </div>
@@ -175,6 +194,39 @@
                                             <asp:Button runat="server" ID="BTN_DeleteInspectorNo" Text="No" class="btn"
                                                 ClientIDMode="AutoID" OnClick="CancelInspectorDeletion"></asp:Button>
                                         </div>
+                                    </div>
+                                </div>
+                                <div runat="server" id ="InspectorManagmentPanel_AddInspector" visible="false"> <!-- The 'Add Inspector' screen for the Inspector Management Panel -->
+                                    <div class="col m6 s12">
+                                        <p><b>User name: </b></p>
+                                        <asp:TextBox ID="Tbx_AddInspectorUserName" runat="server"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_AddInspectorUserName" runat="server" ControlToValidate="Tbx_AddInspectorUserName"
+                                            ErrorMessage="User name contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>First name: </b></p>
+                                        <asp:TextBox ID="Tbx_AddInspectorPassword" runat="server"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_AddInspectorPassword" runat="server" ControlToValidate="Tbx_AddInspectorPassword"
+                                            ErrorMessage="Password contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>First name: </b></p>
+                                        <asp:TextBox ID="Tbx_AddInspectorFirstName" runat="server"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_AddInspectorFirstName" runat="server" ControlToValidate="Tbx_AddInspectorFirstName"
+                                            ErrorMessage="First name contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Last name: </b></p>
+                                        <asp:TextBox ID="Tbx_AddInspectorLastName" runat="server"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_AddInspectorLastName" runat="server" ControlToValidate="Tbx_AddInspectorLastName"
+                                            ErrorMessage="Last name contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col s12">
+                                        <asp:Button runat="server" Cssclass="btn" Text="Add" ID="BTN_AddInspector"
+                                            OnClick="AddInspector" ClientIDMode="AutoID">
+                                        </asp:Button>
+                                        <asp:CustomValidator ID="CV_AddInspectorExists" runat="server"
+                                            ErrorMessage="User name is in use, please try another."></asp:CustomValidator>
                                     </div>
                                 </div>
                             </div>

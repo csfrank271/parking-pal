@@ -114,5 +114,63 @@ namespace ParkingPal.DAL
                 throw exception;
             }
         }
+
+        // Attempts to add an Inspector into the DB. Returns null if Inspector already exists.
+        public static InspectorUser AddInspector(int managerID, string userName, string password,
+            string firstName, string lastName)
+        {
+            // Initialise appUser:
+            InspectorUser inspectorUser = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_create_inspector", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@manager_id", SqlDbType.Int).Value = managerID;
+                    sqlComm.Parameters.Add("@user_name", SqlDbType.VarChar, 50).Value = userName;
+                    sqlComm.Parameters.Add("@password", SqlDbType.VarChar, 50).Value = password;
+                    sqlComm.Parameters.Add("@first_name", SqlDbType.VarChar, 50).Value = firstName;
+                    sqlComm.Parameters.Add("@last_name", SqlDbType.VarChar, 50).Value = lastName;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+                    reader.Read();
+
+                    // Retrieve the record if it exists:
+                    if (reader.HasRows)
+                    {
+                        AppUser appUser = new AppUser
+                        (
+                            (int)reader["AppUserID"],
+                            reader["UserName"].ToString(),
+                            reader["UserPassword"].ToString(),
+                            reader["FirstName"].ToString(),
+                            reader["LastName"].ToString(),
+                            'I'
+                        );
+                        Inspector inspector = new Inspector
+                        (
+                            (int)reader["InspectorID"],
+                            (int)reader["AppUserID"],
+                            (int)reader["ManagerID"]
+                        );
+                        inspectorUser = new InspectorUser(appUser, inspector);
+                    }
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return inspectorUser;
+        }
     }
 }

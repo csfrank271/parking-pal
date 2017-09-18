@@ -49,13 +49,31 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.ListView LVInspectorUsers;
         
         /// <summary>
-        /// LB_AddInspector control.
+        /// DP_InspectorUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LB_AddInspector;
+        protected global::System.Web.UI.WebControls.DataPager DP_InspectorUsers;
+        
+        /// <summary>
+        /// BTN_ShowAddInspectorPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_ShowAddInspectorPanel;
+        
+        /// <summary>
+        /// InspectorManagementTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorManagementTitle;
         
         /// <summary>
         /// InspectorManagmentPanel_Default control.
@@ -164,5 +182,104 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BTN_DeleteInspectorNo;
+        
+        /// <summary>
+        /// InspectorManagmentPanel_AddInspector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InspectorManagmentPanel_AddInspector;
+        
+        /// <summary>
+        /// Tbx_AddInspectorUserName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_AddInspectorUserName;
+        
+        /// <summary>
+        /// CV_AddInspectorUserName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddInspectorUserName;
+        
+        /// <summary>
+        /// Tbx_AddInspectorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_AddInspectorPassword;
+        
+        /// <summary>
+        /// CV_AddInspectorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddInspectorPassword;
+        
+        /// <summary>
+        /// Tbx_AddInspectorFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_AddInspectorFirstName;
+        
+        /// <summary>
+        /// CV_AddInspectorFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddInspectorFirstName;
+        
+        /// <summary>
+        /// Tbx_AddInspectorLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_AddInspectorLastName;
+        
+        /// <summary>
+        /// CV_AddInspectorLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddInspectorLastName;
+        
+        /// <summary>
+        /// BTN_AddInspector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_AddInspector;
+        
+        /// <summary>
+        /// CV_AddInspectorExists control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddInspectorExists;
     }
 }
