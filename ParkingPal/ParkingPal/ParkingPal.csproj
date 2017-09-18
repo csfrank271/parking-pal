@@ -107,12 +107,16 @@
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
+    <Content Include="UL\ULPurchaseTicketPayment.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\BLLogin.cs" />
+    <Compile Include="BL\BLManagerDashboard.cs" />
+    <Compile Include="BL\BLPurchaseTicketPayment.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALLogin.cs" />
+    <Compile Include="DAL\DALManagerDashboard.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -128,6 +132,7 @@
     <Compile Include="Models\Authenticator.cs" />
     <Compile Include="Models\EmailAlert.cs" />
     <Compile Include="Models\Inspector.cs" />
+    <Compile Include="Models\InspectorUser.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ParkingLot.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -188,6 +193,13 @@
     </Compile>
     <Compile Include="UL\ULPurchaseTicketDashboard.aspx.designer.cs">
       <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULPurchaseTicketPayment.aspx.cs">
+      <DependentUpon>ULPurchaseTicketPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULPurchaseTicketPayment.aspx.designer.cs">
+      <DependentUpon>ULPurchaseTicketPayment.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
