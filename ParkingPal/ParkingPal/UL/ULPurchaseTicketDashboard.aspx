@@ -2,6 +2,33 @@
  
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script runat="server" EnablePartialRendering="true" id="ScriptPurchaseTicket1">
+        protected void addTime(object sender, EventArgs e)
+        {
+            if (Convert.ToDateTime(this.labelTicketEndTime.InnerText) < new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 24, 0, 0))
+            {
+                this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.labelTicketEndTime.InnerText).AddMinutes(30).ToShortTimeString();
+            } else
+            {
+                // add code to display message that the ticket has to expire before 11:59pm or maybe set the ticket end time to 11:59pm
+            }
+
+        }
+        protected void minusTime(object sender, EventArgs e)
+        {
+            if (Convert.ToDateTime(this.labelTicketEndTime.InnerText).AddMinutes(-30) > Convert.ToDateTime(this.inputTicketStartTime.Value))
+            {
+                this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.labelTicketEndTime.InnerText).AddMinutes(-30).ToShortTimeString();
+            } else
+            {
+                // show error message
+            }
+        }
+        protected void startTimeChanged(object sender, EventArgs e)
+        {
+            this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.inputTicketStartTime.Value).AddMinutes(30).ToShortTimeString();
+        }
+    </script>
     <div class="container">
         <div class="card">
             <div class="card-title">
@@ -20,12 +47,12 @@
                 </div>
                 <div class="row col s12">
                     <div class="input-field col s4 m2">
-                       <input type="text" id="inputTicketStartTime" class="timepicker">
+                       <input runat="server" type="text" id="inputTicketStartTime" class="timepicker" onchange="startTimeChanged()"/>
                         <label runat="server" id="labelTicketStartTime" for="inputTicketStartTime">Start Time</label>      
                     </div> 
                     <div class="input-field col s8 m10">
-                         <i class="material-icons" style="vertical-align: central;">remove</i>&nbsp;<span runat="server" id="ticketEndTime">End Time</span>&nbsp;<i class="material-icons" style="vertical-align: central;">add</i>
-                    </div> 
+                         <asp:Button id="minusTimeButton" runat="server" class="material-icons" style="cursor: pointer;" onclick="minusTime" text="remove"/>&nbsp;<span runat="server" id="labelTicketEndTime"></span>&nbsp;<asp:Button ID="addTimeButton" runat="server" class="material-icons" style="cursor:pointer;" OnClick="addTime" Text="add" />
+                    </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
@@ -58,18 +85,11 @@
                 </button>
                     </div>
                 <div class="col s5 m5">
-                    <button class="btn waves-effect waves-light col s12 m6" type="submit" name="action">Next
-                        <i class="material-icons right">send</i>
-                    </button>
+                    <asp:Button runat="server" onclick="NavigateToPayment" class="btn waves-effect waves-light col s12 m6" type="submit" name="action" text="Next" /> 
                 </div>
             </div>
             <div class="row col s12"></div>
         </div> 
     </div>
-    
-    <script type="text/javascript">
-        var now = new Date(Date.now());
-        var formatted = now.getHours() + ":" + now.getMinutes();
-        document.getElementById("labelTicketStartTime").text(formatted);
-    </script> 
+     
 </asp:Content>

@@ -13,6 +13,15 @@ namespace ParkingPal.UL {
     public partial class ULPurchaseTicketDashboard {
         
         /// <summary>
+        /// ScriptPurchaseTicket1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptPurchaseTicket1;
+        
+        /// <summary>
         /// inputUserEmailAddress control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelUserRego;
         
         /// <summary>
+        /// inputTicketStartTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText inputTicketStartTime;
+        
+        /// <summary>
         /// labelTicketStartTime control.
         /// </summary>
         /// <remarks>
@@ -58,13 +76,31 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelTicketStartTime;
         
         /// <summary>
-        /// ticketEndTime control.
+        /// minusTimeButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ticketEndTime;
+        protected global::System.Web.UI.WebControls.Button minusTimeButton;
+        
+        /// <summary>
+        /// labelTicketEndTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelTicketEndTime;
+        
+        /// <summary>
+        /// addTimeButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addTimeButton;
         
         /// <summary>
         /// labelSelectCarparkOptions control.
