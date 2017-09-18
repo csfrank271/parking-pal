@@ -7,68 +7,21 @@ namespace ParkingPal.Models
 {
     public class Ticket
     {
-        private int ticketID;
-        private string rego;
-        private DateTime startDateTime, endDateTime;
-
-        public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime)
+        public int TicketID { get; set; }
+        public string Rego { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime EndDateTime { get; set; }
+        public ParkingLot ParkingLotLocation { get; set; }
+        public string CarparkType { get; set; } // change to CarparkType when that model is added 
+        public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime, ParkingLot parkingLotLocation, string carparkType)
         {
-            this.ticketID = ticketID;
-            this.rego = rego;
-            this.startDateTime = startDateTime;
-            this.endDateTime = endDateTime;
+            this.TicketID = ticketID;
+            this.Rego = rego;
+            this.StartDateTime = startDateTime;
+            this.EndDateTime = endDateTime;
+            this.ParkingLotLocation = parkingLotLocation;
+            this.CarparkType = carparkType;
         }
 
-        public int TicketID
-        {
-            get
-            {
-                return ticketID;
-            }
-
-            set
-            {
-                ticketID = value;
-            }
-        }
-
-        public string Rego
-        {
-            get
-            {
-                return rego;
-            }
-
-            set
-            {
-                rego = value;
-            }
-        }
-
-        public DateTime StartDateTime
-        {
-            get
-            {
-                return startDateTime;
-            }
-
-            set
-            {
-                startDateTime = value;
-            }
-        }
-
-        public DateTime EndDateTime
-        {
-            get
-            {
-                return endDateTime;
-            }
-
-            set
-            {
-                endDateTime = value;
-            }
-        }
     }
 }
