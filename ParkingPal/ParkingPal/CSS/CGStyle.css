@@ -1,0 +1,14 @@
+﻿.bgimg {
+    padding: 30px 0px; 
+    background-position:center left;
+    width: 100%;
+    background-repeat: no-repeat;
+}
+.home {
+    text-align: center;
+    vertical-align: central;
+    text-shadow: 2px 2px #000000;
+    color: white;
+    background-color: rgba(0,0,0,0.7);
+    padding: 10px;
+}

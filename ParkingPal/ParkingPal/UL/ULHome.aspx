@@ -1,18 +1,18 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true" CodeBehind="ULHome.aspx.cs" Inherits="ParkingPal.UL.ULHome" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../CSS/CGStyle.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="image" style="padding: 50px 0px; background-position:center center;
-        background-image: url('../IMG/merewetherBathsBlocks.jpg');
-        width:100%; background-repeat: no-repeat;">
-        <h4 style="text-align:center; vertical-align:central; text-shadow:2px 2px #000000; color:white;  background-color:rgba(0,0,0,0.7); padding:10px">
-            <span>ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!</span>
-                </h4>
+    <div class="bgimg" style="background-image: url('../IMG/merewetherBathsBlocks.jpg');">
+        <h5 class="home" style="font-size: 3vw;">
+            ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!
+        </h5>
     </div>
     <br />
     <div class="center">
         <!--add link to purchase screen when created-->
-           <a class="waves-effect waves-light blue darken-3 btn-large center">
+           <a href="../UL/ULPurchaseTicketDashboard.aspx" class="waves-effect waves-light blue darken-3 btn-large center">
                <i class="material-icons left">
                    schedule</i>
             Buy a Ticket Now
