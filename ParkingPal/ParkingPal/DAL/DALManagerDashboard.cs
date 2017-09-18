@@ -91,7 +91,7 @@ namespace ParkingPal.DAL
         }
 
         // Updates an Inspector and its associated AppUser entry:
-        public static void UpdateInspector(int inspectorID, string firstName, string lastName)
+        public static void UpdateInspector(int inspectorID, string password, string firstName, string lastName)
         {
             try
             {
@@ -101,6 +101,7 @@ namespace ParkingPal.DAL
                     SqlCommand sqlComm = new SqlCommand("dbo.sp_update_inspector", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
                     sqlComm.Parameters.Add("@inspector_id", SqlDbType.Int).Value = inspectorID;
+                    sqlComm.Parameters.Add("@password", SqlDbType.VarChar, 50).Value = password;
                     sqlComm.Parameters.Add("@first_name", SqlDbType.VarChar, 50).Value = firstName;
                     sqlComm.Parameters.Add("@last_name", SqlDbType.VarChar, 50).Value = lastName;
 
@@ -134,35 +135,44 @@ namespace ParkingPal.DAL
                     sqlComm.Parameters.Add("@password", SqlDbType.VarChar, 50).Value = password;
                     sqlComm.Parameters.Add("@first_name", SqlDbType.VarChar, 50).Value = firstName;
                     sqlComm.Parameters.Add("@last_name", SqlDbType.VarChar, 50).Value = lastName;
+                    sqlComm.Parameters.Add("@new_inspector_id", SqlDbType.Int);
+                    sqlComm.Parameters["@new_inspector_id"].Direction = ParameterDirection.Output;
 
                     // Open the SQL connection and run the command:
                     sqlConn.Open();
                     sqlComm.ExecuteNonQuery();
-                    SqlDataReader reader = sqlComm.ExecuteReader();
-                    reader.Read();
 
-                    // Retrieve the record if it exists:
-                    if (reader.HasRows)
+                    int newInspectorID = (int)sqlComm.Parameters["@new_inspector_id"].Value;
+                    if (newInspectorID != -1)
                     {
-                        AppUser appUser = new AppUser
-                        (
-                            (int)reader["AppUserID"],
-                            reader["UserName"].ToString(),
-                            reader["UserPassword"].ToString(),
-                            reader["FirstName"].ToString(),
-                            reader["LastName"].ToString(),
-                            'I'
-                        );
-                        Inspector inspector = new Inspector
-                        (
-                            (int)reader["InspectorID"],
-                            (int)reader["AppUserID"],
-                            (int)reader["ManagerID"]
-                        );
-                        inspectorUser = new InspectorUser(appUser, inspector);
+                        sqlComm = new SqlCommand("dbo.sp_get_inspector_user", sqlConn);
+                        sqlComm.CommandType = CommandType.StoredProcedure;
+                        sqlComm.Parameters.Add("@inspector_id", SqlDbType.Int).Value = newInspectorID;
+                        sqlComm.ExecuteNonQuery();
+                        SqlDataReader reader = sqlComm.ExecuteReader();
+                        // Retrieve the record if it exists:
+                        while (reader.Read())
+                        {
+                            AppUser appUser = new AppUser
+                            (
+                                (int)reader["AppUserID"],
+                                reader["UserName"].ToString(),
+                                reader["UserPassword"].ToString(),
+                                reader["FirstName"].ToString(),
+                                reader["LastName"].ToString(),
+                                'I'
+                            );
+                            Inspector inspector = new Inspector
+                            (
+                                (int)reader["InspectorID"],
+                                (int)reader["AppUserID"],
+                                (int)reader["ManagerID"]
+                            );
+                            inspectorUser = new InspectorUser(appUser, inspector);
+                        }
+                        // Close the reader:
+                        reader.Close();
                     }
-                    // Close the reader:
-                    reader.Close();
                 }
             }
             catch (Exception exception)

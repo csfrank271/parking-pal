@@ -34,8 +34,9 @@
                 ChangeInspectorPanel('S');
                 string[] commandArgs = e.CommandArgument.ToString().Split(',');
                 Tbx_InspectorUserName.Text = commandArgs[0];
-                Tbx_InspectorFirstName.Text = commandArgs[1];
-                Tbx_InspectorLastName.Text = commandArgs[2];
+                Tbx_InspectorPassword.Text = commandArgs[1];
+                Tbx_InspectorFirstName.Text = commandArgs[2];
+                Tbx_InspectorLastName.Text = commandArgs[3];
                 LVInspectorUsers.SelectedIndex = selectedIndex;
                 LVInspectorUsers.DataBind();
                 InspectorManagementTitle.InnerText = "Inspector Management - " + commandArgs[0];
@@ -108,16 +109,16 @@
                                     <ItemTemplate> <!-- This template defines the layout for an item in the Inspector list -->
                                         <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item"
                                             CommandName="SelectInspector" ClientIDMode="AutoID"
-                                            CommandArgument='<%#Eval("AppUser.UserName")+","+Eval("AppUser.FirstName")+","+
-                                                Eval("AppUser.LastName")%>'>
+                                            CommandArgument='<%#Eval("AppUser.UserName")+","+Eval("AppUser.UserPassword")+","+
+                                                Eval("AppUser.FirstName")+","+Eval("AppUser.LastName")%>'>
                                             <span><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
                                         </asp:LinkButton>
                                     </ItemTemplate>
                                     <SelectedItemTemplate> <!-- This template defines the layout for the selected item in the Inspector list -->
                                         <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item active"
                                             CommandName="SelectInspector" ClientIDMode="AutoID"
-                                            CommandArgument='<%#Eval("AppUser.UserName")+","+Eval("AppUser.FirstName")+","+
-                                                Eval("AppUser.LastName")%>'>
+                                            CommandArgument='<%#Eval("AppUser.UserName")+","+Eval("AppUser.UserPassword")+","+
+                                                Eval("AppUser.FirstName")+","+Eval("AppUser.LastName")%>'>
                                             <span><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>
@@ -163,16 +164,22 @@
                                         <asp:TextBox ID="Tbx_InspectorUserName" runat="server" Enabled="false"></asp:TextBox>
                                     </div>
                                     <div class="col m6 s12">
+                                        <p><b>Password: </b></p>
+                                        <asp:TextBox ID="Tbx_InspectorPassword" runat="server" TextMode="Password"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_InspectorPassword" runat="server" ControlToValidate="Tbx_InspectorPassword"
+                                            ErrorMessage="Password must contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
                                         <p><b>First name: </b></p>
                                         <asp:TextBox ID="Tbx_InspectorFirstName" runat="server"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_InspectorFirstName" runat="server" ControlToValidate="Tbx_InspectorFirstName"
-                                            ErrorMessage="First name must not be blank and can only contain letters."></asp:CustomValidator>
+                                            ErrorMessage="First name must contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col m6 s12">
                                         <p><b>Last name: </b></p>
                                         <asp:TextBox ID="Tbx_InspectorLastName" runat="server"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_InspectorLastName" runat="server" ControlToValidate="Tbx_InspectorLastName"
-                                            ErrorMessage="Last name must not be blank and can only contain letters."></asp:CustomValidator>
+                                            ErrorMessage="Last name must contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col s12"> <!-- The edit Inspector button -->
                                         <asp:Button runat="server" ID="BTN_EditInspector" Text="Update" class="btn"
@@ -201,25 +208,25 @@
                                         <p><b>User name: </b></p>
                                         <asp:TextBox ID="Tbx_AddInspectorUserName" runat="server"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_AddInspectorUserName" runat="server" ControlToValidate="Tbx_AddInspectorUserName"
-                                            ErrorMessage="User name contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
+                                            ErrorMessage="User name must contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col m6 s12">
-                                        <p><b>First name: </b></p>
-                                        <asp:TextBox ID="Tbx_AddInspectorPassword" runat="server"></asp:TextBox>
+                                        <p><b>Password: </b></p>
+                                        <asp:TextBox ID="Tbx_AddInspectorPassword" runat="server" TextMode="Password"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_AddInspectorPassword" runat="server" ControlToValidate="Tbx_AddInspectorPassword"
-                                            ErrorMessage="Password contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
+                                            ErrorMessage="Password must contain between 1 - 50 characters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col m6 s12">
                                         <p><b>First name: </b></p>
                                         <asp:TextBox ID="Tbx_AddInspectorFirstName" runat="server"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_AddInspectorFirstName" runat="server" ControlToValidate="Tbx_AddInspectorFirstName"
-                                            ErrorMessage="First name contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
+                                            ErrorMessage="First name must contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col m6 s12">
                                         <p><b>Last name: </b></p>
                                         <asp:TextBox ID="Tbx_AddInspectorLastName" runat="server"></asp:TextBox>
                                         <asp:CustomValidator ID="CV_AddInspectorLastName" runat="server" ControlToValidate="Tbx_AddInspectorLastName"
-                                            ErrorMessage="Last name contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
+                                            ErrorMessage="Last name must contain between 1 - 50 letters (no spaces)."></asp:CustomValidator>
                                     </div>
                                     <div class="col s12">
                                         <asp:Button runat="server" Cssclass="btn" Text="Add" ID="BTN_AddInspector"

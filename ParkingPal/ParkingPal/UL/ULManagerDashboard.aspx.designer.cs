@@ -103,6 +103,24 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.TextBox Tbx_InspectorUserName;
         
         /// <summary>
+        /// Tbx_InspectorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Tbx_InspectorPassword;
+        
+        /// <summary>
+        /// CV_InspectorPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InspectorPassword;
+        
+        /// <summary>
         /// Tbx_InspectorFirstName control.
         /// </summary>
         /// <remarks>

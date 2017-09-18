@@ -32,11 +32,11 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
-        public static void UpdateInspector(int inspectorID, string firstName, string lastName)
+        public static void UpdateInspector(int inspectorID, string password, string firstName, string lastName)
         {
             try
             {
-                DALManagerDashboard.UpdateInspector(inspectorID, firstName, lastName);
+                DALManagerDashboard.UpdateInspector(inspectorID, password, firstName, lastName);
             }
             catch (Exception exception)
             {
