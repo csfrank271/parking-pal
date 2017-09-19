@@ -43,5 +43,11 @@ namespace ParkingPal.UL
                 }
             }
         }
+
+        // Searches for Tickets associated with a registration number.
+        protected void SearchForTickets(object sender, EventArgs e)
+        {
+
+        }
     }
 }
