@@ -11,16 +11,22 @@ namespace ParkingPal.Models
         public string Rego { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public ParkingLot ParkingLotLocation { get; set; }
-        public string CarparkType { get; set; } // change to CarparkType when that model is added 
-        public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime, ParkingLot parkingLotLocation, string carparkType)
+        public float Rate { get; set; }
+        public string ParkingLotShortName { get; set; }
+        //public ParkingLot ParkingLotLocation { get; set; }
+        //public string CarparkType { get; set; } // change to CarparkType when that model is added 
+
+        public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime,
+            float rate, string parkingLotShortName)
         {
             this.TicketID = ticketID;
             this.Rego = rego;
             this.StartDateTime = startDateTime;
             this.EndDateTime = endDateTime;
-            this.ParkingLotLocation = parkingLotLocation;
-            this.CarparkType = carparkType;
+            this.Rate = rate;
+            this.ParkingLotShortName = parkingLotShortName;
+            // this.ParkingLotLocation = ParkingLotLocation;
+            // this.CarparkType = carparkType;
         }
 
     }
