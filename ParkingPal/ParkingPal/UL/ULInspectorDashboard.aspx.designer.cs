@@ -49,12 +49,12 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.CustomValidator CV_RegistrationNum;
         
         /// <summary>
-        /// BTN_ShowAddInspectorPanel control.
+        /// BTN_SearchTickets control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTN_ShowAddInspectorPanel;
+        protected global::System.Web.UI.WebControls.Button BTN_SearchTickets;
     }
 }

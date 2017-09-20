@@ -19,7 +19,7 @@
                                         ErrorMessage="Registration must be between 5-7 alphanumeric characters."></asp:CustomValidator>
                                 </div>
                                 <div class="col s4 left-align">
-                                    <asp:Button runat="server" Cssclass="btn" Text="&#xf002;" ID="BTN_ShowAddInspectorPanel"
+                                    <asp:Button runat="server" Cssclass="btn" Text="&#xf002;" ID="BTN_SearchTickets"
                                          style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" OnClick="SearchForTickets">
                                     </asp:Button>
                                 </div>
