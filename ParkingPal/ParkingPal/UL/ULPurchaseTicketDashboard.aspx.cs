@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ParkingPal.Models;
+using ParkingPal.BL;
 using System.Web.Services;
 
 namespace ParkingPal.UL
@@ -15,10 +16,25 @@ namespace ParkingPal.UL
         string strNewURL = null;
 
         protected void NavigateToPayment (object sender, EventArgs e) {
-            Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), null, "Disable");
-            strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
-            Session["Ticket"] = ticket;
-            Response.Redirect(strNewURL); 
+            if (String.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) 
+                || String.IsNullOrWhiteSpace(this.inputUserRego.Value) 
+                || String.IsNullOrWhiteSpace(this.inputTicketStartTime.Value)
+                || String.IsNullOrWhiteSpace(this.labelTicketEndTime.InnerText)
+                || String.IsNullOrWhiteSpace(this.selectCarparkType.Value)
+                || String.IsNullOrWhiteSpace(this.selectCarparkOptions.Value) )
+            {
+                throw new Exception();
+            } else
+            {
+                // make call to dl to get ticket price and rate
+                var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6, this.selectCarparkType.Value);
+              //  var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), this.selectCarparkOptions.Value, this.selectCarparkType.Value);
+                var carpark = this.selectCarparkOptions.Value;
+                Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), null, "Disable");
+                strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
+                Session["Ticket"] = ticket;
+                Response.Redirect(strNewURL);
+            }
         }
         protected void Page_Load(object sender, EventArgs e)
         { 

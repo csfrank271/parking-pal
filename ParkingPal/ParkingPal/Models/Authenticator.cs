@@ -29,6 +29,7 @@ namespace ParkingPal.Models
             {
                 "/UL/ULLogin.aspx",
                 "/UL/ULPurchaseTicketDashboard.aspx",
+                "/UL/ULPurchaseTicketPayment.aspx",
                 "/UL/ULHome.aspx"
             };
 
