@@ -12,24 +12,24 @@
             <div class="input-field col m6 s12">
                 <input runat="server" id="inputName" type="text" class="validate">
                 <label for="inputUserName">User Name</label>
-                <asp:RequiredFieldValidator
+               <!-- <asp:RequiredFieldValidator
                     ID="rfvUserName"
                     ControlToValidate="inputUserName"
                     Display="Dynamic"
                     runat="server"
                     ErrorMessage="User name can not be empty.">
-                </asp:RequiredFieldValidator>
+                </asp:RequiredFieldValidator> -->
             </div>
             <div class="input-field col m6 s12">
                 <input runat="server" id="inputPassword" type="password" class="validate">
                 <label for="inputPassword">Password</label>
-                <asp:RequiredFieldValidator
+                <!-- <asp:RequiredFieldValidator
                     ID="rfvPassword"
                     ControlToValidate="inputPassword"
                     Display="Dynamic"
                     runat="server"
                     ErrorMessage="Password can not be empty.">
-                </asp:RequiredFieldValidator>
+                </asp:RequiredFieldValidator> -->
             </div>
         </div>
 </asp:Content>
