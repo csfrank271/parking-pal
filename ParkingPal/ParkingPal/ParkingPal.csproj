@@ -115,15 +115,24 @@
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
+<<<<<<< HEAD
+=======
+    <Content Include="UL\ULPurchaseTicketPayment.aspx" />
+>>>>>>> kb-week9
     <Content Include="UL\ULRegister.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\BLLogin.cs" />
     <Compile Include="BL\BLManagerDashboard.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="BL\BLPurchaseTicket.cs" />
+>>>>>>> kb-week9
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALLogin.cs" />
     <Compile Include="DAL\DALManagerDashboard.cs" />
+    <Compile Include="DAL\DALPurchaseTicket.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,6 +152,7 @@
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ParkingLot.cs" />
     <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UL\ULAdminDashboard.aspx.cs">
@@ -200,6 +210,13 @@
     </Compile>
     <Compile Include="UL\ULPurchaseTicketDashboard.aspx.designer.cs">
       <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULRegister.aspx.cs">
+      <DependentUpon>ULRegister.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULRegister.aspx.designer.cs">
+      <DependentUpon>ULRegister.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\ULRegister.aspx.cs">
       <DependentUpon>ULRegister.aspx</DependentUpon>

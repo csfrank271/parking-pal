@@ -56,14 +56,14 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <select name="carparkOptions"id="selectCarparkOptions" class="material_select">
+                        <select runat="server" name="carparkOptions" id="selectCarparkOptions" class="material_select">
                             <option value="ICTCarpark" selected>ICT</option>
                             <option value="EngineeringCarpark">Engineering</option>
                         </select>
                         <label runat="server" id="labelSelectCarparkOptions" for="selectCarparkOptions">Carpark</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <select name="carparkTypeOptions" id="selectCarparkType" class="material_select">
+                        <select runat="server" name="carparkTypeOptions" id="selectCarparkType" class="material_select">
                             <option value="general" selected>General</option>
                             <option value="staff">Staff</option>
                             <option value="reserved">Reserved</option>

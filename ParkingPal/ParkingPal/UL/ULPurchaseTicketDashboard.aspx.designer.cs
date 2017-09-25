@@ -103,6 +103,15 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.Button addTimeButton;
         
         /// <summary>
+        /// selectCarparkOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect selectCarparkOptions;
+        
+        /// <summary>
         /// labelSelectCarparkOptions control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelSelectCarparkOptions;
+        
+        /// <summary>
+        /// selectCarparkType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect selectCarparkType;
         
         /// <summary>
         /// labelCarparkTypeOptions control.
