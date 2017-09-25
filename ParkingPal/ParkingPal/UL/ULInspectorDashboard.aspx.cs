@@ -50,6 +50,8 @@ namespace ParkingPal.UL
         {
             string rego = Tbx_RegistrationNum.Text;
             List<Ticket> tickets = BLInspectorDashboard.GetCurrentTicketsForRego(rego);
+            LVTickets.DataSource = tickets;
+            LVTickets.DataBind();
         }
     }
 }
