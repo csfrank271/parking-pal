@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ParkingPal.BL;
 using ParkingPal.Models;
 
 namespace ParkingPal.UL
@@ -42,6 +43,15 @@ namespace ParkingPal.UL
                     Response.Redirect(strNewURL);
                 }
             }
+        }
+
+        // Searches for Tickets associated with a registration number.
+        protected void SearchForTickets(object sender, EventArgs e)
+        {
+            string rego = Tbx_RegistrationNum.Text;
+            List<Ticket> tickets = BLInspectorDashboard.GetCurrentTicketsForRego(rego);
+            LVTickets.DataSource = tickets;
+            LVTickets.DataBind();
         }
     }
 }
