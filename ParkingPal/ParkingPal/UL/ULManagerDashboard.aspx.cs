@@ -88,11 +88,19 @@ namespace ParkingPal.UL
             int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
 
             // Retrieve the user's input and set the Regex and verification checks:
-            string firstName = Tbx_InspectorFirstName.Text,
+            string password = Tbx_InspectorPassword.Text, 
+                firstName = Tbx_InspectorFirstName.Text,
                 lastName = Tbx_InspectorLastName.Text;
-            Regex rgxHumanName = new Regex(@"^[A-z]{1,}$");
+            Regex rgxUserNamePwd = new Regex(@"^[^ ]{1,50}$");
+            Regex rgxHumanName = new Regex(@"^[A-z]{1,50}$");
             bool verificationPassed = true;
 
+            // Verify password:
+            if (!rgxUserNamePwd.IsMatch(password))
+            {
+                verificationPassed = false;
+                CV_InspectorPassword.IsValid = false;
+            }
             // Verify first name:
             if (!rgxHumanName.IsMatch(firstName))
             {
@@ -108,7 +116,7 @@ namespace ParkingPal.UL
             // Update Inspector:
             if (verificationPassed)
             {
-                BLManagerDashboard.UpdateInspector(inspectorID, firstName, lastName);
+                BLManagerDashboard.UpdateInspector(inspectorID, password, firstName, lastName);
             }
         }
 
@@ -117,10 +125,11 @@ namespace ParkingPal.UL
         {
             ChangeInspectorPanel('D');
             int selectedItemIndex = LVInspectorUsers.SelectedIndex;
+            int actuaItemPosition = DP_InspectorUsers.StartRowIndex + selectedItemIndex;
 
             // Retrieve the ID of the Inspector to be removed:
             List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
-            int inspectorID = inspectorUsers.ElementAt(selectedItemIndex).Inspector.InspectorID;
+            int inspectorID = inspectorUsers.ElementAt(actuaItemPosition).Inspector.InspectorID;
 
             // Remove the inspector and its associated AppUser from the database:
             BLManagerDashboard.DeleteInspector(inspectorID);
@@ -175,7 +184,7 @@ namespace ParkingPal.UL
             if (!rgxUserNamePwd.IsMatch(password))
             {
                 verificationPassed = false;
-                CV_AddInspectorUserName.IsValid = false;
+                CV_AddInspectorPassword.IsValid = false;
             }
             // Verify first name:
             if (!rgxHumanName.IsMatch(firstName))
