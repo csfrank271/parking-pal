@@ -66,8 +66,16 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CSS\CGStyle.css" />
     <Content Include="CSS\materialize.css" />
     <Content Include="CSS\materialize.min.css" />
+    <Content Include="IMG\bar beach.jpg" />
+    <Content Include="IMG\merewether blue.jpg" />
+    <Content Include="IMG\merewetherBathsBlocks.jpg" />
+    <Content Include="IMG\newcastle baths in flood.jpg" />
+    <Content Include="IMG\nobbies from baths.jpg" />
+    <Content Include="IMG\nobbies from sea 2.jpg" />
+    <Content Include="IMG\signa 2010.jpg" />
     <Content Include="JS\initialiseMaterialize.js" />
     <Content Include="JS\materialize.js" />
     <Content Include="JS\materialize.min.js" />
@@ -107,13 +115,12 @@
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
-    <Content Include="UL\ULPurchaseTicketPayment.aspx" />
+    <Content Include="UL\ULRegister.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\BLLogin.cs" />
     <Compile Include="BL\BLManagerDashboard.cs" />
-    <Compile Include="BL\BLPurchaseTicketPayment.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALLogin.cs" />
     <Compile Include="DAL\DALManagerDashboard.cs" />
@@ -194,12 +201,12 @@
     <Compile Include="UL\ULPurchaseTicketDashboard.aspx.designer.cs">
       <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\ULPurchaseTicketPayment.aspx.cs">
-      <DependentUpon>ULPurchaseTicketPayment.aspx</DependentUpon>
+    <Compile Include="UL\ULRegister.aspx.cs">
+      <DependentUpon>ULRegister.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\ULPurchaseTicketPayment.aspx.designer.cs">
-      <DependentUpon>ULPurchaseTicketPayment.aspx</DependentUpon>
+    <Compile Include="UL\ULRegister.aspx.designer.cs">
+      <DependentUpon>ULRegister.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
