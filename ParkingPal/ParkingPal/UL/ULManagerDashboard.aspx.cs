@@ -75,6 +75,10 @@ namespace ParkingPal.UL
                 case 'A':
                     InspectorManagmentPanel_AddInspector.Visible = true;
                     BTN_ShowAddInspectorPanel.Enabled = false;
+                    Tbx_AddInspectorFirstName.Text = "";
+                    Tbx_AddInspectorLastName.Text = "";
+                    Tbx_AddInspectorPassword.Text = "";
+                    Tbx_AddInspectorUserName.Text = "";
                     break;
             }
         }
@@ -214,6 +218,10 @@ namespace ParkingPal.UL
                     // Actions to occur if InspectorUser has been successfully added:
                     ChangeInspectorPanel('D');
                     List<InspectorUser> inspectorUsers = (List<InspectorUser>)LVInspectorUsers.DataSource;
+                    if(inspectorUsers == null)
+                    {
+                        inspectorUsers = new List<InspectorUser>();
+                    }
                     inspectorUsers.Add(inspectorUser);
                     LVInspectorUsers.DataSource = inspectorUsers;
                     LVInspectorUsers.DataBind();

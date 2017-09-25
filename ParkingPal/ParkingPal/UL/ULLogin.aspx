@@ -55,8 +55,6 @@
                     <p id="loginError" visible="false" runat="server">
                         Username and password combination is invalid!
                     </p>
-                    <asp:CustomValidator id="cvLoginError" runat="server" 
-                        Display="None" EnableClientScript="False"></asp:CustomValidator>
                 </asp:panel>
             </div>
         </div>

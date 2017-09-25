@@ -49,7 +49,7 @@ namespace ParkingPal.UL
                         this.divStartTime.InnerText = ticket.StartDateTime != null ? ticket.StartDateTime.ToShortTimeString() : "";
                         this.divEndTime.InnerText = ticket.EndDateTime != null ? ticket.EndDateTime.ToShortTimeString() : "";
                         this.divRego.InnerText = ticket.Rego.Any() ? ticket.Rego : "";
-                        this.divLocation.InnerText = ticket.ParkingLotLocation != null ? ticket.ParkingLotLocation.Address : "";
+                        this.divLocation.InnerText = ticket.ParkingLotLocation != null ? ticket.ParkingLotLocation : "";
                         this.divType.InnerText = ticket.CarparkType.Any() ? ticket.CarparkType : "";
                         this.spanTotalPrice.InnerText = "52.00";
                     }

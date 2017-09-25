@@ -85,12 +85,12 @@
                                     OnItemCommand="LVInspectorUsers_OnItemCommand"
                                     OnPagePropertiesChanging="LVInspectorUsers_PagePropertiesChanging">
                                     <LayoutTemplate> <!-- This layout is shown when the Inspector list is not empty -->
-                                        <div class="col s12"> <!-- The Inspector search bar -->
+                                        <!--<div class="col s12">
                                             <div class="input-field">  
                                                 <input type="text" placeholder="&#xF002;  Search inspectors"
                                                     style="font-family: Arial, FontAwesome"/>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="col s12"> <!-- The Inspector list -->
                                             <div class="collection">
                                                 <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
@@ -124,7 +124,7 @@
                                     </SelectedItemTemplate>
                                 </asp:ListView>
                                 <div class="col s12 center-align">
-                                    <asp:DataPager ID="DP_InspectorUsers" PageSize="1" PagedControlID="LVInspectorUsers" runat="server">
+                                    <asp:DataPager ID="DP_InspectorUsers" PageSize="10" PagedControlID="LVInspectorUsers" runat="server">
                                         <Fields>
                                             <asp:NumericPagerField ButtonType="Link"/>
                                         </Fields>

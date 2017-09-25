@@ -49,8 +49,8 @@ namespace ParkingPal.UL
         {
             string strNewURL = null;
 
-            // Reset the customer validator state:
-            cvLoginError.IsValid = true;
+            // Reset the error message:
+            loginError.InnerText = "";
             loginError.Visible = false;
 
             try
@@ -86,7 +86,8 @@ namespace ParkingPal.UL
                         }
                         else
                         {
-                            // GENERATE VALIDATION ERROR HERE ABOUT REQUEST APPROVAL.
+                            loginError.InnerText = "This account is awaiting approval from an Administrator.";
+                            loginError.Visible = true;
                         }
                         break;
                     case 'I':
@@ -103,8 +104,7 @@ namespace ParkingPal.UL
                         strNewURL = "~/UL/ULAdminDashboard.aspx";
                         break;
                     default:
-                        // GENERATE VALIDATION ERROR HERE ABOUT ACCOUNT NON-EXISTENCE HERE.
-                        cvLoginError.IsValid = false;
+                        loginError.InnerText = "The username/password combination is invalid.";
                         loginError.Visible = true;
                         break;
                 }

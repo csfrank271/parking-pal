@@ -30,7 +30,7 @@ namespace ParkingPal.UL
                 var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6, this.selectCarparkType.Value);
               //  var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), this.selectCarparkOptions.Value, this.selectCarparkType.Value);
                 var carpark = this.selectCarparkOptions.Value;
-                Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), null, "Disable");
+                Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6.00, "UON", "General");
                 strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
                 Session["Ticket"] = ticket;
                 Response.Redirect(strNewURL);
