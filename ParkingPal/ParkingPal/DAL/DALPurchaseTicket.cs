@@ -49,5 +49,100 @@ namespace ParkingPal.DAL
             }
             return rates;
         }
+
+        public static List<ParkingBay> GetCarparkTypes(List<ParkingLot> parkingLots)
+        {
+            IEnumerable<int> parkingLotIds;
+            parkingLotIds = parkingLots.Select(parkingLot => parkingLot.ID);
+            List<ParkingBay> carparkTypes = null;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                { 
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_related_carpark_types", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        carparkTypes = new List<ParkingBay>();
+                        while(reader.Read())
+                        {
+                            ParkingBay carparkType = new ParkingBay(
+                                (int)reader["ParkingLotID"],
+                                (int)reader["CarparkTypeID"],
+                                (int)reader["NumberOfParks"],
+                                reader["CarparkType"].ToString()
+                                );
+                            carparkTypes.Add(carparkType);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return carparkTypes;
+        }
+
+        public static List<ParkingLot> GetParkingLots()
+        {
+            List<ParkingLot> parkingLots = null;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                { 
+                     SqlCommand sqlComm = new SqlCommand("dbo.sp_get_all_parkingLot", sqlConn);
+                     sqlComm.CommandType = CommandType.StoredProcedure;  
+
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        parkingLots = new List<ParkingLot>();
+                        while (reader.Read())
+                        {
+                            ParkingLot parkingLot = new ParkingLot(
+                                (int)reader["ID"],
+                                (int)reader["ManagerID"],
+                                reader["ApprovalStatus"].ToString(),
+                                reader["ShortName"].ToString(),
+                                reader["LocationAddress"].ToString(),
+                                reader["Coordinates"].ToString(),
+                                reader["OpenTime"].ToString(),
+                                reader["CloseTime"].ToString(),
+                                (int)reader["AdminID"],
+                                null
+                                );
+                            parkingLots.Add(parkingLot);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+            return parkingLots;
+        }
+
+        private static string split( IEnumerable<int> inString )
+        {
+            string returnString = "";
+            foreach ( int i in inString )
+            {
+                returnString += "" + i + ",";
+            }
+
+            return returnString.Substring(0, returnString.Length);
+        }
     }
 }

@@ -2,6 +2,7 @@
  
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <script runat="server" EnablePartialRendering="true" id="ScriptPurchaseTicket1">
         protected void addTime(object sender, EventArgs e)
         {
@@ -28,6 +29,22 @@
         {
             this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.inputTicketStartTime.Value).AddMinutes(30).ToShortTimeString();
         }
+
+        protected void btn_Next(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) || string.IsNullOrWhiteSpace(this.inputUserRego.Value)) {
+                Page.ClientScript.RegisterStartupScript(this.GetType(),"jsScript","enterEmailAndRegoToast()",true);
+
+            } else {
+                NavigateToPayment(sender, e);
+            }
+        } 
+    </script>
+    <script id="jsScript">
+        function enterEmailAndRegoToast() {
+            // Materialize.toast(message, displayLength, className, completeCallback);
+            Materialize.toast('Please enter your e-mail address and rego.', 10000) // 10000 is the duration of the toast
+        } 
     </script>
     <div class="container">
         <div class="card">
@@ -56,22 +73,12 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <select runat="server" name="carparkOptions" id="selectCarparkOptions" class="material_select">
-                            <option value="ICTCarpark" selected>ICT</option>
-                            <option value="EngineeringCarpark">Engineering</option>
+                        <select runat="server" name="parkingLotOptions" id="parkingLotOptions" class="material_select">
                         </select>
                         <label runat="server" id="labelSelectCarparkOptions" for="selectCarparkOptions">Carpark</label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <select runat="server" name="carparkTypeOptions" id="selectCarparkType" class="material_select">
-                            <option value="general" selected>General</option>
-                            <option value="staff">Staff</option>
-                            <option value="reserved">Reserved</option>
-                            <option value="position">Position</option>
-                            <option value="visitors">Visitor</option>
-                            <option value="carpooling">Carpooling</option>
-                            <option value="disabled">Disabled</option>
-                            <option value="service">Service</option>
+                        <select runat="server" name="carparkTypeOptions" id="carparkTypeOptions" class="material_select"> 
                         </select>
                         <label runat="server" id="labelCarparkTypeOptions" for="selectCarparkType">Type</label>
                     </div>
@@ -80,12 +87,10 @@
             <div class="row col s12 m12">
                 <div class="col s1 m1"></div>
                 <div class="col s5 m5">
-                <button class="btn waves-effect waves-light col s12 m6" type="reset" name="action">Cancel
-                    <i class="material-icons right">close</i>
-                </button>
-                    </div>
-                <div class="col s5 m5">
-                    <asp:Button runat="server" onclick="NavigateToPayment" class="btn waves-effect waves-light col s12 m6" type="submit" name="action" text="Next" /> 
+                    <asp:Button runat="server" Text="&#xf00d; &nbsp; &nbsp; Cancel" ID="BTNCancel" onclick="Cancel" style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" class="btn col s12 m6"  />
+                </div>  
+                <div class="col s5 m5"> 
+                    <asp:Button runat="server" Text="&#xf1d9; &nbsp; &nbsp; Next" ID="BTNNext" onclick="btn_Next" style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" class="btn col s12 m6"  />
                 </div>
             </div>
             <div class="row col s12"></div>

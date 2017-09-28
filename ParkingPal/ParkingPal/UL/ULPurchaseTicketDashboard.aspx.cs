@@ -11,25 +11,29 @@ using System.Web.Services;
 namespace ParkingPal.UL
 {
     public partial class ULPurchaseTicketDashboard : System.Web.UI.Page
-    {
-        int loading = 0;
+    { 
         string strNewURL = null;
 
+        protected void Cancel (object sender, EventArgs e)
+        {
+            strNewURL = "~/UL/ULHome.aspx"; 
+            Response.Redirect(strNewURL); 
+        }
         protected void NavigateToPayment (object sender, EventArgs e) {
             if (String.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) 
                 || String.IsNullOrWhiteSpace(this.inputUserRego.Value) 
                 || String.IsNullOrWhiteSpace(this.inputTicketStartTime.Value)
                 || String.IsNullOrWhiteSpace(this.labelTicketEndTime.InnerText)
-                || String.IsNullOrWhiteSpace(this.selectCarparkType.Value)
-                || String.IsNullOrWhiteSpace(this.selectCarparkOptions.Value) )
+                || String.IsNullOrWhiteSpace(this.carparkTypeOptions.Value)
+                || String.IsNullOrWhiteSpace(this.parkingLotOptions.Value))
             {
                 throw new Exception();
             } else
             {
                 // make call to dl to get ticket price and rate
-                var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6, this.selectCarparkType.Value);
+                var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6, this.carparkTypeOptions.Value);
               //  var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), this.selectCarparkOptions.Value, this.selectCarparkType.Value);
-                var carpark = this.selectCarparkOptions.Value;
+                var carpark = this.parkingLotOptions.Value;
                 Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6.00, "UON", "General");
                 strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
                 Session["Ticket"] = ticket;
@@ -68,6 +72,26 @@ namespace ParkingPal.UL
                     if (!this.labelTicketEndTime.InnerText.Any())
                     {
                         this.labelTicketEndTime.InnerText = DateTime.Now.AddMinutes(30).ToShortTimeString();
+                    }
+                    if (!this.parkingLotOptions.Value.Any())
+                    {
+                        List<ParkingLot> parkingLots = new List<ParkingLot>();
+                        parkingLots = BLPurchaseTicket.GetParkingLots();
+
+                        this.parkingLotOptions.DataTextField = "ShortName";
+                        this.parkingLotOptions.DataValueField = "ID";
+                        this.parkingLotOptions.DataSource = parkingLots;
+                        this.parkingLotOptions.DataBind(); 
+
+                        if (this.parkingLotOptions.Value.Any())
+                        {
+                            this.carparkTypeOptions.DataTextField = "CarparkType";
+                            this.carparkTypeOptions.DataValueField = "CarparkType";
+                            IEnumerable<ParkingLot> selectedParkingLot = parkingLots.Where(parkingLot => parkingLot.ID == Convert.ToInt16(this.parkingLotOptions.Value));
+                            this.carparkTypeOptions.DataSource = selectedParkingLot.First().CarparkTypes;
+                            this.carparkTypeOptions.DataBind();
+                            var test = "sdf";
+                        }
                     }
                 }
             }             

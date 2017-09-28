@@ -24,5 +24,32 @@ namespace ParkingPal.BL
             }
            // return timeDuration;
         }
+
+        public static List<ParkingLot> GetParkingLots()
+        {
+            try
+            {
+                List<ParkingLot> parkingLots = new List<ParkingLot>();
+                parkingLots = DALPurchaseTicket.GetParkingLots(); 
+                List<ParkingBay> carparkTypes = new List<ParkingBay>();
+                carparkTypes = DALPurchaseTicket.GetCarparkTypes(parkingLots);
+                foreach(var parkingLot in parkingLots)
+                {
+                    parkingLot.CarparkTypes = new List<ParkingBay>();
+                    foreach (var carparkType in carparkTypes)
+                    {
+                        if (parkingLot.ID == carparkType.ParkingLotID)
+                        {
+                            parkingLot.CarparkTypes.Add(carparkType);
+                        }
+                    }
+                } 
+                return parkingLots;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }
