@@ -55,5 +55,17 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static List<ParkingLot> GetManagerParkingLots(int managerID)
+        {
+            try
+            {
+                return DALManagerDashboard.GetManagerParkingLots(managerID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

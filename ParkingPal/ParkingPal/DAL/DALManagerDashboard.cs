@@ -182,5 +182,62 @@ namespace ParkingPal.DAL
 
             return inspectorUser;
         }
+
+        // Retrieves all the ParkingLots associated with a Manager.
+        public static List<ParkingLot> GetManagerParkingLots(int managerID)
+        {
+            // Initialise ParkingLots:
+            List<ParkingLot> parkingLots = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_parking_lots_for_manager", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@manager_id", SqlDbType.Int).Value = managerID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    // Retrieve the record if it exists:
+                    if (reader.HasRows)
+                    {
+                        parkingLots = new List<ParkingLot>();
+                        while (reader.Read())
+                        {
+                            int? adminID = null;
+                            if (reader["AdminID"] != null) adminID = (int)reader["AdminID"];
+
+                            ParkingLot parkingLot = new ParkingLot
+                            (
+                                (int)reader["ParkingLotID"],
+                                (int)reader["ManagerID"],
+                                adminID,
+                                reader["ApprovalStatus"].ToString().ToCharArray()[0],
+                                reader["ShortName"].ToString(),
+                                reader["LocationAddress"].ToString(),
+                                reader["Coordinates"].ToString(),
+                                (DateTime)reader["OpenTime"],
+                                (DateTime)reader["CloseTime"]
+                            );
+                            parkingLots.Add(parkingLot);
+                        }
+                    }
+
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return parkingLots;
+        }
     }
 }
