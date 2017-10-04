@@ -7,216 +7,37 @@ namespace ParkingPal.Models
 {
     public class ParkingLot
     {
-        private int parkingLotID, totalCarparks, generalParkingSpots,
-            disabledParkingSpots, carpoolParkingSpots, serviceParkingSpots,
-            positionParkingSpots, reservedParkingSpots, visitorsParkingSpots;
+        // Properties:
+        private int parkingLotID, managerID;
         private int? adminID;
         private char approvalStatus;
         private string shortName, address, coordinates;
+        private DateTime openTime, closeTime;
 
-        public int ParkingLotID
-        {
-            get
-            {
-                return parkingLotID;
-            }
+        public int ParkingLotID { get; set; }
+        public int ManagerID { get; set; }
+        public int? AdminID { get; set; }
+        public char ApprovalStatus { get; set; }
+        public string ShortName { get; set; }
+        public string Address { get; set; }
+        public string Coordinates { get; set; }
+        public DateTime OpenTime { get; set; }
+        public DateTime CloseTime { get; set; }
 
-            set
-            {
-                parkingLotID = value;
-            }
-        }
-
-        public int TotalCarparks
-        {
-            get
-            {
-                return totalCarparks;
-            }
-
-            set
-            {
-                totalCarparks = value;
-            }
-        }
-
-        public int GeneralParkingSpots
-        {
-            get
-            {
-                return generalParkingSpots;
-            }
-
-            set
-            {
-                generalParkingSpots = value;
-            }
-        }
-
-        public int DisabledParkingSpots
-        {
-            get
-            {
-                return disabledParkingSpots;
-            }
-
-            set
-            {
-                disabledParkingSpots = value;
-            }
-        }
-
-        public int CarpoolParkingSpots
-        {
-            get
-            {
-                return carpoolParkingSpots;
-            }
-
-            set
-            {
-                carpoolParkingSpots = value;
-            }
-        }
-
-        public int ServiceParkingSpots
-        {
-            get
-            {
-                return serviceParkingSpots;
-            }
-
-            set
-            {
-                serviceParkingSpots = value;
-            }
-        }
-
-        public int PositionParkingSpots
-        {
-            get
-            {
-                return positionParkingSpots;
-            }
-
-            set
-            {
-                positionParkingSpots = value;
-            }
-        }
-
-        public int ReservedParkingSpots
-        {
-            get
-            {
-                return reservedParkingSpots;
-            }
-
-            set
-            {
-                reservedParkingSpots = value;
-            }
-        }
-
-        public int VisitorsParkingSpots
-        {
-            get
-            {
-                return visitorsParkingSpots;
-            }
-
-            set
-            {
-                visitorsParkingSpots = value;
-            }
-        }
-
-        public int? AdminID
-        {
-            get
-            {
-                return adminID;
-            }
-
-            set
-            {
-                adminID = value;
-            }
-        }
-
-        public char ApprovalStatus
-        {
-            get
-            {
-                return approvalStatus;
-            }
-
-            set
-            {
-                approvalStatus = value;
-            }
-        }
-
-        public string ShortName
-        {
-            get
-            {
-                return shortName;
-            }
-
-            set
-            {
-                shortName = value;
-            }
-        }
-
-        public string Address
-        {
-            get
-            {
-                return address;
-            }
-
-            set
-            {
-                address = value;
-            }
-        }
-
-        public string Coordinates
-        {
-            get
-            {
-                return coordinates;
-            }
-
-            set
-            {
-                coordinates = value;
-            }
-        }
-
-        public ParkingLot(int parkingLotID, int totalCarparks,
-            int generalParkingSpots, int disabledParkingSpots,
-            int carpoolParkingSpots, int serviceParkingSpots,
-            int positionParkingSpots, int reservedParkingSpots,
-            int visitorsParkingSpots, int? adminID, char approvalStatus,
-            string shortName, string address, string coordinates)
+        // Constructor:
+        public ParkingLot(int parkingLotID, int managerID, int? adminID,
+            char approvalStatus, string shortName, string address,
+            string coordinates, DateTime openTime, DateTime closeTime)
         {
             this.ParkingLotID = parkingLotID;
-            this.TotalCarparks = totalCarparks;
-            this.GeneralParkingSpots = generalParkingSpots;
-            this.DisabledParkingSpots = disabledParkingSpots;
-            this.CarpoolParkingSpots = carpoolParkingSpots;
-            this.ServiceParkingSpots = serviceParkingSpots;
-            this.PositionParkingSpots = positionParkingSpots;
-            this.ReservedParkingSpots = reservedParkingSpots;
-            this.VisitorsParkingSpots = visitorsParkingSpots;
+            this.managerID = managerID;
             this.AdminID = adminID;
             this.ApprovalStatus = approvalStatus;
             this.ShortName = shortName;
             this.Address = address;
             this.Coordinates = coordinates;
+            this.OpenTime = openTime;
+            this.CloseTime = closeTime;
         }
     }
 }
