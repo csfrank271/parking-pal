@@ -13,6 +13,15 @@ namespace ParkingPal.UL {
     public partial class ULPurchaseTicketPayment {
         
         /// <summary>
+        /// ScriptPurchaseTicket1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptPurchaseTicket1;
+        
+        /// <summary>
         /// divRego control.
         /// </summary>
         /// <remarks>
@@ -74,5 +83,14 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanTotalPrice;
+        
+        /// <summary>
+        /// ScriptMgr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptMgr;
     }
 }

@@ -103,13 +103,13 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.Button addTimeButton;
         
         /// <summary>
-        /// selectCarparkOptions control.
+        /// parkingLotOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect selectCarparkOptions;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect parkingLotOptions;
         
         /// <summary>
         /// labelSelectCarparkOptions control.
@@ -121,13 +121,13 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelSelectCarparkOptions;
         
         /// <summary>
-        /// selectCarparkType control.
+        /// carparkTypeOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect selectCarparkType;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect carparkTypeOptions;
         
         /// <summary>
         /// labelCarparkTypeOptions control.
@@ -137,5 +137,23 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelCarparkTypeOptions;
+        
+        /// <summary>
+        /// BTNCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNCancel;
+        
+        /// <summary>
+        /// BTNNext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNNext;
     }
 }
