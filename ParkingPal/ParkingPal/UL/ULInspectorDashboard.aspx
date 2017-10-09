@@ -15,11 +15,11 @@
     <div class="section">
         <asp:UpdatePanel ID="UP_InspectionDashboard" runat="server" UpdateMode="Always"> 
             <ContentTemplate>
-                <div id="inspectors" class="card white">
+                <div id="inspectors" class="card grey darken-1" style="position: sticky; right: 0; left: 0;">
                     <div class="card-content">
                         <div class="row">
                             <div class="col s12">
-                                <h5>Enter a registration number to view associated tickets</h5>
+                                <h5 style="color:white">Enter a registration number to view associated tickets</h5>
                             </div>
                             <div class="col s8">
                                 <asp:TextBox ID="Tbx_RegistrationNum" runat="server"></asp:TextBox>
@@ -27,7 +27,7 @@
                                     ErrorMessage="Registration must be between 5-7 alphanumeric characters."></asp:CustomValidator>
                             </div>
                             <div class="col s4 left-align">
-                                <asp:Button runat="server" Cssclass="btn" Text="&#xf002;" ID="BTN_SearchTickets"
+                                <asp:Button runat="server" Cssclass="waves-effect waves-light blue darken-3 btn center" Text="&#xf002;" ID="BTN_SearchTickets"
                                         style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" OnClick="SearchForTickets">
                                 </asp:Button>
                             </div>
@@ -38,6 +38,7 @@
                 <div class="col s12"> <!-- Ticket listing -->
                     <h5>Tickets</h5>
                 </div>
+                <div class="divider"></div>
                 <asp:ListView runat="server" ID="LVTickets">
                     <LayoutTemplate> <!-- This layout is shown when the Ticket list is not empty -->
                         <div class="col s12"> <!-- The Ticket list -->
