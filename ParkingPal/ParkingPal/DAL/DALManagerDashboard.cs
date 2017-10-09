@@ -210,19 +210,22 @@ namespace ParkingPal.DAL
                         while (reader.Read())
                         {
                             int? adminID = null;
-                            if (reader["AdminID"] != null) adminID = (int)reader["AdminID"];
-
+                            object adminIDObj = reader["AdminID"];
+                            if (adminIDObj != DBNull.Value)
+                            {
+                                adminID = (int)reader["AdminID"];
+                            }
                             ParkingLot parkingLot = new ParkingLot
                             (
                                 (int)reader["ParkingLotID"],
-                                (int)reader["ManagerID"],
+                                managerID,
                                 adminID,
                                 reader["ApprovalStatus"].ToString().ToCharArray()[0],
                                 reader["ShortName"].ToString(),
                                 reader["LocationAddress"].ToString(),
                                 reader["Coordinates"].ToString(),
-                                (DateTime)reader["OpenTime"],
-                                (DateTime)reader["CloseTime"]
+                                (TimeSpan)reader["OpenTime"],
+                                (TimeSpan)reader["CloseTime"]
                             );
                             parkingLots.Add(parkingLot);
                         }
@@ -238,6 +241,76 @@ namespace ParkingPal.DAL
             }
 
             return parkingLots;
+        }
+
+        // Updates a ParkingLot:
+        public static void UpdateParkingLot(int parkingLotID, string shortName, string address,
+            string coordinates, TimeSpan openTime, TimeSpan closeTime)
+        {
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_update_parking_lot", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLotID;
+                    sqlComm.Parameters.Add("@short_name", SqlDbType.VarChar).Value = shortName;
+                    sqlComm.Parameters.Add("@location_address", SqlDbType.VarChar, 50).Value = address;
+                    sqlComm.Parameters.Add("@coordinates", SqlDbType.VarChar, 50).Value = coordinates;
+                    sqlComm.Parameters.Add("@open_time", SqlDbType.Time).Value = openTime;
+                    sqlComm.Parameters.Add("@close_time", SqlDbType.Time).Value = closeTime;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        // Attempts to add a ParkingLot into the DB.
+        public static ParkingLot AddParkingLot(int managerID, string name, string address,
+            string coordinates, TimeSpan openTime, TimeSpan closeTime)
+        {
+            // Initialise parking lot:
+            ParkingLot parkingLot = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command to create the Parking Lot:
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_create_parking_lot", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@manager_id", SqlDbType.Int).Value = managerID;
+                    sqlComm.Parameters.Add("@short_name", SqlDbType.VarChar).Value = name;
+                    sqlComm.Parameters.Add("@location_address", SqlDbType.VarChar).Value = address;
+                    sqlComm.Parameters.Add("@coordinates", SqlDbType.VarChar, 255).Value = coordinates;
+                    sqlComm.Parameters.Add("@open_time", SqlDbType.Time).Value = openTime;
+                    sqlComm.Parameters.Add("@close_time", SqlDbType.Time).Value = closeTime;
+                    sqlComm.Parameters.Add("@new_parking_lot_id", SqlDbType.Int);
+                    sqlComm.Parameters["@new_parking_lot_id"].Direction = ParameterDirection.Output;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    int newParkingLotID = (int)sqlComm.Parameters["@new_parking_lot_id"].Value;
+
+                    // Create the new ParkingLot object for ASP manipulation:
+                    parkingLot = new ParkingLot (newParkingLotID, managerID, null, 'U', name, address,
+                        coordinates, openTime, closeTime);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return parkingLot;
         }
     }
 }

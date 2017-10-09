@@ -67,5 +67,47 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static void UpdateParkingLot(int parkingLotID, string shortName, string address,
+            string coordinates, TimeSpan openTime, TimeSpan closeTime)
+        {
+            try
+            {
+                DALManagerDashboard.UpdateParkingLot(parkingLotID, shortName, address,
+                    coordinates, openTime, closeTime);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static List<string> GetHalfHourIntervalsList()
+        {
+            List<string> halfHourIntervals = new List<string>();
+            for (int i = 0; i < 24; i++)
+            {
+                string hour = i.ToString();
+                if (hour.Length == 1) hour = '0' + hour;
+
+                halfHourIntervals.Add(hour + ":00");
+                halfHourIntervals.Add(hour + ":30");
+            }
+
+            return halfHourIntervals;
+        }
+
+        public static ParkingLot AddParkingLot(int managerID, string name, string address,
+            string coordinates, TimeSpan openTime, TimeSpan closeTime)
+        {
+            try
+            {
+                return DALManagerDashboard.AddParkingLot(managerID, name, address, coordinates, openTime, closeTime);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

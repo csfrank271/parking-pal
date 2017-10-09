@@ -8,6 +8,16 @@
     // Registers controls for asynchronus postback, which allows these controls to perform partial page updates.
     protected void LV_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
+        var lbSelectParkingLot = e.Item.FindControl("LB_SelectParkingLot") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbSelectParkingLot);
+        var btnEditParkingLot = e.Item.FindControl("BTN_EditParkingLot") as Button;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnEditParkingLot);
+        var btnShowAddParkingLotPanel = e.Item.FindControl("BTN_ShowAddParkingLotPanel") as Button;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnShowAddParkingLotPanel);
+        var btnAddParkingLot = e.Item.FindControl("BTN_AddParkingLot") as Button;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnAddParkingLot);
+
+
         var lbSelectInspector = e.Item.FindControl("LB_SelectInspector") as LinkButton;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbSelectInspector);
         var btnEditInspector = e.Item.FindControl("BTN_EditInspector") as Button;
@@ -28,20 +38,15 @@
     protected void LVInspectorUsers_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
         int selectedIndex = e.Item.DisplayIndex;
-        switch(e.CommandName)
-        {
-            case "SelectInspector":
-                ChangeInspectorPanel('S');
-                string[] commandArgs = e.CommandArgument.ToString().Split(',');
-                Tbx_InspectorUserName.Text = commandArgs[0];
-                Tbx_InspectorPassword.Text = commandArgs[1];
-                Tbx_InspectorFirstName.Text = commandArgs[2];
-                Tbx_InspectorLastName.Text = commandArgs[3];
-                LVInspectorUsers.SelectedIndex = selectedIndex;
-                LVInspectorUsers.DataBind();
-                InspectorManagementTitle.InnerText = "Inspector Management - " + commandArgs[0];
-                break;
-        }
+        ChangeInspectorPanel('S');
+        string[] commandArgs = e.CommandArgument.ToString().Split(',');
+        Tbx_InspectorUserName.Text = commandArgs[0];
+        Tbx_InspectorPassword.Text = commandArgs[1];
+        Tbx_InspectorFirstName.Text = commandArgs[2];
+        Tbx_InspectorLastName.Text = commandArgs[3];
+        LVInspectorUsers.SelectedIndex = selectedIndex;
+        LVInspectorUsers.DataBind();
+        InspectorManagementTitle.InnerText = "Inspector Management - " + commandArgs[0];
     }
 
     protected void LVInspectorUsers_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
@@ -51,31 +56,218 @@
         ChangeInspectorPanel('D');
         LVInspectorUsers.DataBind();
     }
+
+    // The list of commands and actions for link buttons in the 'LVInspector' list.
+    protected void LVParkingLots_OnItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        int selectedIndex = e.Item.DisplayIndex;
+        ChangeParkingLotPanel('S');
+        string[] commandArgs = e.CommandArgument.ToString().Split(',');
+        Tbx_ParkingLotName.Text = commandArgs[0];
+        LV_ParkingLots.SelectedIndex = selectedIndex;
+        LV_ParkingLots.DataBind();
+        ParkingLotManagementTitle.InnerText = "Parking Lot Management - " + commandArgs[0];
+    }
+
+    protected void LVParkingLots_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+    {
+        DP_ParkingLots.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        LV_ParkingLots.SelectedIndex = -1;
+        ChangeParkingLotPanel('D');
+        LV_ParkingLots.DataBind();
+    }
+
+    public void test()
+    {
+        ChangeParkingLotPanel('D');
+    }
 </script>
 <div class="container">
     <div class="section"> <!-- The selectable tabs at the top of the page-->
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s4"><a href="#inspectors">Inspectors</a></li>
                 <li class="tab col s4"><a href="#lots">Parking Lots</a></li>
-                <li class="tab col s4"><a href="#requests">Lot Requests</a></li>
+                <li class="tab col s4"><a href="#inspectors">Inspectors</a></li>
             </ul>
         </div>
+        <input runat="server" type="text" class="timepicker">
     </div>
-
-    <div id="lots" class="card white"> <!-- Lots tab -->
+    <!-- Lots tab -->
+    <div id="lots" class="card white">
         <div class="card-content">
             <div class="row">
+                <asp:UpdatePanel ID="UP_InspectorPanel" runat="server" UpdateMode="Always"> 
+                    <ContentTemplate>
+                        <div class="col s12 l4"> <!-- Left-side content (top on small screens) -->
+                            <div class="row">
+                                <div class="col s12">
+                                    <h5>Parking Lots List</h5>
+                                </div>
+                                <asp:ListView runat="server" ID="LV_ParkingLots" 
+                                    OnItemCommand="LVParkingLots_OnItemCommand"
+                                    OnPagePropertiesChanging="LVParkingLots_PagePropertiesChanging">
+                                    <LayoutTemplate> <!-- This layout is shown when the ParkingLot list is not empty -->
+                                        <!--<div class="col s12">
+                                            <div class="input-field">  
+                                                <input type="text" placeholder="&#xF002;  Search Parking Lots"
+                                                    style="font-family: Arial, FontAwesome"/>
+                                            </div>
+                                        </div>-->
+                                        <div class="col s12"> <!-- The ParkingLot list -->
+                                            <div class="collection">
+                                                <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
+                                            </div>
+                                        </div>
+                                    </LayoutTemplate>
+                                    <EmptyDataTemplate> <!-- This layout is shown when the ParkingLot list is empty -->
+                                        <div class="col s12">
+                                            <i class="fa fa-info-circle"></i>
+                                            <span>
+                                                You are not managing any Parking Lots. Click 'Request Parking Lot'
+                                                in the 'Additional actions' section to request the creation of a
+                                                new Parking Lot.
+                                            </span>
+                                        </div>
+                                    </EmptyDataTemplate>
+                                    <ItemTemplate> <!-- This template defines the layout for an item in the ParkingLot list -->
+                                        <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item"
+                                            CommandName="SelectParkingLot" ClientIDMode="AutoID"
+                                            CommandArgument='<%#Eval("ShortName")%>'>
+                                            <span><%#Eval("ShortName")%></span>
+                                        </asp:LinkButton>
+                                    </ItemTemplate>
+                                    <SelectedItemTemplate> <!-- This template defines the layout for the selected item in the ParkingLot list -->
+                                        <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item active"
+                                            CommandName="SelectParkingLot" ClientIDMode="AutoID"
+                                            CommandArgument='<%#Eval("ShortName")%>'>
+                                            <span><%#Eval("ShortName")%></span>
+                                        </asp:LinkButton>
+                                    </SelectedItemTemplate>
+                                </asp:ListView>
+                                <div class="col s12 center-align">
+                                    <asp:DataPager ID="DP_ParkingLots" PageSize="10" PagedControlID="LV_ParkingLots" runat="server">
+                                        <Fields>
+                                            <asp:NumericPagerField ButtonType="Link"/>
+                                        </Fields>
+                                    </asp:DataPager>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="row"> <!-- The Additional actions section for the ParkingLot list -->
+                                <div class="col s12">
+                                    <h5>Additional actions</h5>
+                                </div>
+                                <div class="col s12">
+                                    <asp:Button runat="server" Cssclass="btn" Text="Add Parking Lot" ID="BTN_ShowAddParkingLotPanel"
+                                        OnClick="ShowAddParkingLotPrompt" ClientIDMode="AutoID">
+                                    </asp:Button> <!-- The add ParkingLot button -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 l8"> <!-- Right-side content (bottom on small screens) -->
+                            <div class="row">
+                                <div class="col s12">
+                                    <h5 runat="server" id="ParkingLotManagementTitle">Parking Lot Management Section</h5>
+                                </div>
+                                <div runat="server" id ="ParkingLotManagementPanel_Default"> <!-- The default screen for the Parking Lot Management Panel -->
+                                    <div class="col s12">
+                                        <i class="fa fa-info-circle"></i>
+                                        <span>
+                                            This space is an area for managing Parking Lots. It will display details
+                                            of a Parking Lot when selected from the Parking Lot list, and provide the
+                                            options to edit or delete the Parking Lot in addition to assigning/
+                                            revoking authority for Inspectors on the Parking Lot.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div runat="server" id ="ParkingLotManagementPanel_Selected" visible="false"> <!-- The selected Parking Lot screen for the Parking Lot Management Panel -->
+                                    <div class="col s12">
+                                        <h5>Lot details:</h5>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Lot name: </b></p>
+                                        <asp:TextBox ID="Tbx_ParkingLotName" runat="server" Enabled="true"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_ParkingLotName" runat="server" ControlToValidate="Tbx_ParkingLotName"
+                                            ErrorMessage="Parking lot name must not be empty and can only include letters, numbers, and spaces."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Lot address: </b></p>
+                                        <asp:TextBox ID="Tbx_ParkingLotAddress" runat="server" Enabled="true"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_ParkingLotAddress" runat="server" ControlToValidate="Tbx_ParkingLotAddress"
+                                            ErrorMessage="Parking lot address must not be empty and can only include letters, numbers, and spaces."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Lot coordinates: </b></p>
+                                        <asp:TextBox ID="Tbx_ParkingLotCoordinates" runat="server" Enabled="true"></asp:TextBox>
+                                        <asp:CustomValidator ID="CV_ParkingLotCoordinates" runat="server" ControlToValidate="Tbx_ParkingLotCoordinates"
+                                            ErrorMessage="Parking lot coordinates must be of the following format: 'xx.xxxxx, yy.yyyyy', in order of latitude,
+                                                longitude. Latitude values can range from -90 to 90. Longitude values can range from -180 to 180."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Lot open time: </b></p>
+                                        <asp:DropDownList runat="server" ID="DDL_ParkingLotOpenTime" Enabled="true" style="display:inline"></asp:DropDownList>
+                                    </div>
+                                    <div class="col m6 s12">
+                                        <p><b>Lot close time: </b></p>
+                                        <asp:DropDownList runat="server" ID="DDL_ParkingLotCloseTime" Enabled="true" style="display:inline"></asp:DropDownList>
+                                        <asp:CustomValidator ID="CV_ParkingLotCloseTime" runat="server" ControlToValidate="DDL_ParkingLotCloseTime"
+                                            ErrorMessage="Close time must be after open time."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col s12"> <!-- The edit Parking Lot button -->
+                                        <asp:Button runat="server" ID="BTN_EditParkingLot" Text="Update" class="btn"
+                                            ClientIDMode="AutoID" OnClick="EditParkingLot"></asp:Button>
+                                    </div>
+                                </div>
+                                <div runat="server" id ="ParkingLotManagementPanel_AddParkingLot" visible="false"> <!-- The 'Request Parking Lot' screen for the Parking Lot Management Panel -->
+                                    <div class="col m6 s12">
+	                                    <p><b>Lot name: </b></p>
+	                                    <asp:TextBox ID="Tbx_AddParkingLotName" runat="server" Enabled="true"></asp:TextBox>
+	                                    <asp:CustomValidator ID="CV_AddParkingLotName" runat="server" ControlToValidate="Tbx_AddParkingLotName"
+		                                    ErrorMessage="Parking lot name must not be empty and can only include letters, numbers, and spaces."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+	                                    <p><b>Lot address: </b></p>
+	                                    <asp:TextBox ID="Tbx_AddParkingLotAddress" runat="server" Enabled="true"></asp:TextBox>
+	                                    <asp:CustomValidator ID="CV_AddParkingLotAddress" runat="server" ControlToValidate="Tbx_AddParkingLotAddress"
+		                                    ErrorMessage="Parking lot address must not be empty and can only include letters, numbers, and spaces."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+	                                    <p><b>Lot coordinates: </b></p>
+	                                    <asp:TextBox ID="Tbx_AddParkingLotCoordinates" runat="server" Enabled="true"></asp:TextBox>
+	                                    <asp:CustomValidator ID="CV_AddParkingLotCoordinates" runat="server" ControlToValidate="Tbx_AddParkingLotCoordinates"
+		                                    ErrorMessage="Parking lot coordinates must be of the following format: 'xx.xxxxx, yy.yyyyy', in order of latitude,
+			                                    longitude. Latitude values can range from -90 to 90. Longitude values can range from -180 to 180."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col m6 s12">
+	                                    <p><b>Lot open time: </b></p>
+	                                    <asp:DropDownList runat="server" ID="DDL_AddParkingLotOpenTime" Enabled="true" style="display:inline"></asp:DropDownList>
+                                    </div>
+                                    <div class="col m6 s12">
+	                                    <p><b>Lot close time: </b></p>
+	                                    <asp:DropDownList runat="server" ID="DDL_AddParkingLotCloseTime" Enabled="true" style="display:inline"></asp:DropDownList>
+	                                    <asp:CustomValidator ID="CV_AddParkingLotCloseTime" runat="server" ControlToValidate="DDL_AddParkingLotCloseTime"
+		                                    ErrorMessage="Close time must be after open time."></asp:CustomValidator>
+                                    </div>
+                                    <div class="col s12">
+                                        <asp:Button runat="server" Cssclass="btn" Text="Add" ID="BTN_AddParkingLot"
+                                            OnClick="AddParkingLot" ClientIDMode="AutoID">
+                                        </asp:Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </contentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
     </div>
-
+            
     <!-- Inspectors tab -->
-    <asp:UpdatePanel ID="UP_Inspectors" runat="server" UpdateMode="Always"> 
-        <ContentTemplate>
-            <div id="inspectors" class="card white">
-                <div class="card-content">
-                    <div class="row">
+    <div id="inspectors" class="card white">
+        <div class="card-content">
+            <div class="row">
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always"> 
+                    <ContentTemplate>
                         <div class="col s12 l4"> <!-- Left-side content (top on small screens) -->
                             <div class="row">
                                 <div class="col s12">
@@ -238,18 +430,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
-
-    <div id="requests" class="card white"> <!-- Lot requests tab -->
-        <div class="card-content">
-            <div class="row">
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
     </div>
 </div>
-
 </asp:Content>

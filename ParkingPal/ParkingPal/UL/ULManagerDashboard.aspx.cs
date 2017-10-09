@@ -30,10 +30,37 @@ namespace ParkingPal.UL
                 else
                 {
                     Manager manager = (Manager)Session["Manager"];
+
+                    // Initialise the list of Inspectors:
                     List<InspectorUser> inspectorUsers = BLManagerDashboard.
                         GetManagerInspectors(manager.ManagerID);
                     LVInspectorUsers.DataSource = inspectorUsers;
                     LVInspectorUsers.DataBind();
+
+                    // Initialise the list of ParkingLots:
+                    List<ParkingLot> parkingLots = BLManagerDashboard.
+                        GetManagerParkingLots(manager.ManagerID);
+                    LV_ParkingLots.DataSource = parkingLots;
+                    LV_ParkingLots.DataBind();
+
+                    if(!IsPostBack)
+                    {
+                        // Initialise the open time/close time drop down lists:
+                        List<string> halfHourIntervals = BLManagerDashboard.GetHalfHourIntervalsList();
+                        DDL_ParkingLotOpenTime.Items.Clear();
+                        DDL_ParkingLotCloseTime.Items.Clear();
+                        DDL_AddParkingLotOpenTime.Items.Clear();
+                        DDL_AddParkingLotCloseTime.Items.Clear();
+                        foreach (string halfHourInterval in halfHourIntervals)
+                        {
+                            DDL_ParkingLotOpenTime.Items.Add(new ListItem(halfHourInterval, halfHourInterval));
+                            DDL_ParkingLotCloseTime.Items.Add(new ListItem(halfHourInterval, halfHourInterval));
+                            DDL_AddParkingLotOpenTime.Items.Add(new ListItem(halfHourInterval, halfHourInterval));
+                            DDL_AddParkingLotCloseTime.Items.Add(new ListItem(halfHourInterval, halfHourInterval));
+                        }
+                        
+                    }
+                    
                 }
             }
             catch (Exception exception)
@@ -226,6 +253,145 @@ namespace ParkingPal.UL
                     LVInspectorUsers.DataSource = inspectorUsers;
                     LVInspectorUsers.DataBind();
                 }
+            }
+        }
+
+        // Switches the visible panel in the right-side section of the Parking Lot page.
+        [WebMethod]
+        public void ChangeParkingLotPanel(char panelType)
+        {
+            // Default all panels:
+            ParkingLotManagementPanel_Default.Visible = false;
+            ParkingLotManagementPanel_Selected.Visible = false;
+            ParkingLotManagementPanel_AddParkingLot.Visible = false;
+            //BTN_ShowAddParkingLotPanel.Enabled = true;
+
+            switch (panelType)
+            {
+                case 'D':
+                    ParkingLotManagementPanel_Default.Visible = true;
+                    ParkingLotManagementTitle.InnerText = "Parking Lot Management Section";
+                    break;
+                case 'S':
+                    ParkingLotManagementPanel_Selected.Visible = true;
+                    // ADD LOGIC HERE FOR CHOOSING WHICH TO DISPLAY DEPENDING ON AppprovalStatus
+                    break;
+                case 'A':
+                    ParkingLotManagementPanel_AddParkingLot.Visible = true;
+                    BTN_ShowAddParkingLotPanel.Enabled = false;
+                    break;
+            }
+        }
+
+        // Attempt to update a ParkingLot.
+        public void EditParkingLot(object sender, EventArgs e)
+        {
+            // Retrieve the ID of the ParkingLot to be updated:
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ParkingLotID;
+
+            // Retrieve the user's input and set the Regex and verification checks:
+            string name = Tbx_ParkingLotName.Text;
+            string address = Tbx_ParkingLotAddress.Text;
+            string coordinates = Tbx_ParkingLotCoordinates.Text;
+            Regex rgxUserNamePwd = new Regex(@"^[^ ]{1,50}$");
+            Regex rgxParkingLotName = new Regex(@"^[^ ]{1,}[A-z0-9 ]{1,}[^ ]{1,}$");
+            Regex rgxHumanName = new Regex(@"^[A-z]{1,50}$");
+            Regex rgxCoordinates = new Regex(@"^(([-]?[0-8]?[0-9])[.]([0-9]{5})|([-]?90[.][0]{5}))[,][ ](([-]?[1]?[0-7]?[0-9])[.]([0-9]{5})|([-]?180[.][0]{5}))$");
+            bool verificationPassed = true;
+
+            // Verify the ParkingLot name:
+            if (!rgxParkingLotName.IsMatch(name))
+            {
+                verificationPassed = false;
+                CV_ParkingLotName.IsValid = false;
+            }
+            if (!rgxParkingLotName.IsMatch(address))
+            {
+                verificationPassed = false;
+                CV_ParkingLotAddress.IsValid = false;
+            }
+            if (!rgxCoordinates.IsMatch(coordinates))
+            {
+                verificationPassed = false;
+                CV_ParkingLotCoordinates.IsValid = false;
+            }
+            TimeSpan openTime = TimeSpan.Parse(DDL_ParkingLotOpenTime.SelectedValue);
+            TimeSpan closeTime = TimeSpan.Parse(DDL_ParkingLotCloseTime.SelectedValue);
+            if(closeTime <= openTime)
+            {
+                verificationPassed = false;
+                CV_ParkingLotCloseTime.IsValid = false;
+            }
+            // Update the ParkingLot:
+            if (verificationPassed)
+            {
+                BLManagerDashboard.UpdateParkingLot(parkingLotID, name, address,
+                    coordinates, openTime, closeTime);
+            }
+        }
+
+        // Shows the Add Parking Lot prompt.
+        public void ShowAddParkingLotPrompt(object sender, EventArgs e)
+        {
+            ChangeParkingLotPanel('A');
+            ParkingLotManagementTitle.InnerText = "Add Parking Lot";
+        }
+
+        // Attempt to add a Parking Lot.
+        public void AddParkingLot(object sender, EventArgs e)
+        {
+            // Retrieve the user's input and set the Regex and verification checks:
+            string name = Tbx_AddParkingLotName.Text,
+                address = Tbx_AddParkingLotAddress.Text,
+                coordinates = Tbx_AddParkingLotCoordinates.Text;
+            TimeSpan openTime = TimeSpan.Parse(DDL_AddParkingLotOpenTime.Text),
+                closeTime = TimeSpan.Parse(DDL_AddParkingLotCloseTime.Text);
+            Regex rgxUserNamePwd = new Regex(@"^[^ ]{1,50}$");
+            Regex rgxParkingLotName = new Regex(@"^[^ ]{1,}[A-z0-9 ]{1,}[^ ]{1,}$");
+            Regex rgxHumanName = new Regex(@"^[A-z]{1,50}$");
+            Regex rgxCoordinates = new Regex(@"^(([-]?[0-8]?[0-9])[.]([0-9]{5})|([-]?90[.][0]{5}))[,][ ](([-]?[1]?[0-7]?[0-9])[.]([0-9]{5})|([-]?180[.][0]{5}))$");
+            bool verificationPassed = true;
+
+            // Verify the ParkingLot name:
+            if (!rgxParkingLotName.IsMatch(name))
+            {
+                verificationPassed = false;
+                CV_AddParkingLotName.IsValid = false;
+            }
+            if (!rgxParkingLotName.IsMatch(address))
+            {
+                verificationPassed = false;
+                CV_AddParkingLotAddress.IsValid = false;
+            }
+            if (!rgxCoordinates.IsMatch(coordinates))
+            {
+                verificationPassed = false;
+                CV_AddParkingLotCoordinates.IsValid = false;
+            }
+
+            if (closeTime <= openTime)
+            {
+                verificationPassed = false;
+                CV_AddParkingLotCloseTime.IsValid = false;
+            }
+            // Update the ParkingLot:
+            if (verificationPassed)
+            {
+                Manager manager = (Manager)Session["Manager"];
+                int managerID = manager.ManagerID;
+                ParkingLot parkingLot = BLManagerDashboard.AddParkingLot(managerID, name, address, coordinates, openTime, closeTime);
+
+                ChangeParkingLotPanel('D');
+                List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+                if (parkingLots == null)
+                {
+                    parkingLots = new List<ParkingLot>();
+                }
+                parkingLots.Add(parkingLot);
+                LV_ParkingLots.DataSource = parkingLots;
+                LV_ParkingLots.DataBind();
             }
         }
     }
