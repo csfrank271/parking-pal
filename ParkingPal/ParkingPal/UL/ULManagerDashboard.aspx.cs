@@ -289,7 +289,7 @@ namespace ParkingPal.UL
             // Retrieve the ID of the ParkingLot to be updated:
             List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
             int selectedItemIndex = LV_ParkingLots.SelectedIndex;
-            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ParkingLotID;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
 
             // Retrieve the user's input and set the Regex and verification checks:
             string name = Tbx_ParkingLotName.Text;

@@ -64,6 +64,10 @@
         ChangeParkingLotPanel('S');
         string[] commandArgs = e.CommandArgument.ToString().Split(',');
         Tbx_ParkingLotName.Text = commandArgs[0];
+        Tbx_ParkingLotAddress.Text = commandArgs[1];
+        Tbx_ParkingLotCoordinates.Text = commandArgs[2];
+        //DDL_ParkingLotOpenTime.SelectedValue = commandArgs[3];
+        //DDL_ParkingLotCloseTime.SelectedValue = commandArgs[4];
         LV_ParkingLots.SelectedIndex = selectedIndex;
         LV_ParkingLots.DataBind();
         ParkingLotManagementTitle.InnerText = "Parking Lot Management - " + commandArgs[0];
@@ -132,14 +136,15 @@
                                     <ItemTemplate> <!-- This template defines the layout for an item in the ParkingLot list -->
                                         <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item"
                                             CommandName="SelectParkingLot" ClientIDMode="AutoID"
-                                            CommandArgument='<%#Eval("ShortName")%>'>
+                                            CommandArgument='<%#Eval("ShortName")+","+Eval("LocationAddress")+","+
+                                                Eval("Coordinates")+","+Eval("OpenTime")+","+Eval("CloseTime")%>'>
                                             <span><%#Eval("ShortName")%></span>
                                         </asp:LinkButton>
                                     </ItemTemplate>
                                     <SelectedItemTemplate> <!-- This template defines the layout for the selected item in the ParkingLot list -->
                                         <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item active"
-                                            CommandName="SelectParkingLot" ClientIDMode="AutoID"
-                                            CommandArgument='<%#Eval("ShortName")%>'>
+                                            CommandArgument='<%#Eval("ShortName")+","+Eval("LocationAddress")+","+
+                                                Eval("Coordinates")+","+Eval("OpenTime")+","+Eval("CloseTime")%>'>
                                             <span><%#Eval("ShortName")%></span>
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>

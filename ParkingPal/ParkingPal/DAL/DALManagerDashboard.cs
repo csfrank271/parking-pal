@@ -218,14 +218,15 @@ namespace ParkingPal.DAL
                             ParkingLot parkingLot = new ParkingLot
                             (
                                 (int)reader["ParkingLotID"],
-                                managerID,
                                 adminID,
-                                reader["ApprovalStatus"].ToString().ToCharArray()[0],
+                                managerID,
+                                reader["ApprovalStatus"].ToString(),
                                 reader["ShortName"].ToString(),
                                 reader["LocationAddress"].ToString(),
                                 reader["Coordinates"].ToString(),
                                 (TimeSpan)reader["OpenTime"],
-                                (TimeSpan)reader["CloseTime"]
+                                (TimeSpan)reader["CloseTime"],
+                                null
                             );
                             parkingLots.Add(parkingLot);
                         }
@@ -301,8 +302,8 @@ namespace ParkingPal.DAL
                     int newParkingLotID = (int)sqlComm.Parameters["@new_parking_lot_id"].Value;
 
                     // Create the new ParkingLot object for ASP manipulation:
-                    parkingLot = new ParkingLot (newParkingLotID, managerID, null, 'U', name, address,
-                        coordinates, openTime, closeTime);
+                    parkingLot = new ParkingLot (newParkingLotID, null, managerID, "U", name, address,
+                        coordinates, openTime, closeTime, null);
                 }
             }
             catch (Exception exception)
