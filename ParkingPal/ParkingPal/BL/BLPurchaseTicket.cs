@@ -8,7 +8,32 @@ using ParkingPal.Models;
 namespace ParkingPal.BL
 {
     public class BLPurchaseTicket
-    {  
+    {
+
+
+        public static InspectorUser AddInspector(int managerID, string userName, string password,
+         string firstName, string lastName)
+        {
+            try
+            {
+                return DALManagerDashboard.AddInspector(managerID, userName, password, firstName, lastName);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+        public static int AddTicket(Ticket ticket)
+        {
+            try
+            {
+                return DALPurchaseTicket.AddTicket(ticket);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
         public static Rate GetRate(DateTime startTime, DateTime endTime, int carparkLocation, string parkingBayType)
         {
             var span = endTime.Subtract(startTime).TotalMinutes;

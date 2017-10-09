@@ -38,7 +38,8 @@ namespace ParkingPal.UL
                 List<Payment> payments = new List<Payment>();
                 Payment payment= new Payment(-1, -1, total); 
                 payments.Add(payment);
-                List<ParkingBay> parkingBays = null;
+                List<ParkingBay> parkingBays = null; 
+
                 Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), rate.HalfHourlyRate, this.parkingLotOptions.Value, this.carparkTypeOptions.Value, rate, null, null, payments);
                 strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
                 Session["Ticket"] = ticket;

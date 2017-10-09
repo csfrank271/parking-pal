@@ -1,4 +1,5 @@
-﻿using ParkingPal.DAL;
+﻿using ParkingPal.BL;
+using ParkingPal.DAL;
 using ParkingPal.Models;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,7 @@ using System.Web.UI.WebControls;
 namespace ParkingPal.UL
 {
     public partial class ULPurchaseTicketPayment : System.Web.UI.Page
-    {
-        static ParkingLot parkingLot;
-        static ParkingBay parkingBay;
+    { 
         static Ticket ticket;
         static Payment payment;
          
@@ -23,10 +22,10 @@ namespace ParkingPal.UL
         public static void PaymentCompleted()
         { 
             var test = 2;
-            ticket.Rate = ticket.RateObject.HalfHourlyRate;
-            var newTicketID = 0;
+            ticket.Rate = ticket.RateObject.HalfHourlyRate; 
+            int newTicketID = BLPurchaseTicket.AddTicket(ticket); 
             //insert ticket into db and return ticket id
-             foreach (var payment in ticket.Payments)
+            foreach (var payment in ticket.Payments)
             {
                 payment.ticketID = newTicketID;
                 // insert into db
@@ -71,10 +70,10 @@ namespace ParkingPal.UL
                         this.divStartTime.InnerText = ticket.StartDateTime != null ? ticket.StartDateTime.ToShortTimeString() : "";
                         this.divEndTime.InnerText = ticket.EndDateTime != null ? ticket.EndDateTime.ToShortTimeString() : "";
                         this.divRego.InnerText = ticket.Rego.Any() ? ticket.Rego : "";
-                        parkingLot = DALPurchaseTicket.GetParkingLot(Convert.ToInt16(ticket.ParkingLotLocation));
-                        parkingBay = DALPurchaseTicket.GetCarparkType(Convert.ToInt16(ticket.CarparkType), Convert.ToInt16(ticket.ParkingLotLocation));
-                        this.divLocation.InnerText = parkingLot.ShortName;
-                        this.divType.InnerText = parkingBay.CarparkType;
+                        ticket.ParkingLotObject = DALPurchaseTicket.GetParkingLot(Convert.ToInt16(ticket.ParkingLotLocation));
+                        ticket.ParkingBayObject = DALPurchaseTicket.GetCarparkType(Convert.ToInt16(ticket.CarparkType), Convert.ToInt16(ticket.ParkingLotLocation));
+                        this.divLocation.InnerText = ticket.ParkingLotObject.ShortName;
+                        this.divType.InnerText = ticket.ParkingBayObject.CarparkType;
                         decimal total = 0;
                         foreach (var payment in ticket.Payments)
                         {

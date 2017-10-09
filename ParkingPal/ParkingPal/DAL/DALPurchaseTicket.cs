@@ -12,7 +12,7 @@ namespace ParkingPal.DAL
     public class DALPurchaseTicket
     {
         public static List<Rate> GetRate(decimal timeDuration, int carparkLocation)
-        { 
+        {
             List<Rate> rates = null;
             try
             {
@@ -58,7 +58,7 @@ namespace ParkingPal.DAL
             try
             {
                 using (SqlConnection sqlConn = DALCommon.NewConnection())
-                { 
+                {
                     SqlCommand sqlComm = new SqlCommand("dbo.sp_get_related_carpark_types", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
 
@@ -69,7 +69,7 @@ namespace ParkingPal.DAL
                     if (reader.HasRows)
                     {
                         carparkTypes = new List<ParkingBay>();
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             ParkingBay carparkType = new ParkingBay(
                                 (int)reader["ParkingLotID"],
@@ -99,7 +99,7 @@ namespace ParkingPal.DAL
                 {
                     SqlCommand sqlComm = new SqlCommand("dbo.sp_get_parkinglot", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
-                    sqlComm.Parameters.Add("@parkinglot_id", SqlDbType.Int).Value = parkingLotLocation; 
+                    sqlComm.Parameters.Add("@parkinglot_id", SqlDbType.Int).Value = parkingLotLocation;
 
                     sqlConn.Open();
                     var test = sqlComm.ExecuteNonQuery();
@@ -179,9 +179,9 @@ namespace ParkingPal.DAL
             try
             {
                 using (SqlConnection sqlConn = DALCommon.NewConnection())
-                { 
-                     SqlCommand sqlComm = new SqlCommand("dbo.sp_get_all_parkingLot", sqlConn);
-                     sqlComm.CommandType = CommandType.StoredProcedure;  
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_all_parkingLot", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
 
                     sqlConn.Open();
                     sqlComm.ExecuteNonQuery();
@@ -210,22 +210,53 @@ namespace ParkingPal.DAL
                     reader.Close();
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 throw exception;
             }
             return parkingLots;
         }
 
-        private static string split( IEnumerable<int> inString )
+        private static string split(IEnumerable<int> inString)
         {
             string returnString = "";
-            foreach ( int i in inString )
+            foreach (int i in inString)
             {
                 returnString += "" + i + ",";
             }
 
             return returnString.Substring(0, returnString.Length);
+        }
+
+
+        public static int AddTicket(Ticket ticket)
+        {
+            int newTicketID = -1;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_insert_ticket", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@ParkingLotID", SqlDbType.Int).Value = ticket.ParkingLotObject.ID;
+                    sqlComm.Parameters.Add("@CarparkTypeID", SqlDbType.Int).Value = ticket.ParkingBayObject.CarparkTypeID;
+                    sqlComm.Parameters.Add("@Rego", SqlDbType.NVarChar).Value = ticket.Rego;
+                    sqlComm.Parameters.Add("@StartDateTime", SqlDbType.DateTime2).Value = ticket.StartDateTime;
+                    sqlComm.Parameters.Add("@EndDateTime", SqlDbType.DateTime2).Value = ticket.EndDateTime;
+                    sqlComm.Parameters.Add("@Rate", SqlDbType.Decimal).Value = ticket.Rate;
+                    sqlComm.Parameters["@new_ticket_id"].Direction = ParameterDirection.Output;
+
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+
+                    newTicketID = (int)sqlComm.Parameters["@new_ticket_id"].Value;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return newTicketID;
         }
     }
 }
