@@ -109,16 +109,22 @@ namespace ParkingPal.DAL
                         parkingLots = new List<ParkingLot>();
                         while (reader.Read())
                         {
+                            int? adminID = null;
+                            object adminIDObj = reader["AdminID"];
+                            if (adminIDObj != DBNull.Value)
+                            {
+                                adminID = (int)reader["AdminID"];
+                            }
                             ParkingLot parkingLot = new ParkingLot(
                                (int)reader["ID"],
+                               adminID,
                                (int)reader["ManagerID"],
                                reader["ApprovalStatus"].ToString(),
                                reader["ShortName"].ToString(),
                                reader["LocationAddress"].ToString(),
                                reader["Coordinates"].ToString(),
-                               reader["OpenTime"].ToString(),
-                               reader["CloseTime"].ToString(),
-                               (int)reader["AdminID"],
+                               (TimeSpan)reader["OpenTime"],
+                               (TimeSpan)reader["CloseTime"],
                                null
                                );
                             parkingLots.Add(parkingLot);
@@ -192,18 +198,24 @@ namespace ParkingPal.DAL
                         parkingLots = new List<ParkingLot>();
                         while (reader.Read())
                         {
+                            int? adminID = null;
+                            object adminIDObj = reader["AdminID"];
+                            if (adminIDObj != DBNull.Value)
+                            {
+                                adminID = (int)reader["AdminID"];
+                            }
                             ParkingLot parkingLot = new ParkingLot(
                                 (int)reader["ID"],
+                                adminID,
                                 (int)reader["ManagerID"],
                                 reader["ApprovalStatus"].ToString(),
                                 reader["ShortName"].ToString(),
                                 reader["LocationAddress"].ToString(),
                                 reader["Coordinates"].ToString(),
-                                reader["OpenTime"].ToString(),
-                                reader["CloseTime"].ToString(),
-                                (int)reader["AdminID"],
+                                (TimeSpan)reader["OpenTime"],
+                                (TimeSpan)reader["CloseTime"],
                                 null
-                                );
+                            );
                             parkingLots.Add(parkingLot);
                         }
                     }
