@@ -28,6 +28,7 @@ namespace ParkingPal.UL
             foreach (var payment in ticket.Payments)
             {
                 payment.ticketID = newTicketID;
+                int newPaymentID = BLPurchaseTicket.AddPayment(payment);
                 // insert into db
             } 
  

@@ -34,6 +34,19 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static int AddPayment(Payment payment)
+        {
+            try
+            {
+                return DALPurchaseTicket.AddPayment(payment);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         public static Rate GetRate(DateTime startTime, DateTime endTime, int carparkLocation, string parkingBayType)
         {
             var span = endTime.Subtract(startTime).TotalMinutes;
