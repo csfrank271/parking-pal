@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="TicketPayment" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true" CodeBehind="ULPurchaseTicketPayment.aspx.cs" Inherits="ParkingPal.UL.ULPurchaseTicketPayment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+        <script runat="server" EnablePartialRendering="true" id="ScriptPurchaseTicket1">
+        protected void PaymentCompleted(object sender, EventArgs e)
+        { 
+
+        }
+       </script>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,42 +38,44 @@
                     <div class="col s3">$<span runat="server" id="spanTotalPrice"></span></div>
                 </div> 
                 <div id="paypal-button"></div>
-                 <script>
-        paypal.Button.render({
+                <script>
+                    paypal.Button.render({
 
-            env: 'sandbox', // sandbox | production
-            client: {
-                sandbox: 'AVPUuBdakDk-KVpbzJje3Q9LFDHLtXjFlxjszwJ28L-JrEq2flx3xVLK8Y8J-HfWyEO92yvx5ZlRcyJj',
-                production: '<insert production client id>'
-            },
-            commit: true, // Show a 'Pay Now' button
+                        env: 'sandbox', // sandbox | production
+                        client: {
+                            sandbox: 'AVPUuBdakDk-KVpbzJje3Q9LFDHLtXjFlxjszwJ28L-JrEq2flx3xVLK8Y8J-HfWyEO92yvx5ZlRcyJj',
+                            production: '<insert production client id>'
+                        },
+                        commit: true, // Show a 'Pay Now' button
 
-            // payment() is called when the button is clicked
-            payment: function (data, actions) {
-                var total = document.getElementById('<%= spanTotalPrice.ClientID %>').innerText
-                // Make a call to the REST api to create the payment
-                return actions.payment.create({
-                    payment: {
-                        transactions: [
-                            {
-                                amount: { total: total, currency: 'AUD' }
-                            }
-                        ]
-                    }
-                });
-            },
+                        // payment() is called when the button is clicked
+                        payment: function (data, actions) {
+                            var total = document.getElementById('<%= spanTotalPrice.ClientID %>').innerText
+                            // Make a call to the REST api to create the payment
+                            return actions.payment.create({
+                                payment: {
+                                    transactions: [
+                                        {
+                                            amount: { total: total, currency: 'AUD' }
+                                        }
+                                    ]
+                                }
+                            });
+                        },
 
-            // onAuthorize() is called when the buyer approves the payment
-            onAuthorize: function (data, actions) {
+                        // onAuthorize() is called when the buyer approves the payment
+                        onAuthorize: function (data, actions) {
 
-                // Make a call to the REST api to execute the payment
-                return actions.payment.execute().then(function () {
-                    window.alert('Payment Complete!');
-                });
-            }
+                            // Make a call to the REST api to execute the payment
+                            return actions.payment.execute().then(function () { 
+                                Materialize.toast('Payment is completed', 3000);
+                                PageMethods.PaymentCompleted();
+                            });
+                        }
 
-        }, '#paypal-button');
-    </script>
+                    }, '#paypal-button');
+                </script>
+                <asp:ScriptManager ID="ScriptMgr" runat="server" EnablePageMethods="true"></asp:ScriptManager>
             </div>
         </div>
     </div>

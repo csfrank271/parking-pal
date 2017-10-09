@@ -34,17 +34,26 @@
         {
             if (string.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) || string.IsNullOrWhiteSpace(this.inputUserRego.Value)) {
                 Page.ClientScript.RegisterStartupScript(this.GetType(),"jsScript","enterEmailAndRegoToast()",true);
-
             } else {
-                NavigateToPayment(sender, e);
+                if (this.inputUserRego.Value.Length > 6)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "regoTooLongToast()", true);
+                }
+                else
+                {
+                    NavigateToPayment(sender, e);
+                }
             }
-        } 
+        }
     </script>
     <script id="jsScript">
         function enterEmailAndRegoToast() {
             // Materialize.toast(message, displayLength, className, completeCallback);
-            Materialize.toast('Please enter your e-mail address and rego.', 10000) // 10000 is the duration of the toast
-        } 
+            Materialize.toast('Please enter your e-mail address and rego.', 10000); // 10000 is the duration of the toast
+        }
+        function regoTooLongToast() {
+            Materialize.toast('Rego can not be greater than 6 characters.', 10000);
+        }
     </script>
     <div class="container">
         <div class="card">

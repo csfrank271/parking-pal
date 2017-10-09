@@ -42,9 +42,13 @@ namespace ParkingPal.DAL
                                 reader["Rego"].ToString(),
                                 (DateTime)reader["StartDateTime"],
                                 (DateTime)reader["EndDateTime"],
-                                (double)reader.GetDecimal(4),
+                                (decimal)reader.GetDecimal(4),
                                 reader["LocationAddress"].ToString(),
-                                reader["CarparkType"].ToString()
+                                reader["CarparkType"].ToString(),
+                                null,
+                                null,
+                                null,
+                                null
                             );
                             tickets.Add(ticket);
                         }

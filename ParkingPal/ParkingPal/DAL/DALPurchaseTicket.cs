@@ -90,6 +90,89 @@ namespace ParkingPal.DAL
             return carparkTypes;
         }
 
+        public static ParkingLot GetParkingLot(int parkingLotLocation)
+        {
+            List<ParkingLot> parkingLots = null;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_parkinglot", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parkinglot_id", SqlDbType.Int).Value = parkingLotLocation; 
+
+                    sqlConn.Open();
+                    var test = sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        parkingLots = new List<ParkingLot>();
+                        while (reader.Read())
+                        {
+                            ParkingLot parkingLot = new ParkingLot(
+                               (int)reader["ID"],
+                               (int)reader["ManagerID"],
+                               reader["ApprovalStatus"].ToString(),
+                               reader["ShortName"].ToString(),
+                               reader["LocationAddress"].ToString(),
+                               reader["Coordinates"].ToString(),
+                               reader["OpenTime"].ToString(),
+                               reader["CloseTime"].ToString(),
+                               (int)reader["AdminID"],
+                               null
+                               );
+                            parkingLots.Add(parkingLot);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return parkingLots.First();
+        }
+
+        public static ParkingBay GetCarparkType(int carparkType, int parkingLot)
+        {
+            List<ParkingBay> parkingBays = null;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_carpark_type", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@carpark_type_id", SqlDbType.Int).Value = carparkType;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLot;
+
+                    sqlConn.Open();
+                    var test = sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        parkingBays = new List<ParkingBay>();
+                        while (reader.Read())
+                        {
+                            ParkingBay parkingBay = new ParkingBay(
+                                (int)reader["ParkingLotID"],
+                                (int)reader["CarparkTypeID"],
+                                (int)reader["NumberOfParks"],
+                                reader["CarparkType"].ToString()
+                                );
+                            parkingBays.Add(parkingBay);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return parkingBays.First();
+        }
+
         public static List<ParkingLot> GetParkingLots()
         {
             List<ParkingLot> parkingLots = null;

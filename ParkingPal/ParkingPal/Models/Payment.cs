@@ -6,39 +6,16 @@ using System.Web;
 namespace ParkingPal.Models
 {
     public class Payment
-    {
-        private int paymentID, ticketID;
+    { 
+        public int paymentID { get; set; }
+        public int ticketID { get; set; }
+        public decimal total { get; set; }
 
-        public Payment(int paymentID, int ticketID)
+        public Payment(int paymentID, int ticketID, decimal total)
         {
             this.paymentID = paymentID;
             this.ticketID = ticketID;
-        }
-
-        public int PaymentID
-        {
-            get
-            {
-                return paymentID;
-            }
-
-            set
-            {
-                paymentID = value;
-            }
-        }
-
-        public int TicketID
-        {
-            get
-            {
-                return ticketID;
-            }
-
-            set
-            {
-                ticketID = value;
-            }
-        }
+            this.total = total;
+        } 
     }
 }

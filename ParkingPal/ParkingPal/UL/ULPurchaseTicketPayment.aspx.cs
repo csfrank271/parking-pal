@@ -1,8 +1,11 @@
-﻿using ParkingPal.Models;
+﻿using ParkingPal.DAL;
+using ParkingPal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,6 +14,25 @@ namespace ParkingPal.UL
 {
     public partial class ULPurchaseTicketPayment : System.Web.UI.Page
     {
+        static ParkingLot parkingLot;
+        static ParkingBay parkingBay;
+        static Ticket ticket;
+        static Payment payment;
+         
+        [ScriptMethod, WebMethod]
+        public static void PaymentCompleted()
+        { 
+            var test = 2;
+            ticket.Rate = ticket.RateObject.HalfHourlyRate;
+            var newTicketID = 0;
+            //insert ticket into db and return ticket id
+             foreach (var payment in ticket.Payments)
+            {
+                payment.ticketID = newTicketID;
+                // insert into db
+            } 
+ 
+        } 
         protected void Page_Load(object sender, EventArgs e)
         {
             string strNewUrl = null;
@@ -37,7 +59,7 @@ namespace ParkingPal.UL
                 }
                 else
                 {
-                    Ticket ticket = (Ticket)Session["Ticket"];
+                    ticket = (Ticket)Session["Ticket"];
                     if (ticket == null)
                     {
                         var strUrl = "~/UL/ULPurchaseTicketDashboard.aspx";
@@ -49,9 +71,16 @@ namespace ParkingPal.UL
                         this.divStartTime.InnerText = ticket.StartDateTime != null ? ticket.StartDateTime.ToShortTimeString() : "";
                         this.divEndTime.InnerText = ticket.EndDateTime != null ? ticket.EndDateTime.ToShortTimeString() : "";
                         this.divRego.InnerText = ticket.Rego.Any() ? ticket.Rego : "";
-                        this.divLocation.InnerText = ticket.ParkingLotLocation != null ? ticket.ParkingLotLocation : "";
-                        this.divType.InnerText = ticket.CarparkType.Any() ? ticket.CarparkType : "";
-                        this.spanTotalPrice.InnerText = "52.00";
+                        parkingLot = DALPurchaseTicket.GetParkingLot(Convert.ToInt16(ticket.ParkingLotLocation));
+                        parkingBay = DALPurchaseTicket.GetCarparkType(Convert.ToInt16(ticket.CarparkType), Convert.ToInt16(ticket.ParkingLotLocation));
+                        this.divLocation.InnerText = parkingLot.ShortName;
+                        this.divType.InnerText = parkingBay.CarparkType;
+                        decimal total = 0;
+                        foreach (var payment in ticket.Payments)
+                        {
+                            total += payment.total;
+                        }
+                        this.spanTotalPrice.InnerText = total.ToString(); 
                     }
                 }
             }

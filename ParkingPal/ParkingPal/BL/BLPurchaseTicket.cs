@@ -9,14 +9,26 @@ namespace ParkingPal.BL
 {
     public class BLPurchaseTicket
     {  
-        public static List<Rate> GetRate(DateTime startTime, DateTime endTime, int carparkLocation, string parkingBayType)
+        public static Rate GetRate(DateTime startTime, DateTime endTime, int carparkLocation, string parkingBayType)
         {
             var span = endTime.Subtract(startTime).TotalMinutes;
 
             var timeDuration = Convert.ToDecimal(span);
             try
             {
-                return DALPurchaseTicket.GetRate(timeDuration, carparkLocation);
+                var rates = DALPurchaseTicket.GetRate(timeDuration, carparkLocation);
+                Rate rate = null;
+                decimal remainder = 0; 
+                foreach (var r in rates)
+                {
+                    if ((rate == null || (timeDuration - r.TimeDuration) < remainder && (timeDuration -r.TimeDuration > 0)))
+                    {
+                        remainder = r.TimeDuration - timeDuration;
+                        rate = r;
+                    }
+
+                }
+                return rate;
             }
             catch (Exception expection)
             {
