@@ -12,7 +12,7 @@ namespace ParkingPal.Models
         private int? adminID;
         private char approvalStatus;
         private string shortName, address, coordinates;
-        private DateTime openTime, closeTime;
+        private TimeSpan openTime, closeTime;
 
         public int ParkingLotID { get; set; }
         public int ManagerID { get; set; }
@@ -21,16 +21,16 @@ namespace ParkingPal.Models
         public string ShortName { get; set; }
         public string Address { get; set; }
         public string Coordinates { get; set; }
-        public DateTime OpenTime { get; set; }
-        public DateTime CloseTime { get; set; }
+        public TimeSpan OpenTime { get; set; }
+        public TimeSpan CloseTime { get; set; }
 
         // Constructor:
         public ParkingLot(int parkingLotID, int managerID, int? adminID,
             char approvalStatus, string shortName, string address,
-            string coordinates, DateTime openTime, DateTime closeTime)
+            string coordinates, TimeSpan openTime, TimeSpan closeTime)
         {
             this.ParkingLotID = parkingLotID;
-            this.managerID = managerID;
+            this.ManagerID = managerID;
             this.AdminID = adminID;
             this.ApprovalStatus = approvalStatus;
             this.ShortName = shortName;
