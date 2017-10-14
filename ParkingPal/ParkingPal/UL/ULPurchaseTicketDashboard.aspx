@@ -30,6 +30,17 @@
             this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.inputTicketStartTime.Value).AddMinutes(30).ToShortTimeString();
         }
 
+        protected bool IsValidEmail(string email)
+        {
+            try {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch {
+                return false;
+            }
+        }
+
         protected void btn_Next(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) || string.IsNullOrWhiteSpace(this.inputUserRego.Value)) {
@@ -41,7 +52,13 @@
                 }
                 else
                 {
-                    NavigateToPayment(sender, e);
+                    if (!IsValidEmail(this.inputUserEmailAddress.Value))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "invalidEmail()", true);
+                    } else
+                    {
+                        NavigateToPayment(sender, e);
+                    }
                 }
             }
         }
@@ -53,6 +70,9 @@
         }
         function regoTooLongToast() {
             Materialize.toast('Rego can not be greater than 6 characters.', 10000);
+        }
+        function invalidEmail() {
+            Materialize.toast('Please enter a valid e-mail address.', 10000);
         }
     </script>
     <div class="container">
@@ -82,7 +102,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <select runat="server" name="parkingLotOptions" id="parkingLotOptions" class="material_select">
+                        <select runat="server" name="parkingLotOptions" id="parkingLotOptions" autoPostBack="true" onchange="handleChange()" class="material_select">
                         </select>
                         <label runat="server" id="labelSelectCarparkOptions" for="selectCarparkOptions">Carpark</label>
                     </div>

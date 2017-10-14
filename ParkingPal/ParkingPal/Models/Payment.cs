@@ -11,11 +11,14 @@ namespace ParkingPal.Models
         public int ticketID { get; set; }
         public decimal total { get; set; }
 
-        public Payment(int paymentID, int ticketID, decimal total)
+        public string status { get; set; }
+
+        public Payment(int paymentID, int ticketID, decimal total, string status)
         {
             this.paymentID = paymentID;
             this.ticketID = ticketID;
             this.total = total;
+            this.status = status;
         } 
     }
 }

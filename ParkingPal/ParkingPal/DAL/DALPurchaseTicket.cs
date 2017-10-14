@@ -227,18 +227,7 @@ namespace ParkingPal.DAL
                 throw exception;
             }
             return parkingLots;
-        }
-
-        private static string split(IEnumerable<int> inString)
-        {
-            string returnString = "";
-            foreach (int i in inString)
-            {
-                returnString += "" + i + ",";
-            }
-
-            return returnString.Substring(0, returnString.Length);
-        }
+        } 
 
         public static int AddPayment(Payment payment)
         {
@@ -247,9 +236,15 @@ namespace ParkingPal.DAL
             {
                 using (SqlConnection sqlConn = DALCommon.NewConnection())
                 {
-                    SqlCommand sqlComm = new SqlCommand("dbo.sp_insert_payment", sqlConn);
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_create_payment", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
-                    sqlComm.Parameters.Add("");
+                    sqlComm.Parameters.Add("ticket_id", SqlDbType.Int).Value = payment.ticketID;
+                    sqlComm.Parameters.Add("amount", SqlDbType.Decimal).Value = payment.total;
+                    sqlComm.Parameters.Add("status", SqlDbType.NVarChar).Value = payment.status;
+                    sqlComm.Parameters.Add("payment_time", SqlDbType.DateTime2).Value = DateTime.Now;
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    return 1;
                 }
             }
             catch (Exception exception)

@@ -14,6 +14,12 @@ namespace ParkingPal.UL
     { 
         string strNewURL = null;
 
+        [WebMethod]
+        protected void parkingLotOptionChanged()
+        {
+            var test = 1;
+        }
+
         protected void Cancel (object sender, EventArgs e)
         {
             strNewURL = "~/UL/ULHome.aspx"; 
@@ -36,11 +42,11 @@ namespace ParkingPal.UL
                 var total = rate.HalfHourlyRate * (decimal)duration;
                 var carpark = this.parkingLotOptions.Value;
                 List<Payment> payments = new List<Payment>();
-                Payment payment= new Payment(-1, -1, total); 
+                Payment payment= new Payment(-1, -1, total, "unconfirmed"); 
                 payments.Add(payment);
                 List<ParkingBay> parkingBays = null; 
 
-                Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), rate.HalfHourlyRate, this.parkingLotOptions.Value, this.carparkTypeOptions.Value, rate, null, null, payments);
+                Ticket ticket = new Ticket(-1, this.inputUserRego.Value, Convert.ToDateTime(this.inputTicketStartTime.Value), Convert.ToDateTime(this.labelTicketEndTime.InnerText), rate.HalfHourlyRate, this.parkingLotOptions.Value, this.carparkTypeOptions.Value, rate, null, null, payments, this.inputUserEmailAddress.Value);
                 strNewURL = "~/UL/ULPurchaseTicketPayment.aspx";
                 Session["Ticket"] = ticket;
                 Response.Redirect(strNewURL);
@@ -95,7 +101,8 @@ namespace ParkingPal.UL
                             this.carparkTypeOptions.DataValueField = "CarparkTypeID";
                             IEnumerable<ParkingLot> selectedParkingLot = parkingLots.Where(parkingLot => parkingLot.ID == Convert.ToInt16(this.parkingLotOptions.Value));
                             this.carparkTypeOptions.DataSource = selectedParkingLot.First().CarparkTypes;
-                            this.carparkTypeOptions.DataBind(); 
+                            this.carparkTypeOptions.DataBind();
+                            this.carparkTypeOptions.SelectedIndex = 0;
                         }
                     }
                 }

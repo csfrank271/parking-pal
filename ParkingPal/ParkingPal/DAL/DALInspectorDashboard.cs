@@ -48,6 +48,7 @@ namespace ParkingPal.DAL
                                 null,
                                 null,
                                 null,
+                                null,
                                 null
                             );
                             tickets.Add(ticket);

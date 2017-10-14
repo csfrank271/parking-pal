@@ -114,6 +114,7 @@
     <Content Include="UL\ULLogin.aspx" />
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
+    <Content Include="UL\ULProcessTicketAndPayment.aspx" />
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketPayment.aspx" />
     <Content Include="UL\ULRegister.aspx" />
@@ -200,6 +201,13 @@
     </Compile>
     <Compile Include="UL\ULManagerDashboard.aspx.designer.cs">
       <DependentUpon>ULManagerDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULProcessTicketAndPayment.aspx.cs">
+      <DependentUpon>ULProcessTicketAndPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULProcessTicketAndPayment.aspx.designer.cs">
+      <DependentUpon>ULProcessTicketAndPayment.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\ULPurchaseTicketDashboard.aspx.cs">
       <DependentUpon>ULPurchaseTicketDashboard.aspx</DependentUpon>

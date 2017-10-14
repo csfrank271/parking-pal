@@ -21,9 +21,10 @@ namespace ParkingPal.Models
 
         public List<Payment> Payments { get; set; }
 
+        public string Email { get; set; }
         public Ticket(int ticketID, string rego, DateTime startDateTime, DateTime endDateTime,
             decimal rate, string parkingLotLocation, string carparkType,
-            Rate rateObject, ParkingBay parkingBayObject, ParkingLot parkingLotObject, List<Payment> payments)
+            Rate rateObject, ParkingBay parkingBayObject, ParkingLot parkingLotObject, List<Payment> payments, string email)
         {
             this.TicketID = ticketID;
             this.Rego = rego;
@@ -36,6 +37,7 @@ namespace ParkingPal.Models
             this.ParkingBayObject = parkingBayObject;
             this.ParkingLotObject = parkingLotObject;
             this.Payments = payments;
+            this.Email = email;
         }
 
     }
