@@ -30,7 +30,8 @@ namespace ParkingPal.Models
                 "/UL/ULLogin.aspx",
                 "/UL/ULPurchaseTicketDashboard.aspx",
                 "/UL/ULPurchaseTicketPayment.aspx",
-                "/UL/ULHome.aspx"
+                "/UL/ULHome.aspx",
+                "/UL/ULRegister.aspx"
             };
 
             // Determine the appUserType:
