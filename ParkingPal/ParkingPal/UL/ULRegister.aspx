@@ -7,23 +7,49 @@
         <div class="bgimg" style="background-image: url('../IMG/signa 2010.jpg');">
             <h2 class="home"><%: Page.Title %></h2>
         </div>
+        <div class="s12 container">
+            <h5>Enter your details below to create your free account.</h5>
+            <p style="color:dimgrey"><i>Registering an account is currently available only to Management</i></p>
+        </div>
     <!-- Form input fields -->
         <div class="row">
+             <div class="input-field col m6 s12">
+                <input runat="server" id="inputFirstName" type="text" class="validate">
+                <label for="inputFirstName">First Name</label>
+                <asp:RequiredFieldValidator
+                    ID="rfvFirstName"
+                    ControlToValidate="inputFirstName"
+                    Display="Dynamic"
+                    runat="server"
+                    ErrorMessage="First Name can not be empty.">
+                </asp:RequiredFieldValidator>
+            </div>
             <div class="input-field col m6 s12">
-                <input runat="server" id="inputName" type="text" class="validate">
+                <input runat="server" id="inputLastName" type="text" class="validate">
+                <label for="inputLastName">Last Name</label>
+                <asp:RequiredFieldValidator
+                    ID="rfvLastName"
+                    ControlToValidate="inputLastName"
+                    Display="Dynamic"
+                    runat="server"
+                    ErrorMessage="Last Name can not be empty.">
+                </asp:RequiredFieldValidator>
+            </div>
+            <div class="input-field col m6 s12">
+                <input runat="server" id="inputUserName" type="text" class="validate">
                 <label for="inputUserName">User Name</label>
-               <!-- <asp:RequiredFieldValidator
+                <asp:RequiredFieldValidator
                     ID="rfvUserName"
                     ControlToValidate="inputUserName"
                     Display="Dynamic"
                     runat="server"
                     ErrorMessage="User name can not be empty.">
-                </asp:RequiredFieldValidator> -->
+                </asp:RequiredFieldValidator>
             </div>
             <div class="input-field col m6 s12">
                 <input runat="server" id="inputPassword" type="password" class="validate">
                 <label for="inputPassword">Password</label>
-                <!-- <asp:RequiredFieldValidator
+                <asp:RequiredFieldValidator
                     ID="rfvPassword"
                     ControlToValidate="inputPassword"
                     Display="Dynamic"
