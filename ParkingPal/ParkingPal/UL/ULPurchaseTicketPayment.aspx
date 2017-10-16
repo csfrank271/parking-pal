@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="TicketPayment" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true" CodeBehind="ULPurchaseTicketPayment.aspx.cs" Inherits="ParkingPal.UL.ULPurchaseTicketPayment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-        <script runat="server" EnablePartialRendering="true" id="ScriptPurchaseTicket1">
-        protected void PaymentCompleted(object sender, EventArgs e)
-        { 
-
-        }
+        <script runat="server" EnablePartialRendering="true" id="csharpscript">
+            protected void PaymentCompleted()
+            {
+                PaymentCompleted();
+            }
        </script>
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -67,9 +67,10 @@
                         onAuthorize: function (data, actions) {
 
                             // Make a call to the REST api to execute the payment
-                            return actions.payment.execute().then(function () { 
-                                Materialize.toast('Payment is completed', 3000);
-                                PageMethods.PaymentCompleted();
+                            return actions.payment.execute().then(function () {
+                                document.getElementById("paypal-button").hidden = true;
+                                Materialize.toast('Payment is completed', 3000); 
+                                window.location.href = "ULProcessTicketAndPayment.aspx";
                             });
                         }
 

@@ -13,13 +13,13 @@ namespace ParkingPal.UL {
     public partial class ULPurchaseTicketPayment {
         
         /// <summary>
-        /// ScriptPurchaseTicket1 control.
+        /// csharpscript control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptPurchaseTicket1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl csharpscript;
         
         /// <summary>
         /// divRego control.

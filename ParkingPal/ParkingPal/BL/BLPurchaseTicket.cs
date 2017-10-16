@@ -4,25 +4,13 @@ using System.Linq;
 using System.Web;
 using ParkingPal.DAL;
 using ParkingPal.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace ParkingPal.BL
 {
     public class BLPurchaseTicket
-    {
-
-
-        public static InspectorUser AddInspector(int managerID, string userName, string password,
-         string firstName, string lastName)
-        {
-            try
-            {
-                return DALManagerDashboard.AddInspector(managerID, userName, password, firstName, lastName);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
-        }
+    { 
         public static int AddTicket(Ticket ticket)
         {
             try
@@ -35,11 +23,39 @@ namespace ParkingPal.BL
             }
         }
 
-        public static int AddPayment(Payment payment)
+        public static int AddPayment(Payment payment, Ticket ticket)
         {
             try
             {
-                return DALPurchaseTicket.AddPayment(payment);
+                int paymentAdded = DALPurchaseTicket.AddPayment(payment);
+
+
+                using (MailMessage mm = new MailMessage("parkingpal9@gmail.com", ticket.Email))
+                {
+                    mm.Subject = "Confirmation Of Parking Ticket Purchase";
+                    mm.Body = @"Thank you for purchasing a parking ticket with ParkingPal. <br />
+                                  Please find below the details of your ticket and recent payment: <br />
+                                  <table>
+                                    <tr><td><b>Ticket ID:</b></td><td>"+payment.ticketID+@"</td></tr>
+                                   <tr><td><b>Start</b></td><td>" + ticket.StartDateTime.ToString() + @"</td> 
+                                  <td><b>End</b></td><td>" + ticket.EndDateTime.ToString() + @"</td></tr>
+                                  <tr><td><b>Location</b></td><td>"+ticket.ParkingLotObject.ShortName+@"</td>
+                                  <td><b>Type</b></td><td>"+ticket.ParkingBayObject.CarparkType+@"</td></tr>
+                                  <tr><td><b>Rate</b></td><td>$"+ticket.Rate+@"</td>
+                                  <td><b>Payment Total</b><td>$"+payment.total+@"</td></tr></table> <br />
+                                  You are able to extend the time on all current tickets via the ParkingPal website using the ticket ID. 
+                                    "; 
+                    mm.IsBodyHtml = true; 
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("parkingpal9@gmail.com", "parkingpal1");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mm);
+                }
+                    return paymentAdded;
             }
             catch (Exception exception)
             {

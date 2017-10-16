@@ -64,7 +64,7 @@ namespace ParkingPal.UL {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputTicketStartTime;
+        protected global::System.Web.UI.WebControls.TextBox inputTicketStartTime;
         
         /// <summary>
         /// labelTicketStartTime control.
@@ -109,7 +109,7 @@ namespace ParkingPal.UL {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect parkingLotOptions;
+        protected global::System.Web.UI.WebControls.DropDownList parkingLotOptions;
         
         /// <summary>
         /// labelSelectCarparkOptions control.

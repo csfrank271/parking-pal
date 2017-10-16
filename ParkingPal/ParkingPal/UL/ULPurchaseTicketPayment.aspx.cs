@@ -15,24 +15,9 @@ namespace ParkingPal.UL
 {
     public partial class ULPurchaseTicketPayment : System.Web.UI.Page
     { 
-        static Ticket ticket;
-        static Payment payment;
-         
-        [ScriptMethod, WebMethod]
-        public static void PaymentCompleted()
-        { 
-            var test = 2;
-            ticket.Rate = ticket.RateObject.HalfHourlyRate; 
-            int newTicketID = BLPurchaseTicket.AddTicket(ticket); 
-            //insert ticket into db and return ticket id
-            foreach (var payment in ticket.Payments)
-            {
-                payment.ticketID = newTicketID;
-                int newPaymentID = BLPurchaseTicket.AddPayment(payment);
-                // insert into db
-            } 
- 
-        } 
+        Ticket ticket;
+        Payment payment;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             string strNewUrl = null;
