@@ -13,75 +13,111 @@ namespace ParkingPal.UL {
     public partial class ULRegister {
         
         /// <summary>
-        /// inputFirstName control.
+        /// InputEmailAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputFirstName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText InputEmailAddress;
         
         /// <summary>
-        /// rfvFirstName control.
+        /// CV_InputEmailAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirstName;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InputEmailAddress;
         
         /// <summary>
-        /// inputLastName control.
+        /// InputFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputLastName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText InputFirstName;
         
         /// <summary>
-        /// rfvLastName control.
+        /// CV_InputFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLastName;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InputFirstName;
         
         /// <summary>
-        /// inputUserName control.
+        /// InputLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputUserName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText InputLastName;
         
         /// <summary>
-        /// rfvUserName control.
+        /// CV_InputLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUserName;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InputLastName;
         
         /// <summary>
-        /// inputPassword control.
+        /// InputPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword inputPassword;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword InputPassword;
         
         /// <summary>
-        /// rfvPassword control.
+        /// CV_InputPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPassword;
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InputPassword;
+        
+        /// <summary>
+        /// InputConfirmPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword InputConfirmPassword;
+        
+        /// <summary>
+        /// CV_InputConfirmPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_InputConfirmPassword;
+        
+        /// <summary>
+        /// BTN_RegManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_RegManager;
+        
+        /// <summary>
+        /// CV_RegManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_RegManager;
     }
 }
