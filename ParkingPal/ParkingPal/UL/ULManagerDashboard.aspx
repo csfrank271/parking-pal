@@ -125,7 +125,7 @@
                                     </LayoutTemplate>
                                     <EmptyDataTemplate> <!-- This layout is shown when the ParkingLot list is empty -->
                                         <div class="col s12">
-                                            <i class="fa fa-info-circle"></i>
+                                            <i class="material-icons">info_outline</i>
                                             <span>
                                                 You are not managing any Parking Lots. Click 'Request Parking Lot'
                                                 in the 'Additional actions' section to request the creation of a
@@ -142,10 +142,10 @@
                                         </asp:LinkButton>
                                     </ItemTemplate>
                                     <SelectedItemTemplate> <!-- This template defines the layout for the selected item in the ParkingLot list -->
-                                        <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item active"
+                                        <asp:LinkButton runat="server" ID="LB_SelectParkingLot" class="collection-item active grey darken-2"
                                             CommandArgument='<%#Eval("ShortName")+","+Eval("LocationAddress")+","+
                                                 Eval("Coordinates")+","+Eval("OpenTime")+","+Eval("CloseTime")%>'>
-                                            <span><%#Eval("ShortName")%></span>
+                                            <span style="color:white"><%#Eval("ShortName")%></span>
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>
                                 </asp:ListView>
@@ -176,7 +176,7 @@
                                 </div>
                                 <div runat="server" id ="ParkingLotManagementPanel_Default"> <!-- The default screen for the Parking Lot Management Panel -->
                                     <div class="col s12">
-                                        <i class="fa fa-info-circle"></i>
+                                        <i class="material-icons">info_outline</i>
                                         <span>
                                             This space is an area for managing Parking Lots. It will display details
                                             of a Parking Lot when selected from the Parking Lot list, and provide the
@@ -296,7 +296,7 @@
                                     </LayoutTemplate>
                                     <EmptyDataTemplate> <!-- This layout is shown when the Inspector list is empty -->
                                         <div class="col s12">
-                                            <i class="fa fa-info-circle"></i>
+                                            <i class="material-icons">info_outline</i>
                                             <span>
                                                 You are not managing any Inspectors. Click 'Add Inspector'
                                                 in the 'Additional actions' section to add a new Inspector.
@@ -312,11 +312,11 @@
                                         </asp:LinkButton>
                                     </ItemTemplate>
                                     <SelectedItemTemplate> <!-- This template defines the layout for the selected item in the Inspector list -->
-                                        <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item active"
+                                        <asp:LinkButton runat="server" ID="LB_SelectInspector" class="collection-item active grey darken-2"
                                             CommandName="SelectInspector" ClientIDMode="AutoID"
                                             CommandArgument='<%#Eval("AppUser.UserName")+","+Eval("AppUser.UserPassword")+","+
                                                 Eval("AppUser.FirstName")+","+Eval("AppUser.LastName")%>'>
-                                            <span><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
+                                            <span style="color:white"><%#Eval("AppUser.FirstName")%>&nbsp;<%#Eval("AppUser.LastName")%></span>
                                         </asp:LinkButton>
                                     </SelectedItemTemplate>
                                 </asp:ListView>
@@ -347,7 +347,7 @@
                                 </div>
                                 <div runat="server" id ="InspectorManagmentPanel_Default"> <!-- The default screen for the Inspector Management Panel -->
                                     <div class="col s12">
-                                        <i class="fa fa-info-circle"></i>
+                                        <i class="material-icons">info_outline</i>
                                         <span>
                                             This space is an area for managing Inspectors. It will display details
                                             of an Inspector when selected from the Inspector list, and provide the
