@@ -26,6 +26,44 @@ namespace ParkingPal.UL
             this.carparkTypeOptions.SelectedIndex = 0;
         }
 
+        protected bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        protected void btn_Next(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) || string.IsNullOrWhiteSpace(this.inputUserRego.Value))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "enterEmailAndRegoToast()", true);
+            }
+            else
+            {
+                if (this.inputUserRego.Value.Length > 6)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "regoTooLongToast()", true);
+                }
+                else
+                {
+                    if (!IsValidEmail(this.inputUserEmailAddress.Value))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "invalidEmail()", true);
+                    }
+                    else
+                    {
+                        NavigateToPayment(sender, e);
+                    }
+                }
+            }
+        }
         protected void Cancel (object sender, EventArgs e)
         {
             strNewURL = "~/UL/ULHome.aspx"; 
@@ -43,7 +81,7 @@ namespace ParkingPal.UL
             } else
             {
                 // make call to dl to get ticket price and rate
-                var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Text), Convert.ToDateTime(this.labelTicketEndTime.InnerText), 6, this.carparkTypeOptions.Value);
+                var rate = BLPurchaseTicket.GetRate(Convert.ToDateTime(this.inputTicketStartTime.Text), Convert.ToDateTime(this.labelTicketEndTime.InnerText), Convert.ToInt16(this.carparkTypeOptions.Value), this.carparkTypeOptions.Value);
                 var duration = Convert.ToDateTime(this.labelTicketEndTime.InnerText).Subtract(Convert.ToDateTime(this.inputTicketStartTime.Text)).TotalMinutes / 30;
                 var total = rate.HalfHourlyRate * (decimal)duration;
                 var carpark = this.parkingLotOptions.SelectedValue;

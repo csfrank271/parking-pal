@@ -30,38 +30,7 @@
             this.labelTicketEndTime.InnerText = Convert.ToDateTime(this.inputTicketStartTime.Text).AddMinutes(30).ToShortTimeString();
         }
 
-        protected bool IsValidEmail(string email)
-        {
-            try {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch {
-                return false;
-            }
-        }
-
-        protected void btn_Next(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.inputUserEmailAddress.Value) || string.IsNullOrWhiteSpace(this.inputUserRego.Value)) {
-                Page.ClientScript.RegisterStartupScript(this.GetType(),"jsScript","enterEmailAndRegoToast()",true);
-            } else {
-                if (this.inputUserRego.Value.Length > 6)
-                {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "regoTooLongToast()", true);
-                }
-                else
-                {
-                    if (!IsValidEmail(this.inputUserEmailAddress.Value))
-                    {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "invalidEmail()", true);
-                    } else
-                    {
-                        NavigateToPayment(sender, e);
-                    }
-                }
-            }
-        }
+       
     </script>
     <script id="jsScript">
         function enterEmailAndRegoToast() {
