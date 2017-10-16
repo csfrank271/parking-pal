@@ -45,7 +45,7 @@
             </div>
             <div>
                <a href="../UL/ULRegister.aspx">
-                Click here to create an account
+                Want to register your parking lot to ParkingPal? Create a free account here.
            </a>
             </div>
         </div>
