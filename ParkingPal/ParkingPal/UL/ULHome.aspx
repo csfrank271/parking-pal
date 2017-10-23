@@ -12,11 +12,24 @@
     <br />
     <div class="center">
         <!--add link to purchase screen when created-->
-           <a href="../UL/ULPurchaseTicketDashboard.aspx" class="waves-effect waves-light blue darken-3 btn-large center">
+        <div class="col row s12 m6">
+            <a href="../UL/ULPurchaseTicketDashboard.aspx" class="waves-effect waves-light blue darken-3 btn-large center">
                <i class="material-icons left">
                    schedule</i>
             Buy a Ticket Now
-           </a>
+           </a> 
+        </div>
+        <div class="col row s12 m6">
+            <div class="col s3 m4"></div>
+            <div class="input-field col s6 m2">
+                <input runat="server" id="inputTicketId" type="number" class="validate" />
+                <label runat="server" id="labelTicketId" for="inputTicketId">Ticket ID</label>  
+            </div>
+            <div class="col s12 m3">
+                <asp:Button runat="server" cssClass="waves-effect waves-light blue darken-3 btn-large" onClick="extendTicket" Text="Extend Ticket" /> 
+            </div>
+        </div>
+          
     </div>
     <br />
     <!-- if we want the collapisble table to be added dynamically we need to add the following javascript:

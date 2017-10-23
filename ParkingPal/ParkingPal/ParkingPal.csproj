@@ -119,18 +119,24 @@
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketPayment.aspx" />
     <Content Include="UL\ULRegister.aspx" />
+    <Content Include="UL\ULRetrieveTicketInfo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\BLCommon.cs" />
     <Compile Include="BL\BLInspectorDashboard.cs" />
     <Compile Include="BL\BLLogin.cs" />
     <Compile Include="BL\BLManagerDashboard.cs" />
     <Compile Include="BL\BLPurchaseTicket.cs" />
+    <Compile Include="BL\BLRegister.cs" />
+    <Compile Include="BL\BLTicket.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALInspectorDashboard.cs" />
     <Compile Include="DAL\DALLogin.cs" />
     <Compile Include="DAL\DALManagerDashboard.cs" />
     <Compile Include="DAL\DALPurchaseTicket.cs" />
+    <Compile Include="DAL\DALRegister.cs" />
+    <Compile Include="DAL\DALTicket.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -144,6 +150,7 @@
     <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Authenticator.cs" />
+    <Compile Include="Models\ManagerUser.cs" />
     <Compile Include="Models\ParkingBay.cs" />
     <Compile Include="Models\EmailAlert.cs" />
     <Compile Include="Models\Inspector.cs" />
@@ -233,6 +240,13 @@
     </Compile>
     <Compile Include="UL\ULRegister.aspx.designer.cs">
       <DependentUpon>ULRegister.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULRetrieveTicketInfo.aspx.cs">
+      <DependentUpon>ULRetrieveTicketInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULRetrieveTicketInfo.aspx.designer.cs">
+      <DependentUpon>ULRetrieveTicketInfo.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
