@@ -154,6 +154,16 @@ namespace ParkingPal.UL
                             this.carparkTypeOptions.DataBind();
                         }
                     }
+                    Ticket ticketTemp = (Ticket)Session["ticket"];
+                    if (ticketTemp != null)
+                    {
+                        this.inputTicketStartTime.Text = ticketTemp.StartDateTime.ToShortTimeString();
+                        this.labelTicketEndTime.InnerText = ticketTemp.EndDateTime.ToShortTimeString();
+                        this.inputUserEmailAddress.Value = ticketTemp.Email;
+                        this.inputUserRego.Value = ticketTemp.Rego;
+                        this.carparkTypeOptions.Value = ticketTemp.CarparkType;
+                        this.parkingLotOptions.SelectedValue = ticketTemp.ParkingLotLocation;
+                    }
                 }
             }             
         }

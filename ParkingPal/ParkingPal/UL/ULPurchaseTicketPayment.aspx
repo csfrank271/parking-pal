@@ -7,12 +7,14 @@
                 PaymentCompleted();
             }
        </script>
+    <!--fuck asp-->
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     </head>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <div class="card">
@@ -37,7 +39,8 @@
                     <div class="col s3"><b>Total: </b></div>
                     <div class="col s3">$<span runat="server" id="spanTotalPrice"></span></div>
                 </div> 
-                <div id="paypal-button"></div>
+                <div class="row col s12">
+                <div id="paypal-button" class="col s9 m2"></div>
                 <script>
                     paypal.Button.render({
 
@@ -77,7 +80,10 @@
                     }, '#paypal-button');
                 </script>
                 <asp:ScriptManager ID="ScriptMgr" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-            </div>
-        </div>
+                <div class="col s5 m3">
+                  <asp:Button ID="BTNBack" runat="server" OnClick="BTNBack_Clicked" Text="Back" class="btn col s12 m6 blue accent-2"/>
+                  <br /> &nbsp;<br />
+                </div>
+          </div>
     </div>
 </asp:Content> 

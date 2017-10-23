@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
         <div class="col s12">
-            <div class="card">
+            <div class="card z-depth-0">
                 <div class="card-content">
                     <p>
                         You have been successfully logged out.

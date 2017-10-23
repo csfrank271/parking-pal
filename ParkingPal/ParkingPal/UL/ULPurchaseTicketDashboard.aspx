@@ -45,8 +45,9 @@
         }
     </script>
     <div class="container">
-        <div class="card">
-            <div class="card-title">
+        <div class="card z-depth-0">
+            <br />
+            <div class="card-title center">
                 Purchase Parking Ticket
             </div> 
             <div class="card-content">
@@ -57,16 +58,19 @@
                     </div>
                     <div class="input-field col s12 m6">
                         <input runat="server" id="inputUserRego" type="text" class="validate" /> 
-                        <label runat="server" id="labelUserRego" for="inputUserRego">Rego</label>
+                        <label runat="server" id="labelUserRego" for="inputUserRego">Registration Number</label>
                     </div>
                 </div>
                 <div class="row col s12">
                     <div class="input-field col s4 m2">
                         <asp:textbox runat="server" AutoPostBack="true" type="text" id="inputTicketStartTime" class="timepicker" onTextChanged="startTimeChanged"/>
-                        <label runat="server" id="labelTicketStartTime" for="inputTicketStartTime">Start Time</label>      
-                    </div> 
-                    <div class="input-field col s8 m10">
-                         <asp:Button id="minusTimeButton" runat="server" class="material-icons" style="cursor: pointer;" onclick="minusTime" text="remove"/>&nbsp;<span runat="server" id="labelTicketEndTime"></span>&nbsp;<asp:Button ID="addTimeButton" runat="server" class="material-icons" style="cursor:pointer;" OnClick="addTime" Text="add" />
+                        <label runat="server" id="labelTicketStartTime" for="inputTicketStartTime">Start Time</label>
+                    </div>
+                    <div class="col s4" style="margin-top:-3px; margin-bottom:-7px">       
+                        <label runat="server" id="label1" for="inputTicketEndTime">&nbsp; &nbsp; End Time</label>
+                    </div>
+                    <div class="input-field col s7 m10">
+                        <asp:Button id="minusTimeButton" runat="server" class="material-icons timeBtn" style="cursor: pointer;" onclick="minusTime" text="remove_circle_outline"/>&nbsp;<span runat="server" id="labelTicketEndTime" class="endTime"></span>&nbsp;<asp:Button ID="addTimeButton" runat="server" class="material-icons timeBtn" style="cursor:pointer;" OnClick="addTime" Text="add_circle_outline" />
                     </div>
                 </div>
                 <div class="row">
@@ -86,7 +90,7 @@
             <div class="row col s12 m12">
                 <div class="col s1 m1"></div>
                 <div class="col s5 m5">
-                    <asp:Button runat="server" Text="&#xf00d; &nbsp; &nbsp; Cancel" ID="BTNCancel" onclick="Cancel" style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" class="btn col s12 m6"  />
+                    <asp:Button runat="server" Text="&#xf00d; &nbsp; &nbsp; Cancel" ID="BTNCancel" onclick="Cancel" style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" class="btn col s12 m6 blue accent-2"  />
                 </div>  
                 <div class="col s5 m5"> 
                     <asp:Button runat="server" Text="&#xf1d9; &nbsp; &nbsp; Next" ID="BTNNext" onclick="btn_Next" style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" class="btn col s12 m6"  />
