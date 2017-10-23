@@ -5,11 +5,21 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ParkingPal.Models;
+using System.Web.Services;
 
 namespace ParkingPal.UL
 {
     public partial class ULHome : System.Web.UI.Page
     {
+        [WebMethod]
+        protected void extendTicket (object sender, EventArgs e)
+        {
+            var something = "sdf";
+            if (BL.BLTicket.GetTicketInfo(Convert.ToInt16(this.inputTicketId.Value)).TicketID > 0)
+            {
+
+            }
+        } 
         protected void Page_Load(object sender, EventArgs e)
         {
             string strNewURL = null;
