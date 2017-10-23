@@ -35,8 +35,7 @@
                             </div>
                             <div class="col s12">
                                 <button onclick="startWebcam();">RESTART CAMERA</button>
-                                <asp:Button runat="server" id="BTN_Snapshot" OnClientClick="snapshot();"
-                                        OnClick="TakeScreenshot" Text="SCAN"></asp:Button> 
+                                <asp:Button runat="server" id="BTN_Snapshot" OnClientClick="snapshot();" Text="SCAN"></asp:Button> 
                                 <!--<button onclick="stopWebcam();">Stop WebCam</button>--> 
                             </div>
                             <video class="responsive-video" width=1280 height=720 id="video" controls autoplay></video>

@@ -78,12 +78,6 @@ namespace ParkingPal.UL
             LVTickets.DataBind();
         }
 
-        // Searches for Tickets associated with a registration number.
-        protected void TakeScreenshot(object sender, EventArgs e)
-        {
-            
-        }
-
         [WebMethod(EnableSession = true)]
         public static void UploadImage(string imageData)
         {
