@@ -3,11 +3,11 @@
     <link href="../CSS/CGStyle.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div class="container">
     <div class="bgimg" style="background-image: url('../IMG/signa 2010.jpg');">
         <h2 class="home"><%: Page.Title %></h2>
     </div>
 	<!-- Form input fields -->
+    <div class="container">
     <div class="card white">
         <div class="card-content">
             <div class="row">
@@ -53,5 +53,6 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
+</>
 </asp:Content>

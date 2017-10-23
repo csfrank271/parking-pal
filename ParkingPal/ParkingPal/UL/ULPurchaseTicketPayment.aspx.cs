@@ -15,6 +15,12 @@ namespace ParkingPal.UL
 {
     public partial class ULPurchaseTicketPayment : System.Web.UI.Page
     { 
+        protected void BTNBack_Clicked(object sender, EventArgs e)
+        {
+           string strNewUrl = "~/UL/ULPurchaseTicketDashboard.aspx";
+            var test = Session["ticket"];
+            Response.Redirect(strNewUrl);
+        }
         Ticket ticket;
         Payment payment;
 

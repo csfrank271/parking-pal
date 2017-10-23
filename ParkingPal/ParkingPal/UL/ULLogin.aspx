@@ -22,6 +22,7 @@
                     ControlToValidate="inputUserName"
                     Display="Dynamic"
                     runat="server"
+                    Style="color:red"
                     ErrorMessage="User name can not be empty.">
                 </asp:RequiredFieldValidator>
             </div>
@@ -33,6 +34,7 @@
                     ControlToValidate="inputPassword"
                     Display="Dynamic"
                     runat="server"
+                    Style="color:red"
                     ErrorMessage="Password can not be empty.">
                 </asp:RequiredFieldValidator>
             </div>
@@ -43,10 +45,11 @@
                     cssclass="btn blue darken-3"
                     OnClick="BtnLogin_Click" Text="Submit" />
             </div>
-            <div>
+            <br />
+            <div class="col s12">
                <a href="../UL/ULRegister.aspx">
                 Want to register your parking lot to ParkingPal? Create a free account here.
-           </a>
+               </a>
             </div>
         </div>
         <div class="row">

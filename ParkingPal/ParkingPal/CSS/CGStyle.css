@@ -17,3 +17,19 @@
 #actives {
     background: black;
 }
+
+.timeBtn {
+    background:transparent center;
+    border:none;
+    margin-top:-16px;
+}
+.endTime {
+    vertical-align:super;
+    display:inline-block;
+}
+.endTime:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
