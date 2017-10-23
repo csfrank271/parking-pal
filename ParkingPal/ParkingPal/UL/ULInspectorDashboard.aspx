@@ -1,16 +1,9 @@
 ﻿<%@ Page Title="InspectorDash" Language="C#" MasterPageFile="~/MasterPages/ParkingPalMaster.Master" AutoEventWireup="true" CodeBehind="ULInspectorDashboard.aspx.cs" Inherits="ParkingPal.UL.ULInspectorDashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="../JS/capture.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <asp:ScriptManager ID="smUpdatePanelScripts" runat="server" EnablePageMethods="true"/>
-<script runat="server" EnablePartialRendering="true" ID="ScriptManager1">
-    // Registers controls for asynchronus postback, which allows these controls to perform partial page updates.
-    protected void LV_ItemDataBound(object sender, ListViewItemEventArgs e)
-    {
-        var btnSearchTickets = e.Item.FindControl("BTN_SearchTickets") as Button;
-        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnSearchTickets);
-    }
-</script>
 <div class="container">
     <div class="section">
         <asp:UpdatePanel ID="UP_InspectionDashboard" runat="server" UpdateMode="Always"> 
@@ -31,12 +24,33 @@
                                         style="font-family: Arial, FontAwesome" ClientIDMode="AutoID" OnClick="SearchForTickets">
                                 </asp:Button>
                             </div>
+
+                            <div class="col s12">
+                                <p>
+                                    Alternatively, if your device has a camera then you can simply scan the licence plate.
+                                    Focus your camera on the licence plate, then select 'SCAN'. If your camera is not loading,
+                                    try selecting the 'RESTART CAMERA' option. Licence plate recognition is not 100% accuracte;
+                                    best results come from including only the licence plate characters in the scan.
+                                </p>
+                            </div>
+                            <div class="col s12">
+                                <button onclick="startWebcam();">RESTART CAMERA</button>
+                                <asp:Button runat="server" id="BTN_Snapshot" OnClientClick="snapshot();"
+                                        OnClick="TakeScreenshot" Text="SCAN"></asp:Button> 
+                                <!--<button onclick="stopWebcam();">Stop WebCam</button>--> 
+                            </div>
+                            <video class="responsive-video" width=1280 height=720 id="video" controls autoplay></video>
+                            <canvas  id="myCanvas" width="2560" height="1440" style="display:none"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="divider"></div>
                 <div class="col s12"> <!-- Ticket listing -->
                     <h5>Tickets</h5>
+                </div>
+                 <div class="col s12"> <!-- Ticket listing -->
+                    <p runat="server" id="regoSearch"></p>
                 </div>
                 <asp:ListView runat="server" ID="LVTickets">
                     <LayoutTemplate> <!-- This layout is shown when the Ticket list is not empty -->
@@ -85,9 +99,8 @@
                         </div>
                     </ItemTemplate>
                 </asp:ListView>
-            </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </div>
+        </div>
 </div>
 </asp:Content>

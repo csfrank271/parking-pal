@@ -22,15 +22,6 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.ScriptManager smUpdatePanelScripts;
         
         /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ScriptManager1;
-        
-        /// <summary>
         /// UP_InspectionDashboard control.
         /// </summary>
         /// <remarks>
@@ -65,6 +56,24 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BTN_SearchTickets;
+        
+        /// <summary>
+        /// BTN_Snapshot control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_Snapshot;
+        
+        /// <summary>
+        /// regoSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl regoSearch;
         
         /// <summary>
         /// LVTickets control.
