@@ -25,6 +25,7 @@
                                 </asp:Button>
                             </div>
 
+                            <!-- Uncomment this section to make use of camera scanning (EXPERIMENTAL, DOES NOT WORK OVER SECURE CONTEXTS DUE TO LACK OF CERTIFICATE
                             <div class="col s12">
                                 <p>
                                     Alternatively, if your device has a camera then you can simply scan the licence plate.
@@ -35,12 +36,10 @@
                             </div>
                             <div class="col s12">
                                 <button onclick="startWebcam();">RESTART CAMERA</button>
-                                <asp:Button runat="server" id="BTN_Snapshot" OnClientClick="snapshot();" Text="SCAN"></asp:Button> 
-                                <!--<button onclick="stopWebcam();">Stop WebCam</button>--> 
+                                <asp:Button runat="server" id="BTN_Snapshot" OnClientClick="snapshot();" Text="SCAN"></asp:Button>
                             </div>
                             <video class="responsive-video" width=1280 height=720 id="video" controls autoplay></video>
-                            <canvas  id="myCanvas" width="2560" height="1440" style="display:none"></canvas>
-                            </div>
+                            <canvas  id="myCanvas" width="2560" height="1440" style="display:none"></canvas>-->
                         </div>
                     </div>
                 </div>
