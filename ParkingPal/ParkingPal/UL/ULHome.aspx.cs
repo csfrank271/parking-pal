@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using ParkingPal.Models;
 using ParkingPal.BL;
 using System.Web.Services;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 
 namespace ParkingPal.UL
 {
@@ -87,8 +89,38 @@ namespace ParkingPal.UL
                 if (strNewURL != null)
                 {
                     Response.Redirect(strNewURL);
+                } else
+                {
+
+                    
                 }
             }
         }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static object[] getGraphData()
+        {
+            List<ParkingLot> parkingLots = BLPurchaseTicket.GetParkingLots();
+            List<ParkingLotGraph> graphData = new List<ParkingLotGraph>();
+            foreach (var parkingLot in parkingLots)
+            {
+                int usedCarParks = BLTicket.GetUsedParkingLots(parkingLot.ID);
+                int totalCarParks = BLTicket.GetTotalParkingLots(parkingLot.ID);
+                decimal percentage = (decimal)usedCarParks / (decimal)totalCarParks;
+                ParkingLotGraph plg = new ParkingLotGraph(parkingLot.ShortName, percentage);
+                graphData.Add(plg);
+            }
+            var chartData = new object[graphData.Count];
+            int j = 0;
+            foreach ( var lot in graphData)
+            {
+                chartData[j] = new object[] { lot.ParkingLotName, lot.PercentageFull };
+                j++;
+            }
+            return chartData;
+        }
     }
+
+
 }

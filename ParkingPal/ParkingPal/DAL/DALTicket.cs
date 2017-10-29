@@ -10,6 +10,68 @@ namespace ParkingPal.DAL
 {
     public class DALTicket
     {
+        public static int GetUsedParkingLots(int parkingLotId)
+        {
+            int used = 0;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_current_carpark_status", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@CarparkId", SqlDbType.Int).Value = parkingLotId;
+
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            used = (int)reader["Amount"];
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return used;
+        }
+
+        public static int GetTotalParkingLots(int parkingLotId)
+        {
+            int used = 0;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_total_carparks", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@CarparkId", SqlDbType.Int).Value = parkingLotId;
+
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            used = (int)reader["Amount"];
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return used;
+        }
+
         public static Ticket UpdateTicket (Ticket ticket)
         {
             Ticket returnTicket = ticket;

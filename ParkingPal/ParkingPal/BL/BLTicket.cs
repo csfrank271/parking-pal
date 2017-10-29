@@ -8,6 +8,29 @@ namespace ParkingPal.BL
 {
     public class BLTicket
     {
+        public static int GetUsedParkingLots(int parkingLotId)
+        {
+            try
+            {
+                return DAL.DALTicket.GetUsedParkingLots(parkingLotId);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static int GetTotalParkingLots(int parkingLotId)
+        {
+            try
+            {
+                return DAL.DALTicket.GetTotalParkingLots(parkingLotId);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
 
         public static Ticket UpdateTicket(Ticket ticket)
         {
