@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ParkingPal.Models;
+using ParkingPal.BL;
 using System.Web.Services;
 
 namespace ParkingPal.UL
@@ -12,14 +13,50 @@ namespace ParkingPal.UL
     public partial class ULHome : System.Web.UI.Page
     {
         [WebMethod]
-        protected void extendTicket (object sender, EventArgs e)
+        protected void extendTicket(object sender, EventArgs e)
         {
-            var something = "sdf";
-            if (BL.BLTicket.GetTicketInfo(Convert.ToInt16(this.inputTicketId.Value)).TicketID > 0)
+            int ticketId = -1;
+            if (this.inputTicketId.Value == null)
             {
-
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "incorrectIdToast()", true);
+                // error saying a ticket id must be entered
             }
-        } 
+            try
+            {
+                ticketId = Convert.ToInt16(this.inputTicketId.Value);
+            }
+            catch
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "incorrectIdToast()", true);
+
+                // throw new Exception();
+                // error message
+            }
+            if (ticketId > 0)
+            {
+                var tickets = BL.BLTicket.GetTicketInfo(Convert.ToInt16(this.inputTicketId.Value));
+                if (tickets.Any())
+                {
+                    if (tickets.FirstOrDefault().EndDateTime < new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 01))
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "ticketHasExpiredToast()", true);
+
+                    }
+                    else
+                    {
+                        Session["extendticket"] = tickets.FirstOrDefault();
+                        string strNewUrl = "~/UL/ULRetrieveTicketInfo.aspx";
+
+                        Response.Redirect(strNewUrl);
+                    }
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "jsScript", "incorrectIdToast()", true);
+                    // show error message saying no ticket id
+                }
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             string strNewURL = null;

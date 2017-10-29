@@ -4,6 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script id="jsScript">
+        function incorrectIdToast() {
+            Materialize.toast('This ticket ID does not exist.', 10000);
+        }
+        function ticketHasExpiredToast() {
+            Materialize.toast('This ticket can not be extended as it is not for today.', 10000);
+        }
+    </script>
     <div class="bgimg" style="background-image: url('../IMG/merewetherBathsBlocks.jpg');">
         <h5 class="home" style="font-size: 3vw;">
             ParkingPal allows people that park in ParkingPal registered parking lots to purchase online tickets, saving time and paper!

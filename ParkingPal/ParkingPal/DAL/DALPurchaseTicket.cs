@@ -269,7 +269,8 @@ namespace ParkingPal.DAL
                     sqlComm.Parameters.Add("@Rego", SqlDbType.NVarChar).Value = ticket.Rego;
                     sqlComm.Parameters.Add("@StartDateTime", SqlDbType.DateTime2).Value = ticket.StartDateTime;
                     sqlComm.Parameters.Add("@EndDateTime", SqlDbType.DateTime2).Value = ticket.EndDateTime;
-                    sqlComm.Parameters.Add("@Rate", SqlDbType.Decimal).Value = ticket.Rate; 
+                    sqlComm.Parameters.Add("@Rate", SqlDbType.Decimal).Value = ticket.Rate;
+                    sqlComm.Parameters.Add("@Email", SqlDbType.NVarChar, 400).Value = ticket.Email;
                     sqlComm.Parameters.Add("@new_ticket_id", SqlDbType.Int);
                     sqlComm.Parameters["@new_ticket_id"].Direction = ParameterDirection.Output;
 
