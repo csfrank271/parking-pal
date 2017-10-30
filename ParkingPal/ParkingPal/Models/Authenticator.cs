@@ -31,6 +31,8 @@ namespace ParkingPal.Models
                 "/UL/ULPurchaseTicketDashboard.aspx",
                 "/UL/ULPurchaseTicketPayment.aspx",
                 "/UL/ULProcessTicketAndPayment.aspx",
+                "/UL/ULRetrieveTicketInfo.aspx",
+                "/UL/ULProcessExtendedTicketAndPayment.aspx",
                 "/UL/ULHome.aspx",
 				"/UL/ULRegister.aspx"
             };
