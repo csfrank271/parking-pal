@@ -76,28 +76,28 @@ namespace ParkingPal.UL
             LVTickets.DataBind();
         }
 
-        [WebMethod(EnableSession = true)]
-        public static void UploadImage(string imageData)
-        {
-            // Convert base 64 string to byte[]
-            byte[] imageBytes = Convert.FromBase64String(imageData);
-            // Convert byte[] to Image
-            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
-            {
-                System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
-                string rootPath = HttpRuntime.AppDomainAppPath;
-                string filePath = HttpRuntime.AppDomainAppPath + "CapturedImages\\"; //FOR DEBUGGING
-                image.Save(filePath + "test.jpeg"); // FOR DEBUGGING
+        //[WebMethod(EnableSession = true)]
+        //public static void UploadImage(string imageData)
+        //{
+        //    // Convert base 64 string to byte[]
+        //    byte[] imageBytes = Convert.FromBase64String(imageData);
+        //    // Convert byte[] to Image
+        //    using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+        //    {
+        //        System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
+        //        string rootPath = HttpRuntime.AppDomainAppPath;
+        //        string filePath = HttpRuntime.AppDomainAppPath + "CapturedImages\\"; //FOR DEBUGGING
+        //        image.Save(filePath + "test.jpeg"); // FOR DEBUGGING
 
-                // LICENCE PLATE RECOGNITION:
-                string dataPath = rootPath + "\\tessdata";
-                var img = new Bitmap(image);
-                var ocr = new TesseractEngine(dataPath, "eng", EngineMode.TesseractAndCube);
-                var page = ocr.Process(img);
-                string rego = page.GetText();
+        //        // LICENCE PLATE RECOGNITION:
+        //        string dataPath = rootPath + "\\tessdata";
+        //        var img = new Bitmap(image);
+        //        var ocr = new TesseractEngine(dataPath, "eng", EngineMode.TesseractAndCube);
+        //        var page = ocr.Process(img);
+        //        string rego = page.GetText();
 
-                HttpContext.Current.Session["Rego"] = rego;
-            }
-        }
+        //        HttpContext.Current.Session["Rego"] = rego;
+        //    }
+        //}
     }
 }
