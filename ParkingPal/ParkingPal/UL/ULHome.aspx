@@ -105,7 +105,7 @@
         $('.collapsible').collapsible();
     });
     -->
-    <div id="bar-graph"></div>
+    <div class="row col s12" id="bar-graph"></div>
     <ul class="collapsible" data-collapsible="accordion">
         <li>
             <div class="collapsible-header active center"><i class="material-icons right">expand_more</i>
