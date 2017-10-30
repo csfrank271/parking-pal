@@ -33,7 +33,6 @@ C:\Parking-Pal\ParkingPal\ParkingPal\bin\roslyn\VBCSCompiler.exe.config
 C:\Parking-Pal\ParkingPal\ParkingPal\bin\ParkingPal.dll.config
 C:\Parking-Pal\ParkingPal\ParkingPal\bin\ParkingPal.dll
 C:\Parking-Pal\ParkingPal\ParkingPal\bin\ParkingPal.pdb
-C:\Parking-Pal\ParkingPal\ParkingPal\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Parking-Pal\ParkingPal\ParkingPal\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Parking-Pal\ParkingPal\ParkingPal\obj\Debug\ParkingPal.csprojResolveAssemblyReference.cache
 C:\Parking-Pal\ParkingPal\ParkingPal\obj\Debug\ParkingPal.dll

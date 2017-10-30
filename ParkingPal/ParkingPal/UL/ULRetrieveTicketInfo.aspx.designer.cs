@@ -40,6 +40,24 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.UpdatePanel UP_RetreiveTicketInfo;
         
         /// <summary>
+        /// ticketRego control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ticketRego;
+        
+        /// <summary>
+        /// divRego control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRego;
+        
+        /// <summary>
         /// ticketInfo control.
         /// </summary>
         /// <remarks>
@@ -49,48 +67,75 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ticketInfo;
         
         /// <summary>
-        /// inputTicketRego control.
+        /// divStartTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputTicketRego;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divStartTime;
         
         /// <summary>
-        /// labelTicketRego control.
+        /// divEndTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelTicketRego;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEndTime;
         
         /// <summary>
-        /// inputRate control.
+        /// divLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText inputRate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLocation;
         
         /// <summary>
-        /// labelRate control.
+        /// divType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelRate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divType;
         
         /// <summary>
-        /// extendTicketForOptions control.
+        /// spanTotalPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList extendTicketForOptions;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanTotalPrice;
+        
+        /// <summary>
+        /// selectExtendTill control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList selectExtendTill;
+        
+        /// <summary>
+        /// labelSelectExtendTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl labelSelectExtendTime;
+        
+        /// <summary>
+        /// totalCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totalCost;
     }
 }

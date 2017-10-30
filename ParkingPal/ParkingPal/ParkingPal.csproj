@@ -70,6 +70,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\ParkingPal.dll" />
+    <Content Include="bin\ParkingPal.pdb" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\Tesseract.xml" />
     <Content Include="CSS\CGStyle.css" />
     <Content Include="CSS\materialize.css" />
     <Content Include="CSS\materialize.min.css" />
@@ -97,6 +111,10 @@
     <Content Include="Fonts\roboto\Roboto-Thin.woff" />
     <Content Include="Fonts\roboto\Roboto-Thin.woff2" />
     <Content Include="MasterPages\ParkingPalMaster.Master" />
+    <Content Include="bin\ParkingPal.dll.config" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -104,6 +122,15 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="tessdata\eng.cube.bigrams" />
+    <Content Include="tessdata\eng.cube.fold" />
+    <Content Include="tessdata\eng.cube.lm" />
+    <Content Include="tessdata\eng.cube.nn" />
+    <Content Include="tessdata\eng.cube.params" />
+    <Content Include="tessdata\eng.cube.size" />
+    <Content Include="tessdata\eng.cube.word-freq" />
+    <Content Include="tessdata\eng.tesseract_cube.nn" />
+    <Content Include="tessdata\eng.traineddata" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -120,6 +147,7 @@
     <Content Include="UL\ULLogin.aspx" />
     <Content Include="UL\ULLogout.aspx" />
     <Content Include="UL\ULManagerDashboard.aspx" />
+    <Content Include="UL\ULProcessExtendedTicketAndPayment.aspx" />
     <Content Include="UL\ULProcessTicketAndPayment.aspx" />
     <Content Include="UL\ULPurchaseTicketDashboard.aspx" />
     <Content Include="UL\ULPurchaseTicketPayment.aspx" />
@@ -162,6 +190,7 @@
     <Compile Include="Models\InspectorUser.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ParkingLot.cs" />
+    <Compile Include="Models\ParkingLotGraph.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\Ticket.cs" />
@@ -217,6 +246,13 @@
     </Compile>
     <Compile Include="UL\ULManagerDashboard.aspx.designer.cs">
       <DependentUpon>ULManagerDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULProcessExtendedTicketAndPayment.aspx.cs">
+      <DependentUpon>ULProcessExtendedTicketAndPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULProcessExtendedTicketAndPayment.aspx.designer.cs">
+      <DependentUpon>ULProcessExtendedTicketAndPayment.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\ULProcessTicketAndPayment.aspx.cs">
       <DependentUpon>ULProcessTicketAndPayment.aspx</DependentUpon>
