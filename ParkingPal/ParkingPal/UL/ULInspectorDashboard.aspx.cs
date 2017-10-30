@@ -6,7 +6,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ParkingPal.BL;
 using ParkingPal.Models;
-using System.Drawing;
+using System.Drawing; 
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+// using Tesseract; 
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.IO;
@@ -92,11 +95,11 @@ namespace ParkingPal.UL
                 // LICENCE PLATE RECOGNITION:
                 string dataPath = rootPath + "\\tessdata";
                 var img = new Bitmap(image);
-                var ocr = new TesseractEngine(dataPath, "eng", EngineMode.TesseractAndCube);
-                var page = ocr.Process(img);
-                string rego = page.GetText();
+            //    var ocr = new TesseractEngine(dataPath, "eng", EngineMode.TesseractAndCube);
+            //    var page = ocr.Process(img);
+            //    string rego = page.GetText();
 
-                HttpContext.Current.Session["Rego"] = rego;
+              //  HttpContext.Current.Session["Rego"] = rego;
             }
         }
     }
