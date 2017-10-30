@@ -16,7 +16,8 @@
         smUpdatePanelScripts.RegisterAsyncPostBackControl(btnShowAddParkingLotPanel);
         var btnAddParkingLot = e.Item.FindControl("BTN_AddParkingLot") as Button;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(btnAddParkingLot);
-
+        var lbUpdateCarparkType = e.Item.FindControl("LB_UpdateCarparkType") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbUpdateCarparkType);
 
         var lbSelectInspector = e.Item.FindControl("LB_SelectInspector") as LinkButton;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbSelectInspector);
@@ -70,6 +71,7 @@
         //DDL_ParkingLotCloseTime.SelectedValue = commandArgs[4];
         LV_ParkingLots.SelectedIndex = selectedIndex;
         LV_ParkingLots.DataBind();
+        PopulateParkingLotCarparkTypesView();
         ParkingLotManagementTitle.InnerText = "Parking Lot Management - " + commandArgs[0];
     }
 
@@ -81,9 +83,24 @@
         LV_ParkingLots.DataBind();
     }
 
-    public void test()
+    // The list of commands and actions for link buttons in the 'LV_CarparkTypes' list.
+    protected void LVCarparkTypes_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
-        ChangeParkingLotPanel('D');
+        int selectedIndex = e.Item.DisplayIndex;
+        string commandArg = e.CommandArgument.ToString();
+        TextBox tbx_ParkCount = e.Item.FindControl("TBX_ParkCount") as TextBox;
+
+        Regex rbxParkCount = new Regex(@"^[0-9]{1,}$");
+        if (!rbxParkCount.IsMatch(tbx_ParkCount.Text))
+        {
+            CV_CarparkTypes.IsValid = false;
+        }
+        else
+        {
+            UpdateCarparkType(commandArg, Int32.Parse(tbx_ParkCount.Text));
+        }
+        //int parkCount = Int32.Parse(itcParkCount.Text);
+        //UpdateCarparkType(commandArg, parkCount);
     }
 </script>
 <div class="container">
@@ -94,7 +111,6 @@
                 <li class="tab col s4"><a href="#inspectors">Inspectors</a></li>
             </ul>
         </div>
-        <input runat="server" type="text" class="timepicker">
     </div>
     <!-- Lots tab -->
     <div id="lots" class="card white">
@@ -221,6 +237,48 @@
                                     <div class="col s12"> <!-- The edit Parking Lot button -->
                                         <asp:Button runat="server" ID="BTN_EditParkingLot" Text="Update" class="btn"
                                             ClientIDMode="AutoID" OnClick="EditParkingLot"></asp:Button>
+                                    </div>
+                                    <div class="col s12">
+                                        <h5>Lot carparks:</h5>
+                                    </div>
+                                    <div class="col s12">
+                                        <asp:CustomValidator ID="CV_CarparkTypes" runat="server" ErrorMessage="Spaces must be an integer greater than or equal to zero."></asp:CustomValidator>
+                                        <asp:ListView ID="LV_CarparkTypes" runat="server" OnItemCommand="LVCarparkTypes_OnItemCommand">
+                                            <LayoutTemplate>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td><asp:Label runat="server" Text="Type" /></td>
+                                                            <td><asp:Label runat="server" Text="Spaces" /></td>
+                                                            <td><asp:Label runat="server" Text="Update" /></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
+                                                    </tbody>
+                                                </table>
+                                            </LayoutTemplate>
+                                            <EmptyDataTemplate> <!-- This layout is shown when the CarparkType list is empty -->
+                                                <div class="col s12">
+                                                    <i class="material-icons">info_outline</i>
+                                                    <span>
+                                                        There are no Carpark Types in the system.
+                                                    </span>
+                                                </div>
+                                            </EmptyDataTemplate>
+                                            <ItemTemplate> <!-- This template defines the layout for an item in the CarparkType list -->
+                                                <tr>
+                                                    <td><asp:Label runat="server" Text='<%#Eval("CarparkType")%>' /></td>
+                                                    <td><asp:TextBox runat="server" Text='<%#Eval("NumberOfParks")%>' id="TBX_ParkCount" />
+                                                    <td>
+                                                        <asp:LinkButton runat="server" ID="LB_UpdateCarparkType" class="btn"
+                                                            Text="UPDATE" CommandName="UpdateCarparkType" ClientIDMode="AutoID"
+                                                            CommandArgument='<%#Eval("CarparkType")%>'>
+                                                        </asp:LinkButton>
+                                                    </td>
+                                                </tr>
+                                            </ItemTemplate>
+                                        </asp:ListView>
                                     </div>
                                 </div>
                                 <div runat="server" id ="ParkingLotManagementPanel_AddParkingLot" visible="false"> <!-- The 'Request Parking Lot' screen for the Parking Lot Management Panel -->

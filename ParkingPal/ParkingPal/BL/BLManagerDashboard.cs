@@ -109,5 +109,29 @@ namespace ParkingPal.BL
                 throw exception;
             }
         }
+
+        public static List<ParkingBayCarparkType> GetParkingLotCarparkTypes(int parkingLotID)
+        {
+            try
+            {
+                return DALManagerDashboard.GetParkingLotCarparkTypes(parkingLotID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static void UpdateCarparkType(int parkingLotID, string carparkType, int parkCount)
+        {
+            try
+            {
+                DALManagerDashboard.UpdateCarparkType(parkingLotID, carparkType, parkCount);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

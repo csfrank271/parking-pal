@@ -313,5 +313,100 @@ namespace ParkingPal.DAL
 
             return parkingLot;
         }
+
+        // Retrieves all the CarparkTypes and the counts of each 
+        public static List<ParkingBayCarparkType> GetParkingLotCarparkTypes(int parkingLotID)
+        {
+            // Initialise tickets:
+            List<ParkingBayCarparkType> parkingBayCarparkTypes = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_parking_lot_carpark_types", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLotID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    // Retrieve the record if it exists:
+                    if (reader.HasRows)
+                    {
+                        parkingBayCarparkTypes = new List<ParkingBayCarparkType>();
+                        while (reader.Read())
+                        {
+                            // Check for NULL values:
+                            int? lotID = null, carparkTypeID = null;
+                            int numberOfParks = 0;
+                            object checkObj = null;
+                            checkObj = reader["ParkingLotID"];
+                            if (checkObj != DBNull.Value)
+                            {
+                                lotID = (int)reader["ParkingLotID"];
+                            }
+                            checkObj = reader["CarparkTypeID"];
+                            if (checkObj != DBNull.Value)
+                            {
+                                carparkTypeID = (int)reader["CarparkTypeID"];
+                            }
+                            checkObj = reader["NumberOfParks"];
+                            if (checkObj != DBNull.Value)
+                            {
+                                numberOfParks = (int)reader["NumberOfParks"];
+                            }
+
+                            ParkingBayCarparkType parkingBayCarparkType = new ParkingBayCarparkType
+                            (
+                                (int)reader["ID"],
+                                reader["CarparkType"].ToString(),
+                                lotID,
+                                carparkTypeID,
+                                numberOfParks
+                            );
+                            parkingBayCarparkTypes.Add(parkingBayCarparkType);
+                        }
+                    }
+
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return parkingBayCarparkTypes;
+        }
+
+        // Retrieves all the CarparkTypes and the counts of each 
+        public static void UpdateCarparkType(int parkingLotID, string carparkType, int parkCount)
+        {
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_update_parking_lot_carpark_type", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLotID;
+                    sqlComm.Parameters.Add("@carpark_type", SqlDbType.VarChar).Value = carparkType;
+                    sqlComm.Parameters.Add("@park_count", SqlDbType.Int).Value = parkCount;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

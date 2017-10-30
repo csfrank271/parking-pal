@@ -30,6 +30,7 @@ namespace ParkingPal.UL
                 else
                 {
                     Manager manager = (Manager)Session["Manager"];
+                    CV_CarparkTypes.IsValid = true;
 
                     // Initialise the list of Inspectors:
                     List<InspectorUser> inspectorUsers = BLManagerDashboard.
@@ -264,7 +265,7 @@ namespace ParkingPal.UL
             ParkingLotManagementPanel_Default.Visible = false;
             ParkingLotManagementPanel_Selected.Visible = false;
             ParkingLotManagementPanel_AddParkingLot.Visible = false;
-            //BTN_ShowAddParkingLotPanel.Enabled = true;
+            BTN_ShowAddParkingLotPanel.Enabled = true;
 
             switch (panelType)
             {
@@ -274,7 +275,7 @@ namespace ParkingPal.UL
                     break;
                 case 'S':
                     ParkingLotManagementPanel_Selected.Visible = true;
-                    // ADD LOGIC HERE FOR CHOOSING WHICH TO DISPLAY DEPENDING ON AppprovalStatus
+                    // FUTURE WORK (OUT OF SCOPE): Add logic for selecting which screen to display based on ParkingLot approval status
                     break;
                 case 'A':
                     ParkingLotManagementPanel_AddParkingLot.Visible = true;
@@ -393,6 +394,29 @@ namespace ParkingPal.UL
                 LV_ParkingLots.DataSource = parkingLots;
                 LV_ParkingLots.DataBind();
             }
+        }
+
+        public void PopulateParkingLotCarparkTypesView()
+        {
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+            List<ParkingBayCarparkType> parkingBayCarparkTypes = BLManagerDashboard.GetParkingLotCarparkTypes(parkingLotID);
+            LV_CarparkTypes.DataSource = parkingBayCarparkTypes;
+            LV_CarparkTypes.DataBind();
+        }
+
+        public void UpdateCarparkType(string carparkType, int parkCount)
+        {
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+            BLManagerDashboard.UpdateCarparkType(parkingLotID, carparkType, parkCount);
+            List<ParkingBayCarparkType> parkingBayCarparkTypes = BLManagerDashboard.GetParkingLotCarparkTypes(parkingLotID);
+            LV_CarparkTypes.DataSource = parkingBayCarparkTypes;
+            LV_CarparkTypes.DataBind();
         }
     }
 }
