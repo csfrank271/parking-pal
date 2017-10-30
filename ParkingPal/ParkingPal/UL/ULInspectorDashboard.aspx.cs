@@ -7,12 +7,10 @@ using System.Web.UI.WebControls;
 using ParkingPal.BL;
 using ParkingPal.Models;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using Tesseract;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.IO;
+//using Tesseract;
 
 namespace ParkingPal.UL
 {
