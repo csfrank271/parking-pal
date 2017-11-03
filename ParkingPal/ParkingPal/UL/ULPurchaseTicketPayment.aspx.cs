@@ -25,7 +25,7 @@ namespace ParkingPal.UL
         Payment payment;
 
         protected void Page_Load(object sender, EventArgs e)
-        {
+        { 
             string strNewUrl = null;
             AppUser appUser = (AppUser)Session["AppUser"];
             try

@@ -115,6 +115,7 @@
     <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
     <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -153,7 +154,10 @@
     <Content Include="UL\ULPurchaseTicketPayment.aspx" />
     <Content Include="UL\ULRegister.aspx" />
     <Content Include="UL\ULRetrieveTicketInfo.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="UL\ULUnableToExtend.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\BLCommon.cs" />
@@ -289,6 +293,13 @@
     </Compile>
     <Compile Include="UL\ULRetrieveTicketInfo.aspx.designer.cs">
       <DependentUpon>ULRetrieveTicketInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\ULUnableToExtend.aspx.cs">
+      <DependentUpon>ULUnableToExtend.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\ULUnableToExtend.aspx.designer.cs">
+      <DependentUpon>ULUnableToExtend.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

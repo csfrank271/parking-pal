@@ -33,3 +33,15 @@
   vertical-align: middle;
   height: 100%;
 }
+
+@media only screen and (max-width: 380px) {
+    #brand-logo {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    #brand-logo {
+        font-size: 12px;
+    }
+}

@@ -60,8 +60,14 @@ namespace ParkingPal.UL
                             time = time.Add(add);
                             if (time > this.carparkEndTime) { times.Add(this.carparkEndTime); } else { times.Add(time); }
                         }
+                        if (!times.Any())
+                        {
+                            var strUrl = "~/UL/ULUnableToExtend.aspx";
+                            Response.Redirect(strUrl);
+                        }
                         this.selectExtendTill.DataSource = times;
                         this.selectExtendTill.DataBind();
+                        Session["EndTime"] = this.selectExtendTill.SelectedValue;
                         TimeSpan newEndTime = Convert.ToDateTime(this.selectExtendTill.SelectedValue).TimeOfDay;
                         double difference = (newEndTime - this.ticket.EndDateTime.TimeOfDay).Minutes;
                         this.totalCost.InnerText = ((Convert.ToInt16(this.ticket.Rate)) * (difference / 30)).ToString();
