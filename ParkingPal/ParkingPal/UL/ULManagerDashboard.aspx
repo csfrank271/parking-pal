@@ -66,9 +66,9 @@
         string[] commandArgs = e.CommandArgument.ToString().Split(',');
         Tbx_ParkingLotName.Text = commandArgs[0];
         Tbx_ParkingLotAddress.Text = commandArgs[1];
-        Tbx_ParkingLotCoordinates.Text = commandArgs[2];
-        //DDL_ParkingLotOpenTime.SelectedValue = commandArgs[3];
-        //DDL_ParkingLotCloseTime.SelectedValue = commandArgs[4];
+        Tbx_ParkingLotCoordinates.Text = commandArgs[2] + ',' + commandArgs[3];
+        DDL_ParkingLotOpenTime.SelectedValue = DDL_AddParkingLotOpenTime.Items.FindByValue(commandArgs[4].Substring(0, 5)).Value;
+        DDL_ParkingLotCloseTime.SelectedValue = DDL_AddParkingLotOpenTime.Items.FindByValue(commandArgs[5].Substring(0, 5)).Value;
         LV_ParkingLots.SelectedIndex = selectedIndex;
         LV_ParkingLots.DataBind();
         PopulateParkingLotCarparkTypesView();
