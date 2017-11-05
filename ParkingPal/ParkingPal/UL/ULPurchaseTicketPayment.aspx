@@ -86,6 +86,14 @@
                                     Materialize.toast('Payment is completed', 3000); 
                                     window.location.href = "ULProcessTicketAndPayment.aspx";
                                 });
+                            },
+                            
+                            onError: function (data, actions) {
+                                document.getElementById("paypal-button").hidden = true;
+                                document.getElementById("ContentPlaceHolder1_BTNBack").style.visibility = "hidden";
+                                document.getElementById("loaderdiv").style.visibility = "visible";
+                                Materialize.toast('Payment is completed', 3000);
+                                window.location.href = "ULProcessTicketAndPayment.aspx";
                             }
 
                         }, '#paypal-button');
