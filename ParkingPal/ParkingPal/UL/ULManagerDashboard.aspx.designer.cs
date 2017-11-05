@@ -202,6 +202,60 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.WebControls.ListView LV_CarparkTypes;
         
         /// <summary>
+        /// CV_ParkingLotRates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_ParkingLotRates;
+        
+        /// <summary>
+        /// LV_ParkingLotRates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView LV_ParkingLotRates;
+        
+        /// <summary>
+        /// CV_AddParkingLotRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CV_AddParkingLotRate;
+        
+        /// <summary>
+        /// TBX_AddRateDuration control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBX_AddRateDuration;
+        
+        /// <summary>
+        /// TBX_AddRateHourly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TBX_AddRateHourly;
+        
+        /// <summary>
+        /// BTN_AddParkingLotRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_AddParkingLotRate;
+        
+        /// <summary>
         /// ParkingLotManagementPanel_AddParkingLot control.
         /// </summary>
         /// <remarks>

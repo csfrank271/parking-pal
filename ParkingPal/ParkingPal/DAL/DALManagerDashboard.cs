@@ -408,5 +408,140 @@ namespace ParkingPal.DAL
                 throw exception;
             }
         }
+
+        // Retrieves all the Rates for a ParkingLot
+        public static List<Rate> GetParkingLotRates(int parkingLotID)
+        {
+            // Initialise tickets:
+            List<Rate> rates = null;
+
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_get_parking_lot_rates", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLotID;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader reader = sqlComm.ExecuteReader();
+
+                    // Retrieve the record if it exists:
+                    if (reader.HasRows)
+                    {
+                        rates = new List<Rate>();
+                        while (reader.Read())
+                        {
+                            Rate rate = new Rate
+                            (
+                                (int)reader["ID"],
+                                (int)reader["ParkingLotID"],
+                                (decimal)reader["TimeDuration"],
+                                (decimal)reader["HalfHourlyRate"]
+                            );
+                            rates.Add(rate);
+                        }
+                    }
+
+                    // Close the reader:
+                    reader.Close();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return rates;
+        }
+
+        // Updates a Rate:
+        public static int UpdateRate(int rateID, decimal timeDuration, decimal rateHourly)
+        {
+            int result = 0;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_update_parking_lot_rate", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@rate_id", SqlDbType.Int).Value = rateID;
+                    sqlComm.Parameters.Add("@time_duration", SqlDbType.Decimal).Value = timeDuration;
+                    sqlComm.Parameters.Add("@rate", SqlDbType.Decimal).Value = rateHourly;
+                    sqlComm.Parameters.Add("@result", SqlDbType.Int);
+                    sqlComm.Parameters["@result"].Direction = ParameterDirection.Output;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+
+                    result = (int)sqlComm.Parameters["@result"].Value;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return result;
+        }
+
+        // Updates a Rate:
+        public static int AddParkingLotRate(int parkingLotID, decimal timeDuration, decimal rateHourly)
+        {
+            int result = -1;
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_create_parking_lot_rate", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@parking_lot_id", SqlDbType.Int).Value = parkingLotID;
+                    sqlComm.Parameters.Add("@time_duration", SqlDbType.Decimal).Value = timeDuration;
+                    sqlComm.Parameters.Add("@rate", SqlDbType.Decimal).Value = rateHourly;
+                    sqlComm.Parameters.Add("@result", SqlDbType.Int);
+                    sqlComm.Parameters["@result"].Direction = ParameterDirection.Output;
+
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+
+                    result = (int)sqlComm.Parameters["@result"].Value;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+
+            return result;
+        }
+
+        // Deletes a Rate:
+        public static void DeleteParkingLotRate(int rateID)
+        {
+            try
+            {
+                using (SqlConnection sqlConn = DALCommon.NewConnection())
+                {
+                    // Set the SQL command and its parameters
+                    SqlCommand sqlComm = new SqlCommand("dbo.sp_delete_parking_lot_rate", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add("@rate_id", SqlDbType.Int).Value = rateID;
+                    // Open the SQL connection and run the command:
+                    sqlConn.Open();
+                    sqlComm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
     }
 }

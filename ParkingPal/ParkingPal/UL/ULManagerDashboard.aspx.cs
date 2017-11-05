@@ -418,5 +418,92 @@ namespace ParkingPal.UL
             LV_CarparkTypes.DataSource = parkingBayCarparkTypes;
             LV_CarparkTypes.DataBind();
         }
+
+        public void PopulateParkingLotRatesView()
+        {
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+            List<Rate> rates = BLManagerDashboard.GetParkingLotRates(parkingLotID);
+            LV_ParkingLotRates.DataSource = rates;
+            LV_ParkingLotRates.DataBind();
+        }
+
+        public int UpdateRate(int rateID, decimal timeDuration, decimal rateHourly)
+        {
+            int result = BLManagerDashboard.UpdateRate(rateID, timeDuration, rateHourly);
+
+            if(result == 1)
+            {
+                List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+                int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+                int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+                List<Rate> rates = BLManagerDashboard.GetParkingLotRates(parkingLotID);
+                LV_ParkingLotRates.DataSource = rates;
+                LV_ParkingLotRates.DataBind();
+            }
+
+            return result;
+        }
+
+        public void AddParkingLotRate(object sender, EventArgs e)
+        {
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+            try
+            {
+                decimal timeDuration = Decimal.Parse(TBX_AddRateDuration.Text);
+                decimal rateHourly = Decimal.Parse(TBX_AddRateHourly.Text);
+                if ((timeDuration * 2) % 1 != 0 || timeDuration <= 0 || timeDuration > 24)
+                {
+                    CV_AddParkingLotRate.Text = "Rate duration must be hourly or half hourly and be between 0.5 and 24 (e.g. 0.5, 1, 1.5, ..., 23.5, 24)";
+                    CV_AddParkingLotRate.IsValid = false;
+                }
+                else if (rateHourly <= 0 || rateHourly >= 100)
+                {
+                    CV_AddParkingLotRate.Text = "Hourly rate must be greater than 0 and less than 100.";
+                    CV_AddParkingLotRate.IsValid = false;
+                }
+                else
+                {
+                    int result = BLManagerDashboard.AddParkingLotRate(parkingLotID, timeDuration, rateHourly);
+
+                    if (result == -1)
+                    {
+                        CV_AddParkingLotRate.Text = "Rate duration is already in use.";
+                        CV_AddParkingLotRate.IsValid = false;
+                    }
+                    else
+                    {
+                        List<Rate> rates = BLManagerDashboard.GetParkingLotRates(parkingLotID);
+                        LV_ParkingLotRates.DataSource = rates;
+                        LV_ParkingLotRates.DataBind();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                CV_AddParkingLotRate.Text = "Invalid input: must be a number";
+                CV_AddParkingLotRate.IsValid = false;
+            }
+        }
+
+        // Deletes a Rate:
+        public void DeleteParkingLotRate(int rateID)
+        {
+            BLManagerDashboard.DeleteParkingLotRate(rateID);
+
+            List<ParkingLot> parkingLots = (List<ParkingLot>)LV_ParkingLots.DataSource;
+            int selectedItemIndex = LV_ParkingLots.SelectedIndex;
+            int parkingLotID = parkingLots.ElementAt(selectedItemIndex).ID;
+
+            List<Rate> rates = BLManagerDashboard.GetParkingLotRates(parkingLotID);
+            LV_ParkingLotRates.DataSource = rates;
+            LV_ParkingLotRates.DataBind();
+        }
     }
 }

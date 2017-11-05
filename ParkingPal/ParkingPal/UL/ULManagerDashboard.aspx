@@ -18,6 +18,12 @@
         smUpdatePanelScripts.RegisterAsyncPostBackControl(btnAddParkingLot);
         var lbUpdateCarparkType = e.Item.FindControl("LB_UpdateCarparkType") as LinkButton;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbUpdateCarparkType);
+        var lbUpdateCarparkRate = e.Item.FindControl("LB_UpdateCarparkRate") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbUpdateCarparkRate);
+        var btnAddParkingLotRate = e.Item.FindControl("BTN_AddParkingLotRate") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(btnAddParkingLotRate);
+        var lbDeleteCarparkRate = e.Item.FindControl("LB_DeleteCarparkRate") as LinkButton;
+        smUpdatePanelScripts.RegisterAsyncPostBackControl(lbDeleteCarparkRate);
 
         var lbSelectInspector = e.Item.FindControl("LB_SelectInspector") as LinkButton;
         smUpdatePanelScripts.RegisterAsyncPostBackControl(lbSelectInspector);
@@ -72,6 +78,7 @@
         LV_ParkingLots.SelectedIndex = selectedIndex;
         LV_ParkingLots.DataBind();
         PopulateParkingLotCarparkTypesView();
+        PopulateParkingLotRatesView();
         ParkingLotManagementTitle.InnerText = "Parking Lot Management - " + commandArgs[0];
     }
 
@@ -86,7 +93,6 @@
     // The list of commands and actions for link buttons in the 'LV_CarparkTypes' list.
     protected void LVCarparkTypes_OnItemCommand(object sender, ListViewCommandEventArgs e)
     {
-        int selectedIndex = e.Item.DisplayIndex;
         string commandArg = e.CommandArgument.ToString();
         TextBox tbx_ParkCount = e.Item.FindControl("TBX_ParkCount") as TextBox;
 
@@ -99,8 +105,54 @@
         {
             UpdateCarparkType(commandArg, Int32.Parse(tbx_ParkCount.Text));
         }
-        //int parkCount = Int32.Parse(itcParkCount.Text);
-        //UpdateCarparkType(commandArg, parkCount);
+    }
+
+    // The list of commands and actions for link buttons in the 'LV_ParkingLotRates' list.
+    protected void LVParkingLotRates_OnItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        int commandArg = Int32.Parse(e.CommandArgument.ToString());
+        TextBox tbx_RateDuration = e.Item.FindControl("TBX_RateDuration") as TextBox;
+        TextBox tbx_RateHourly = e.Item.FindControl("TBX_RateHourly") as TextBox;
+
+
+        if(e.CommandName.Equals("UpdateCarparkRate"))
+        {
+            try
+            {
+                decimal rateDuration = Decimal.Parse(tbx_RateDuration.Text);
+                decimal rateHourly = Decimal.Parse(tbx_RateHourly.Text);
+                if ((rateDuration * 2) % 1 != 0 || rateDuration <= 0 || rateDuration > 24)
+                {
+                    CV_ParkingLotRates.Text = "Rate duration must be hourly or half hourly and be between 0.5 and 24 (e.g. 0.5, 1, 1.5, ..., 23.5, 24)";
+                    CV_ParkingLotRates.IsValid = false;
+                }
+                else if (rateHourly <= 0 || rateHourly >= 100)
+                {
+                    CV_ParkingLotRates.Text = "Hourly rate must be greater than 0 and less than 100.";
+                    CV_ParkingLotRates.IsValid = false;
+                }
+                else
+                {
+                    int result = UpdateRate(commandArg, rateDuration, rateHourly);
+
+                    if(result == 0)
+                    {
+                        CV_ParkingLotRates.Text = "Rate duration is already in use.";
+                        CV_ParkingLotRates.IsValid = false;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                CV_ParkingLotRates.Text = "Invalid input: must be a number";
+                CV_ParkingLotRates.IsValid = false;
+            }
+        }
+
+        else if(e.CommandName.Equals("DeleteCarparkRate"))
+        {
+            DeleteParkingLotRate(commandArg);
+        }
     }
 </script>
 <div class="container">
@@ -241,7 +293,7 @@
                                     <div class="col s12">
                                         <h5>Lot carparks:</h5>
                                     </div>
-                                    <div class="col s12">
+                                    <div class="col s12"> <!-- ParkingLot carparks -->
                                         <asp:CustomValidator ID="CV_CarparkTypes" runat="server" ErrorMessage="Spaces must be an integer greater than or equal to zero."></asp:CustomValidator>
                                         <asp:ListView ID="LV_CarparkTypes" runat="server" OnItemCommand="LVCarparkTypes_OnItemCommand">
                                             <LayoutTemplate>
@@ -279,6 +331,69 @@
                                                 </tr>
                                             </ItemTemplate>
                                         </asp:ListView>
+                                    </div>
+                                    <div class="col s12">
+                                        <h5>Parking Lot rates:</h5>
+                                    </div>
+                                    <div class="col s12"> <!-- ParkingLot rates -->
+                                        <asp:CustomValidator ID="CV_ParkingLotRates" runat="server" ErrorMessage=""></asp:CustomValidator>
+                                        <asp:ListView ID="LV_ParkingLotRates" runat="server" OnItemCommand="LVParkingLotRates_OnItemCommand">
+                                            <LayoutTemplate>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td><asp:Label runat="server" Text="Duration Trigger" /></td>
+                                                            <td><asp:Label runat="server" Text="Rate" /></td>
+                                                            <td><asp:Label runat="server" Text="Actions" /></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
+                                                    </tbody>
+                                                </table>
+                                            </LayoutTemplate>
+                                            <EmptyDataTemplate> <!-- This layout is shown when the ParkingLot Rate list is empty -->
+                                                <div class="col s12">
+                                                    <i class="material-icons">info_outline</i>
+                                                    <span>
+                                                        There are no rates for this ParkingLot. Customers will be charge the default rate.
+                                                    </span>
+                                                </div>
+                                            </EmptyDataTemplate>
+                                            <ItemTemplate> <!-- This template defines the layout for an item in the CarparkType list -->
+                                                <tr>
+                                                    <td><asp:TextBox runat="server" Text='<%#Eval("TimeDuration")%>' id="TBX_RateDuration" /></td>
+                                                    <td><asp:TextBox runat="server" Text='<%#Eval("HalfHourlyRate")%>' id="TBX_RateHourly" /></td>
+                                                    <td>
+                                                        <asp:LinkButton runat="server" ID="LB_UpdateCarparkRate" class="btn"
+                                                            Text="UPDATE" CommandName="UpdateCarparkRate" ClientIDMode="AutoID"
+                                                            CommandArgument='<%#Eval("RateId")%>'>
+                                                        </asp:LinkButton>
+                                                        <asp:LinkButton runat="server" ID="LB_DeleteCarparkRate" class="btn"
+                                                            Text="DELETE" CommandName="DeleteCarparkRate" ClientIDMode="AutoID"
+                                                            CommandArgument='<%#Eval("RateId")%>'>
+                                                        </asp:LinkButton>
+                                                    </td>
+                                                </tr>
+                                            </ItemTemplate>
+                                        </asp:ListView>
+                                    </div>
+                                    <div class="col s12">
+                                        <p>Add Rate</p>
+                                        <asp:CustomValidator ID="CV_AddParkingLotRate" runat="server" ErrorMessage=""></asp:CustomValidator>
+                                    </div>
+                                    <div class="col s12">
+                                        <div class="col s4">
+                                            <asp:TextBox runat="server" Text='' id="TBX_AddRateDuration" />
+                                        </div>
+                                        <div class="col s4">
+                                            <asp:TextBox runat="server" Text='' id="TBX_AddRateHourly" />
+                                        </div>
+                                        <div class="col s4">
+                                            <asp:Button runat="server" Cssclass="btn" Text="Add" ID="BTN_AddParkingLotRate"
+                                                OnClick="AddParkingLotRate" ClientIDMode="AutoID">
+                                            </asp:Button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div runat="server" id ="ParkingLotManagementPanel_AddParkingLot" visible="false"> <!-- The 'Request Parking Lot' screen for the Parking Lot Management Panel -->

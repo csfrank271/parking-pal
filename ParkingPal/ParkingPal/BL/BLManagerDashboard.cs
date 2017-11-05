@@ -9,7 +9,7 @@ namespace ParkingPal.BL
 {
     public class BLManagerDashboard
     {
-        public static List<InspectorUser> GetManagerInspectors (int managerID)
+        public static List<InspectorUser> GetManagerInspectors(int managerID)
         {
             try
             {
@@ -127,6 +127,55 @@ namespace ParkingPal.BL
             try
             {
                 DALManagerDashboard.UpdateCarparkType(parkingLotID, carparkType, parkCount);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static List<Rate> GetParkingLotRates(int parkingLotID)
+        {
+            try
+            {
+                return DALManagerDashboard.GetParkingLotRates(parkingLotID);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static int UpdateRate(int rateID, decimal timeDuration, decimal rateHourly)
+        {
+            try
+            {
+                return DALManagerDashboard.UpdateRate(rateID, timeDuration, rateHourly);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public static int AddParkingLotRate(int parkingLotID, decimal timeDuration, decimal rateHourly)
+        {
+            try
+            {
+                return DALManagerDashboard.AddParkingLotRate(parkingLotID, timeDuration, rateHourly);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        // Deletes a Rate:
+        public static void DeleteParkingLotRate(int rateID)
+        {
+            try
+            {
+                DALManagerDashboard.DeleteParkingLotRate(rateID);
             }
             catch (Exception exception)
             {
