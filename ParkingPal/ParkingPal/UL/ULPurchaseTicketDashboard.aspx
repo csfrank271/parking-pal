@@ -69,8 +69,10 @@
                     <div class="col s4" style="margin-top:-3px; margin-bottom:-7px">       
                         <label runat="server" id="label1" for="inputTicketEndTime">&nbsp; &nbsp; End Time</label>
                     </div>
-                    <div class="input-field col s7 m10">
-                        <asp:Button id="minusTimeButton" runat="server" class="material-icons timeBtn" style="cursor: pointer;" onclick="minusTime" text="remove_circle_outline"/>&nbsp;<span runat="server" id="labelTicketEndTime" class="endTime"></span>&nbsp;<asp:Button ID="addTimeButton" runat="server" class="material-icons timeBtn" style="cursor:pointer;" OnClick="addTime" Text="add_circle_outline" />
+                    <div class="input-field col s8 m10">
+                        <asp:Button id="minusTimeButton" runat="server" class="material-icons timeBtn" style="cursor: pointer;" onclick="minusTime" text="remove_circle_outline"/>&nbsp;<span runat="server" id="labelTicketEndTime" class="endTime"></span>
+                        &nbsp;
+                        <asp:Button ID="addTimeButton" runat="server" class="material-icons timeBtn" style="cursor:pointer;" OnClick="addTime" Text="add_circle_outline" />
                     </div>
                 </div>
                 <div class="row">

@@ -90,6 +90,11 @@
                                                     Materialize.toast('Payment is completed', 3000); 
                                                     window.location.href = "ULProcessExtendedTicketAndPayment.aspx";
                                                 });
+                                            },
+                                            onError: function (data, actions) {
+                                                document.getElementById("paypal-button").hidden = true;
+                                                Materialize.toast('Payment is completed', 3000);
+                                                window.location.href = "ULProcessExtendedTicketAndPayment.aspx";
                                             }
 
                                         }, '#paypal-button');

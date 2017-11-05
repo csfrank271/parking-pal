@@ -30,7 +30,7 @@
         <nav visible="false">
             <div runat="server" id="unauthenticatedNav" class="nav-wrapper grey darken-3" visible="false">
                 <img src="../IMG/parking%20icon.png" style="position:relative; height:70px; width:70px; margin:-7px 0px -7px 8px" />
-                <a href="../UL/ULHome.aspx"" class="brand-logo">ParkingPal</a>
+                <a id="brand-logo" href="../UL/ULHome.aspx"" class="brand-logo">ParkingPal</a>
                 <a href="#" data-activates="sideNav" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="../UL/ULHome.aspx">Home</a></li>

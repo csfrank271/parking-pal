@@ -6,8 +6,7 @@
             {
                 PaymentCompleted();
             }
-       </script>
-    <!--fuck asp-->
+       </script> 
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +20,12 @@
             <div class="card-title">
                 Ticket Payment - <span runat="server" id="divRego"></span>
             </div>
-            <div class="card-content">
+            <div class="card-content" style="padding-top: 0">
+                 <div style="margin: 0" class="col s12 row">
+                    <div style="visibility: hidden" ID="loaderdiv" class="progress">
+                      <div class="indeterminate"></div>
+                  </div>
+                </div>
                 <div runat="server" class="col s12 m6 row center" id="divTicketDate"></div>
                 <div class="row col s12 m12">
                     <div class="col s3"><b>Start: </b></div>
@@ -39,51 +43,65 @@
                     <div class="col s3"><b>Total: </b></div>
                     <div class="col s3">$<span runat="server" id="spanTotalPrice"></span></div>
                 </div> 
+               
                 <div class="row col s12">
-                <div id="paypal-button" class="col s9 m2"></div>
-                <script>
-                    paypal.Button.render({
+                    <div class="col s12 m6">
+                      <asp:Button ID="BTNBack" runat="server" OnClick="BTNBack_Clicked" Text="Back" class="btn col s12 m6 blue accent-2"/>
+                      <br /> &nbsp;<br />
+                    </div> 
+                    <div id="paypal-button" class="col s12 m6 center"></div>
+                    <script>
+                        paypal.Button.render({
 
-                        env: 'sandbox', // sandbox | production
-                        client: {
-                            sandbox: 'AVPUuBdakDk-KVpbzJje3Q9LFDHLtXjFlxjszwJ28L-JrEq2flx3xVLK8Y8J-HfWyEO92yvx5ZlRcyJj',
-                            production: '<insert production client id>'
-                        },
-                        commit: true, // Show a 'Pay Now' button
+                            env: 'sandbox', // sandbox | production
+                            client: {
+                                sandbox: 'AVPUuBdakDk-KVpbzJje3Q9LFDHLtXjFlxjszwJ28L-JrEq2flx3xVLK8Y8J-HfWyEO92yvx5ZlRcyJj',
+                                production: '<insert production client id>'
+                            },
+                            commit: true, // Show a 'Pay Now' button
 
-                        // payment() is called when the button is clicked
-                        payment: function (data, actions) {
-                            var total = document.getElementById('<%= spanTotalPrice.ClientID %>').innerText
-                            // Make a call to the REST api to create the payment
-                            return actions.payment.create({
-                                payment: {
-                                    transactions: [
-                                        {
-                                            amount: { total: total, currency: 'AUD' }
-                                        }
-                                    ]
-                                }
-                            });
-                        },
+                            // payment() is called when the button is clicked
+                            payment: function (data, actions) {
+                                var total = document.getElementById('<%= spanTotalPrice.ClientID %>').innerText
+                                // Make a call to the REST api to create the payment
+                                return actions.payment.create({
+                                    payment: {
+                                        transactions: [
+                                            {
+                                                amount: { total: total, currency: 'AUD' }
+                                            }
+                                        ]
+                                    }
+                                });
+                            },
 
-                        // onAuthorize() is called when the buyer approves the payment
-                        onAuthorize: function (data, actions) {
+                            // onAuthorize() is called when the buyer approves the payment
+                            onAuthorize: function (data, actions) {
 
-                            // Make a call to the REST api to execute the payment
-                            return actions.payment.execute().then(function () {
+                                // Make a call to the REST api to execute the payment
+                                return actions.payment.execute().then(function () {
+                                    document.getElementById("paypal-button").hidden = true;
+                                    document.getElementById("ContentPlaceHolder1_BTNBack").style.visibility = "hidden";
+                                    document.getElementById("loaderdiv").style.visibility = "visible";
+                                    Materialize.toast('Payment is completed', 3000); 
+                                    window.location.href = "ULProcessTicketAndPayment.aspx";
+                                });
+                            },
+                            
+                            onError: function (data, actions) {
                                 document.getElementById("paypal-button").hidden = true;
-                                Materialize.toast('Payment is completed', 3000); 
+                                document.getElementById("ContentPlaceHolder1_BTNBack").style.visibility = "hidden";
+                                document.getElementById("loaderdiv").style.visibility = "visible";
+                                Materialize.toast('Payment is completed', 3000);
                                 window.location.href = "ULProcessTicketAndPayment.aspx";
-                            });
-                        }
+                            }
 
-                    }, '#paypal-button');
-                </script>
-                <asp:ScriptManager ID="ScriptMgr" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-                <div class="col s5 m3">
-                  <asp:Button ID="BTNBack" runat="server" OnClick="BTNBack_Clicked" Text="Back" class="btn col s12 m6 blue accent-2"/>
-                  <br /> &nbsp;<br />
+                        }, '#paypal-button');
+                    </script>
+                    <asp:ScriptManager ID="ScriptMgr" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+                    
                 </div>
+            </div>
           </div>
     </div>
 </asp:Content> 

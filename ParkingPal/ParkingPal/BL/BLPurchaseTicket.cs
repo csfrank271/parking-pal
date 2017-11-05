@@ -30,7 +30,7 @@ namespace ParkingPal.BL
                 int paymentAdded = DALPurchaseTicket.AddPayment(payment);
 
 
-                using (MailMessage mm = new MailMessage("parkingpal9@gmail.com", ticket.Email))
+              /*  using (MailMessage mm = new MailMessage("parkingpal9@gmail.com", ticket.Email))
                 {
                     mm.Subject = "Confirmation Of Parking Ticket Purchase";
                     mm.Body = @"Thank you for purchasing a parking ticket with ParkingPal. <br />
@@ -54,7 +54,7 @@ namespace ParkingPal.BL
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;
                     smtp.Send(mm);
-                }
+                } */
                     return paymentAdded;
             }
             catch (Exception exception)

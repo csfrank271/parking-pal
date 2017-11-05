@@ -85,15 +85,6 @@ namespace ParkingPal.UL {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanTotalPrice;
         
         /// <summary>
-        /// ScriptMgr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptMgr;
-        
-        /// <summary>
         /// BTNBack control.
         /// </summary>
         /// <remarks>
@@ -101,5 +92,14 @@ namespace ParkingPal.UL {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BTNBack;
+        
+        /// <summary>
+        /// ScriptMgr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptMgr;
     }
 }
